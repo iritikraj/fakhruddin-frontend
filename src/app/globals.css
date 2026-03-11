@@ -1,21 +1,48 @@
 @import "tailwindcss";
 
-@font-face {
-  font-family: 'Optima';
-  src: url('/fonts/Optima.ttf');
-  font-weight: 400;
-  font-style: normal;
-  font-display: swap;
+@theme {
+  --font-serif: var(--font-cinzel);
+  --font-sans: var(--font-inter);
+
+  --color-luxury-gold: #c5a365;
+  --color-luxury-dark: #111111;
 }
 
-h2 {
-  font-family: 'optima';
+/* Hide scrollbar for Lenis smooth scrolling */
+::-webkit-scrollbar {
+  display: none;
 }
 
-span {
-  font-family: 'optima';
+html,
+body {
+  background-color: var(--color-luxury-dark);
+  color: #ffffff;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
 }
 
-.font-optima-css {
-  font-family: 'optima';
+/* Typography masking utility */
+.text-mask {
+  overflow: hidden;
+  display: inline-block;
+}
+
+displacement-filter {
+  filter: url(#liquid-glass);
+}
+
+@media (pointer: fine) {
+  body {
+    cursor: none;
+  }
+
+  /* Ensure links and buttons also hide the default pointer */
+  a,
+  button,
+  [role="button"],
+  input,
+  select,
+  textarea {
+    cursor: none;
+  }
 }

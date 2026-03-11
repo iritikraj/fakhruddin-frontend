@@ -4,7 +4,7 @@
 
 ### Step 1: Install Dependencies
 ```bash
-cd ethmar-chess-animation
+cd nextjs-demo
 npm install
 ```
 
