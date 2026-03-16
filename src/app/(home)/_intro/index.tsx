@@ -4,13 +4,13 @@ import { useRef } from "react";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { useGSAP } from "@gsap/react";
-import { TransitionLink } from "./TransitionLink";
+import { TransitionLink } from "@/components/TransitionLink";
 
 if (typeof window !== "undefined") {
   gsap.registerPlugin(ScrollTrigger);
 }
 
-export default function LuxuryRevealAbout() {
+export default function BrandReveal() {
   const containerRef = useRef<HTMLElement>(null);
   const turbRef = useRef<SVGFETurbulenceElement>(null);
   const dispRef = useRef<SVGFEDisplacementMapElement>(null);
@@ -336,7 +336,7 @@ export default function LuxuryRevealAbout() {
                 <div className="absolute inset-0 bg-[#9D7E44] translate-y-[101%] group-hover:translate-y-0 transition-transform duration-700 ease-[cubic-bezier(0.76,0,0.24,1)]" />
               </button> */}
               <TransitionLink
-                href="/residences"
+                href="/treppan-living"
                 className="text-sm tracking-widest uppercase hover:text-gray-400 transition-colors"
                 data-cursor="Explore" // Syncs perfectly with your custom cursor!
               >

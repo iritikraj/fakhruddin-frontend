@@ -2,7 +2,7 @@ import type { NextConfig } from "next";
 
 const nextConfig: NextConfig = {
   /* config options here */
-  output: "export",
+  // output: "export",
   reactCompiler: true,
   images: {
     remotePatterns: [
@@ -24,6 +24,11 @@ const nextConfig: NextConfig = {
       {
         protocol: "https",
         hostname: "toppng.com",
+        pathname: "/**",
+      },
+      {
+        protocol: "https",
+        hostname: "cdn-ilehell.nitrocdn.com",
         pathname: "/**",
       },
     ],

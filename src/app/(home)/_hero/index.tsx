@@ -9,7 +9,7 @@ if (typeof window !== "undefined") {
   gsap.registerPlugin(ScrollTrigger, useGSAP);
 }
 
-export default function PremiumHero() {
+export default function Hero() {
   const containerRef = useRef(null);
   const textRef = useRef(null);
   const flowerRef = useRef(null);
@@ -91,6 +91,7 @@ export default function PremiumHero() {
 
   return (
     <>
+      <link rel="preload" as="video" href="/Treppan-Living-PRIVE-Video.mp4" type="video/mp4" />
       <section
         ref={containerRef}
         className="relative w-full h-screen overflow-hidden bg-white flex items-center justify-center"
@@ -106,6 +107,7 @@ export default function PremiumHero() {
             loop
             muted
             playsInline
+            preload="true"
             className="w-full h-full object-cover opacity-90 mix-blend-multiply"
           />
         </div>

@@ -1,7 +1,11 @@
 {
-  "name": "nextjs-demo",
+  "name": "fakhruddin-frontend",
   "version": "0.1.0",
   "private": true,
+  "author": {
+    "name": "Ritik Raj",
+    "email": "ritikraj9653@gmail.com"
+  },
   "scripts": {
     "dev": "next dev",
     "build": "next build",
@@ -18,6 +22,7 @@
     "framer-motion": "^12.34.0",
     "gsap": "^3.14.2",
     "lenis": "^1.3.18",
+    "lucide-react": "^0.577.0",
     "next": "16.1.6",
     "react": "19.2.3",
     "react-dom": "19.2.3",
