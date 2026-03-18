@@ -1,6 +1,6 @@
 "use client";
 
-import { useRef } from "react";
+import { useRef, useEffect, useState } from "react";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { useGSAP } from "@gsap/react";
@@ -11,631 +11,686 @@ if (typeof window !== "undefined") {
   gsap.registerPlugin(ScrollTrigger);
 }
 
-// ─────────────────────────────────────────────────────────────
-// SHARED: Bullet Row
-// ─────────────────────────────────────────────────────────────
-function BulletRow({ text, light = false }: { text: string; light?: boolean }) {
-  return (
-    <div
-      className={`flex items-center gap-4 py-4 border-b group cursor-default
-        ${light ? "border-[#F9F8F6]/10" : "border-[#1A1A1A]/8"}`}
-    >
-      <div
-        className={`w-2 h-2 rounded-full shrink-0 transition-all duration-500 group-hover:scale-150 group-hover:ring-4
-          ${light ? "bg-[#A19585] group-hover:ring-[#A19585]/20" : "bg-[#A19585] group-hover:ring-[#A19585]/20"}`}
-      />
-      <span
-        className={`text-sm md:text-[15px] font-light leading-relaxed tracking-wide transition-colors duration-400
-          ${light ? "text-[#F9F8F6]/65 group-hover:text-[#F9F8F6]" : "text-[#1A1A1A]/65 group-hover:text-[#1A1A1A]"}`}
-      >
-        {text}
-      </span>
-    </div>
-  );
-}
+// Custom hook for responsive design
+const useWindowSize = () => {
+  const [windowSize, setWindowSize] = useState({
+    width: typeof window !== 'undefined' ? window.innerWidth : 1200,
+    height: typeof window !== 'undefined' ? window.innerHeight : 800,
+  });
+
+  useEffect(() => {
+    const handleResize = () => {
+      setWindowSize({
+        width: window.innerWidth,
+        height: window.innerHeight,
+      });
+    };
+
+    window.addEventListener('resize', handleResize);
+    return () => window.removeEventListener('resize', handleResize);
+  }, []);
+
+  return windowSize;
+};
 
 // ─────────────────────────────────────────────────────────────
 // SECTION 1 — HERO
 // ─────────────────────────────────────────────────────────────
 function Hero() {
   const ref = useRef<HTMLElement>(null);
+  const imageRef = useRef<HTMLImageElement>(null);
+  const contentRef = useRef<HTMLDivElement>(null);
+  const titleRef = useRef<HTMLHeadingElement>(null);
+  const subtitleRef = useRef<HTMLParagraphElement>(null);
+  const lineRef = useRef<HTMLDivElement>(null);
 
   useGSAP(() => {
-    const tl = gsap.timeline({ defaults: { ease: "power4.out" } });
-
-    tl.fromTo(".hero-bg",
-      { scale: 1.12, opacity: 0 },
-      { scale: 1, opacity: 1, duration: 2.4, ease: "power2.inOut" }
-    )
-      .fromTo(".hero-eyebrow",
-        { y: 30, opacity: 0, filter: "blur(8px)" },
-        { y: 0, opacity: 1, filter: "blur(0px)", duration: 1 },
-        "-=1.6"
-      )
-      .fromTo(".hero-title-word",
-        { y: "115%", opacity: 0 },
-        { y: "0%", opacity: 1, stagger: 0.055, duration: 1.4 },
-        "-=0.9"
-      )
-      .fromTo(".hero-sub-line",
-        { y: 28, opacity: 0 },
-        { y: 0, opacity: 1, duration: 1, stagger: 0.15 },
-        "-=0.7"
-      )
-      .fromTo(".hero-scroll-hint",
-        { opacity: 0 },
-        { opacity: 1, duration: 1 },
-        "-=0.3"
-      );
-
-    // Subtle continuous Ken Burns
-    gsap.to(".hero-bg img", {
-      scale: 1.07, duration: 18, ease: "none", yoyo: true, repeat: -1,
-    });
-  }, { scope: ref });
-
-  const titleWords = ["Wellness", "+", "Sustainability", "+", "Smart", "Living"];
-
-  return (
-    <section
-      ref={ref}
-      className="relative w-full h-screen min-h-[640px] overflow-hidden bg-[#090C14] flex items-end"
-    >
-      {/* Background */}
-      <div className="hero-bg absolute inset-0 z-10 opacity-0 will-change-transform">
-        <img
-          src="images/Intelligent-Living-Tech.webp"
-          alt="WellTech Hero"
-          className="w-full h-full object-cover"
-        />
-        <div className="absolute inset-0 bg-gradient-to-t from-[#090C14] via-[#090C14]/60 to-[#090C14]/20" />
-        <div className="absolute inset-0 bg-gradient-to-r from-[#090C14]/75 via-[#090C14]/20 to-transparent" />
-      </div>
-
-      {/* Subtle grid texture */}
-      <div
-        className="absolute inset-0 z-20 pointer-events-none opacity-[0.035]"
-        style={{
-          backgroundImage:
-            "linear-gradient(to right,#A19585 1px,transparent 1px),linear-gradient(to bottom,#A19585 1px,transparent 1px)",
-          backgroundSize: "110px 110px",
-        }}
-      />
-
-      {/* Content */}
-      <div className="relative z-30 w-full max-w-[1400px] mx-auto px-8 md:px-20 pb-20 md:pb-28">
-        <div className="hero-eyebrow opacity-0 flex items-center gap-5 mb-7">
-          <div className="w-10 h-[1px] bg-[#A19585]" />
-          <p className="text-[9px] tracking-[0.6em] uppercase text-[#A19585] font-bold">
-            The Science of Living Well
-          </p>
-        </div>
-
-        {/* Title — word by word overflow reveal */}
-        <h1 className="font-serif text-[11vw] md:text-[7.5vw] lg:text-[6.2vw] leading-[1] tracking-tighter text-[#F9F8F6] mb-10 flex flex-wrap gap-x-[0.25em]">
-          {titleWords.map((word, i) => (
-            <span key={i} className="overflow-hidden inline-block align-bottom">
-              <span
-                className={`hero-title-word inline-block ${word === "+" ? "text-[#A19585] font-light italic" : ""}`}
-              >
-                {word}
-              </span>
-            </span>
-          ))}
-        </h1>
-
-        <div className="max-w-xl flex flex-col gap-4">
-          <p className="hero-sub-line opacity-0 text-sm md:text-base text-[#F9F8F6]/55 font-light leading-[1.9]">
-            WellTech is our integrated approach to future living — combining sustainability, intelligent infrastructure, and advanced wellness solutions into one seamless residential ecosystem.
-          </p>
-          <p className="hero-sub-line opacity-0 text-base md:text-lg text-[#F9F8F6] font-serif italic">
-            It's not an add-on. It's built into how you live every day.
-          </p>
-        </div>
-      </div>
-
-      {/* Scroll hint */}
-      <div className="hero-scroll-hint opacity-0 absolute bottom-10 right-10 md:right-20 z-30 flex flex-col items-center gap-2">
-        <div className="w-[1px] h-16 bg-[#F9F8F6]/15 relative overflow-hidden">
-          <div
-            className="absolute top-0 left-0 w-full h-[45%] bg-[#A19585]"
-            style={{ animation: "scrollDrop 2.2s ease-in-out infinite" }}
-          />
-        </div>
-        <p className="text-[7px] tracking-[0.4em] uppercase text-[#F9F8F6]/25 mt-1">Scroll</p>
-      </div>
-
-      <style>{`
-        @keyframes scrollDrop {
-          0%   { transform: translateY(-100%); opacity: 0; }
-          20%  { opacity: 1; }
-          80%  { opacity: 1; }
-          100% { transform: translateY(400%); opacity: 0; }
-        }
-      `}</style>
-    </section>
-  );
-}
-
-// ─────────────────────────────────────────────────────────────
-// SECTION 2 — SUSTAINABLE LIVING, BUILT IN  (light bg, image right)
-// ─────────────────────────────────────────────────────────────
-function SustainableLiving() {
-  const ref = useRef<HTMLElement>(null);
-
-  useGSAP(() => {
-    gsap.from(".sl-title-word", {
-      y: "110%", opacity: 0, stagger: 0.06, duration: 1.2, ease: "power4.out",
-      scrollTrigger: { trigger: ref.current, start: "top 78%" },
-    });
-    gsap.from(".sl-eyebrow", {
-      x: -20, opacity: 0, duration: 1, ease: "power3.out",
-      scrollTrigger: { trigger: ref.current, start: "top 78%" },
-    });
-    gsap.from(".sl-bullet", {
-      x: -24, opacity: 0, stagger: 0.1, duration: 0.9, ease: "power3.out",
-      scrollTrigger: { trigger: ".sl-bullets", start: "top 82%" },
-    });
-    gsap.from(".sl-footer-text", {
-      y: 20, opacity: 0, duration: 1, ease: "power3.out",
-      scrollTrigger: { trigger: ".sl-footer-text", start: "top 92%" },
-    });
-    gsap.fromTo(".sl-img-wrap",
-      { clipPath: "inset(100% 0% 0% 0%)" },
-      {
-        clipPath: "inset(0% 0% 0% 0%)", duration: 1.7, ease: "expo.inOut",
-        scrollTrigger: { trigger: ".sl-img-wrap", start: "top 80%" },
-      }
-    );
-    gsap.fromTo(".sl-img-wrap img", { scale: 1.2 }, {
-      scale: 1, duration: 1.9, ease: "power2.out",
-      scrollTrigger: { trigger: ".sl-img-wrap", start: "top 80%" },
-    });
-    gsap.from(".sl-divider", {
-      scaleX: 0, transformOrigin: "left", duration: 1.8, ease: "expo.inOut",
-      scrollTrigger: { trigger: ref.current, start: "top 84%" },
-    });
-    gsap.from(".sl-watermark", {
-      x: 80, opacity: 0, duration: 1.6, ease: "power3.out",
-      scrollTrigger: { trigger: ref.current, start: "top 80%" },
-    });
-  }, { scope: ref });
-
-  const bullets = [
-    "Energy-efficient infrastructure",
-    "Smart water and air management",
-    "Responsible material choices",
-    "Intelligent resource optimisation",
-  ];
-
-  return (
-    <section ref={ref} className="bg-[#F9F8F6] text-[#1A1A1A] py-28 md:py-44 overflow-hidden relative">
-
-      {/* Watermark */}
-      <div className="sl-watermark absolute right-0 top-1/2 -translate-y-1/2 font-serif text-[22vw] leading-none text-[#1A1A1A]/[0.03] select-none pointer-events-none pr-6 z-0">
-        01
-      </div>
-
-      <div className="relative z-10 max-w-[1400px] mx-auto px-8 md:px-20">
-        <div className="sl-divider w-full h-[1px] bg-[#1A1A1A]/10 mb-16 md:mb-24" />
-
-        <div className="grid grid-cols-1 lg:grid-cols-12 gap-16 lg:gap-20 items-center">
-
-          {/* LEFT — Content */}
-          <div className="lg:col-span-6 xl:col-span-5 flex flex-col">
-            <div className="sl-eyebrow flex items-center gap-4 mb-8">
-              <div className="w-8 h-[1px] bg-[#A19585]" />
-              <p className="text-[9px] tracking-[0.5em] uppercase text-[#A19585] font-bold">
-                01 / Sustainability
-              </p>
-            </div>
-
-            <h2 className="font-serif text-4xl md:text-5xl lg:text-[3.4rem] tracking-tight leading-[1.05] mb-12 flex flex-wrap gap-x-[0.22em]">
-              {["Sustainable", "Living,", "Built", "In"].map((w, i) => (
-                <span key={i} className="overflow-hidden inline-block align-bottom">
-                  <span className="sl-title-word inline-block">{w}</span>
-                </span>
-              ))}
-            </h2>
-
-            <div className="sl-bullets flex flex-col mb-10">
-              {bullets.map((b, i) => (
-                <div key={i} className="sl-bullet"><BulletRow text={b} /></div>
-              ))}
-            </div>
-
-            <p className="sl-footer-text text-sm text-[#1A1A1A]/50 font-light italic leading-relaxed max-w-sm">
-              Sustainability here works quietly in the background, enhancing both the planet and your lifestyle.
-            </p>
-          </div>
-
-          {/* RIGHT — Image */}
-          <div className="lg:col-span-6 xl:col-span-7 relative">
-            {/* Offset accent border */}
-            <div className="absolute -top-4 -right-4 w-full h-full border border-[#A19585]/20 rounded-sm pointer-events-none z-0" />
-            <div className="sl-img-wrap relative w-full aspect-[4/3] overflow-hidden rounded-sm z-10 bg-[#E8E4DF]">
-              <img
-                src="images/Pure-Water.webp"
-                alt="Sustainable Living — Pure Water"
-                className="w-full h-full object-cover"
-              />
-              <div className="absolute inset-0 bg-gradient-to-br from-transparent to-[#A19585]/10 pointer-events-none" />
-            </div>
-          </div>
-
-        </div>
-      </div>
-    </section>
-  );
-}
-
-// ─────────────────────────────────────────────────────────────
-// SECTION 3 — ADVANCED WELLNESS INTEGRATION  (dark bg, image left)
-// ─────────────────────────────────────────────────────────────
-function AdvancedWellness() {
-  const ref = useRef<HTMLElement>(null);
-
-  useGSAP(() => {
-    gsap.fromTo(".aw-img-wrap",
-      { clipPath: "inset(0% 100% 0% 0%)" },
-      {
-        clipPath: "inset(0% 0% 0% 0%)", duration: 1.8, ease: "expo.inOut",
-        scrollTrigger: { trigger: ".aw-img-wrap", start: "top 80%" },
-      }
-    );
-    gsap.fromTo(".aw-img-wrap img", { scale: 1.25 }, {
-      scale: 1, duration: 2, ease: "power2.out",
-      scrollTrigger: { trigger: ".aw-img-wrap", start: "top 80%" },
-    });
-    gsap.from(".aw-title-word", {
-      y: "110%", opacity: 0, stagger: 0.07, duration: 1.3, ease: "power4.out",
-      scrollTrigger: { trigger: ".aw-content", start: "top 78%" },
-    });
-    gsap.from(".aw-eyebrow", {
-      x: 20, opacity: 0, duration: 1,
-      scrollTrigger: { trigger: ".aw-content", start: "top 78%" },
-    });
-    gsap.from(".aw-bullet", {
-      x: 28, opacity: 0, stagger: 0.1, duration: 0.9, ease: "power3.out",
-      scrollTrigger: { trigger: ".aw-bullets", start: "top 80%" },
-    });
-    gsap.from(".aw-footer-text", {
-      y: 20, opacity: 0, duration: 1,
-      scrollTrigger: { trigger: ".aw-footer-text", start: "top 92%" },
-    });
-    gsap.from(".aw-accent-line", {
-      scaleY: 0, transformOrigin: "top", duration: 1.5, ease: "expo.inOut",
-      scrollTrigger: { trigger: ref.current, start: "top 75%" },
-    });
-    gsap.from(".aw-watermark", {
-      x: -60, opacity: 0, duration: 1.5, ease: "power3.out",
-      scrollTrigger: { trigger: ref.current, start: "top 75%" },
-    });
-  }, { scope: ref });
-
-  const bullets = [
-    "Cryotherapy Recovery Zones",
-    "Hyperbaric Oxygen Therapy",
-    "Infrared and Red-Light Therapy",
-    "Hot and Cold Plunge Experiences",
-    "Flotation Therapy Environments",
-  ];
-
-  return (
-    <section ref={ref} className="bg-[#0D1120] text-[#F9F8F6] py-28 md:py-44 overflow-hidden relative">
-
-      {/* Grid overlay */}
-      <div
-        className="absolute inset-0 pointer-events-none opacity-[0.03]"
-        style={{
-          backgroundImage:
-            "linear-gradient(to right,#A19585 1px,transparent 1px),linear-gradient(to bottom,#A19585 1px,transparent 1px)",
-          backgroundSize: "100px 100px",
-        }}
-      />
-
-      {/* Watermark */}
-      <div className="aw-watermark absolute left-0 top-1/2 -translate-y-1/2 font-serif text-[22vw] leading-none text-[#F9F8F6]/[0.025] select-none pointer-events-none pl-6 z-0">
-        02
-      </div>
-
-      <div className="relative z-10 max-w-[1400px] mx-auto px-8 md:px-20">
-        <div className="grid grid-cols-1 lg:grid-cols-12 gap-16 lg:gap-20 items-center">
-
-          {/* LEFT — Image */}
-          <div className="lg:col-span-5 relative order-2 lg:order-1">
-            <div className="aw-accent-line absolute -left-6 top-0 bottom-0 w-[2px] bg-gradient-to-b from-[#A19585] via-[#A19585]/30 to-transparent" />
-            <div className="aw-img-wrap relative w-full aspect-[3/4] overflow-hidden rounded-sm bg-[#1A1F2E]">
-              <img
-                src="images/Advanced-Wellness-Integration.webp"
-                alt="Advanced Wellness Integration"
-                className="w-full h-full object-cover opacity-85"
-              />
-              <div className="absolute inset-0 bg-gradient-to-t from-[#0D1120]/55 via-transparent to-transparent" />
-              <div className="absolute inset-0 bg-gradient-to-br from-[#A19585]/8 to-transparent pointer-events-none" />
-            </div>
-          </div>
-
-          {/* RIGHT — Content */}
-          <div className="aw-content lg:col-span-7 flex flex-col order-1 lg:order-2">
-            <div className="aw-eyebrow flex items-center gap-4 mb-8">
-              <div className="w-8 h-[1px] bg-[#A19585]" />
-              <p className="text-[9px] tracking-[0.5em] uppercase text-[#A19585] font-bold">
-                02 / Advanced Wellness
-              </p>
-            </div>
-
-            <h2 className="font-serif text-4xl md:text-5xl lg:text-[3.4rem] tracking-tight leading-[1.05] mb-12 flex flex-wrap gap-x-[0.22em]">
-              {["Advanced", "Wellness", "Integration"].map((w, i) => (
-                <span key={i} className="overflow-hidden inline-block align-bottom">
-                  <span className="aw-title-word inline-block">{w}</span>
-                </span>
-              ))}
-            </h2>
-
-            <div className="aw-bullets flex flex-col mb-10">
-              {bullets.map((b, i) => (
-                <div key={i} className="aw-bullet"><BulletRow text={b} light /></div>
-              ))}
-            </div>
-
-            <p className="aw-footer-text text-sm text-[#F9F8F6]/40 font-light italic leading-relaxed max-w-md">
-              These are not occasional amenities. They're part of everyday living.
-            </p>
-          </div>
-
-        </div>
-      </div>
-    </section>
-  );
-}
-
-// ─────────────────────────────────────────────────────────────
-// SECTION 4 — TWIN CARDS  (light bg)
-// ─────────────────────────────────────────────────────────────
-function TwinCards() {
-  const ref = useRef<HTMLElement>(null);
-
-  useGSAP(() => {
-    gsap.from(".tc-eyebrow", {
-      y: 20, opacity: 0, duration: 1, ease: "power3.out",
-      scrollTrigger: { trigger: ref.current, start: "top 80%" },
-    });
-    gsap.from(".tc-card", {
-      y: 70, opacity: 0, stagger: 0.2, duration: 1.4, ease: "power3.out",
-      scrollTrigger: { trigger: ".tc-grid", start: "top 78%" },
-    });
-    gsap.from(".tc-bullet", {
-      x: -18, opacity: 0, stagger: 0.06, duration: 0.8, ease: "power3.out",
-      scrollTrigger: { trigger: ".tc-grid", start: "top 72%" },
-    });
-    gsap.from(".tc-divider", {
-      scaleX: 0, transformOrigin: "left", duration: 1.6, ease: "expo.inOut",
-      scrollTrigger: { trigger: ref.current, start: "top 84%" },
-    });
-    gsap.from(".tc-watermark", {
-      scale: 0.8, opacity: 0, duration: 1.5,
-      scrollTrigger: { trigger: ref.current, start: "top 80%" },
-    });
-  }, { scope: ref });
-
-  const cards = [
-    {
-      num: "03",
-      label: "Intelligent Systems",
-      title: "Intelligent Living Systems",
-      subtitle: "Technology connects everything seamlessly:",
-      bullets: [
-        "AI-enabled home environments",
-        "Predictive maintenance insights",
-        "Wellness data integration",
-        "Community connectivity platforms",
-      ],
-      footer: "The goal is simple: smarter living with less effort.",
-      dark: false,
-      img: "images/Airocide.webp",
-    },
-    {
-      num: "04",
-      label: "Indoor Environments",
-      title: "Healthier Indoor Environments",
-      subtitle: null,
-      bullets: [
-        "Enhanced air quality systems",
-        "Mineralised and purified water solutions",
-        "Climate-optimised interiors",
-        "Natural light optimisation",
-      ],
-      footer: "Because wellness starts where you spend the most time.",
-      dark: true,
-      img: "images/indoor_herbs.webp",
-    },
-  ];
-
-  return (
-    <section ref={ref} className="bg-[#F9F8F6] py-28 md:py-44 overflow-hidden relative">
-
-      {/* Watermark */}
-      <div className="tc-watermark absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 font-serif text-[26vw] leading-none text-[#1A1A1A]/[0.022] select-none pointer-events-none z-0">
-        03
-      </div>
-
-      <div className="relative z-10 max-w-[1400px] mx-auto px-8 md:px-20">
-        <div className="tc-divider w-full h-[1px] bg-[#1A1A1A]/10 mb-14 md:mb-20" />
-
-        <div className="tc-eyebrow flex items-center gap-4 mb-14 md:mb-20">
-          <div className="w-8 h-[1px] bg-[#A19585]" />
-          <p className="text-[9px] tracking-[0.55em] uppercase text-[#A19585] font-bold">
-            The Full System
-          </p>
-        </div>
-
-        <div className="tc-grid grid grid-cols-1 lg:grid-cols-2 gap-8">
-          {cards.map((card, ci) => (
-            <div
-              key={ci}
-              className={`tc-card group relative overflow-hidden rounded-sm flex flex-col
-                ${card.dark ? "bg-[#0D1120] text-[#F9F8F6]" : "bg-[#F0EDE8] text-[#1A1A1A]"}`}
-            >
-              {/* Top image strip */}
-              <div className="relative w-full aspect-[16/7] overflow-hidden">
-                <img
-                  src={card.img}
-                  alt={card.title}
-                  className={`w-full h-full object-cover transition-transform duration-[1200ms] ease-[cubic-bezier(0.76,0,0.24,1)] group-hover:scale-105
-                    ${card.dark ? "opacity-55 mix-blend-luminosity" : "opacity-65 grayscale-[0.25]"}`}
-                />
-                <div
-                  className={`absolute inset-0 ${card.dark
-                    ? "bg-gradient-to-t from-[#0D1120] via-[#0D1120]/5 to-transparent"
-                    : "bg-gradient-to-t from-[#F0EDE8] via-[#F0EDE8]/5 to-transparent"
-                    }`}
-                />
-                {/* Number badge top-right */}
-                <div className="absolute top-6 right-7">
-                  <span className={`font-serif italic text-5xl select-none
-                    ${card.dark ? "text-[#F9F8F6]/12" : "text-[#1A1A1A]/10"}`}>
-                    {card.num}
-                  </span>
-                </div>
-              </div>
-
-              {/* Body */}
-              <div className="flex flex-col gap-6 p-8 md:p-10 flex-1">
-                <div className="flex items-center gap-4">
-                  <div className="w-6 h-[1px] bg-[#A19585]" />
-                  <p className="text-[8px] tracking-[0.45em] uppercase font-bold text-[#A19585]">
-                    {card.label}
-                  </p>
-                </div>
-
-                <h3 className="font-serif text-2xl md:text-3xl lg:text-[2.1rem] tracking-tight leading-[1.1]">
-                  {card.title}
-                </h3>
-
-                {card.subtitle && (
-                  <p className={`text-sm font-light italic ${card.dark ? "text-[#F9F8F6]/45" : "text-[#1A1A1A]/45"}`}>
-                    {card.subtitle}
-                  </p>
-                )}
-
-                <div className="flex flex-col">
-                  {card.bullets.map((b, bi) => (
-                    <div key={bi} className="tc-bullet">
-                      <BulletRow text={b} light={card.dark} />
-                    </div>
-                  ))}
-                </div>
-
-                <p className={`text-sm font-light italic mt-auto pt-2 ${card.dark ? "text-[#F9F8F6]/38" : "text-[#1A1A1A]/48"}`}>
-                  {card.footer}
-                </p>
-              </div>
-            </div>
-          ))}
-        </div>
-      </div>
-    </section>
-  );
-}
-
-// ─────────────────────────────────────────────────────────────
-// SECTION 5 — WHY WELLTECH MATTERS  (dark CTA)
-// ─────────────────────────────────────────────────────────────
-function WhyWellTech() {
-  const ref = useRef<HTMLElement>(null);
-
-  useGSAP(() => {
-    gsap.fromTo(".wwt-bg",
-      { scale: 1.14, opacity: 0 },
-      {
-        scale: 1, opacity: 1, duration: 2.2, ease: "power2.out",
-        scrollTrigger: { trigger: ref.current, start: "top 85%" },
-      }
-    );
-    // Parallax scroll on bg
-    gsap.to(".wwt-bg img", {
-      y: "14%", ease: "none",
+    // Create a timeline for the hero section
+    const tl = gsap.timeline({
       scrollTrigger: {
         trigger: ref.current,
-        start: "top bottom", end: "bottom top", scrub: true,
-      },
+        start: "top top",
+        end: "bottom top",
+        scrub: 1.5,
+        pin: true,
+        pinSpacing: true,
+      }
     });
-    gsap.from(".wwt-content", {
-      y: 55, opacity: 0, stagger: 0.14, duration: 1.5, ease: "power3.out",
-      scrollTrigger: { trigger: ".wwt-inner", start: "top 78%" },
-    });
-    gsap.from(".wwt-title-word", {
-      y: "110%", opacity: 0, stagger: 0.07, duration: 1.4, ease: "power4.out",
-      scrollTrigger: { trigger: ".wwt-inner", start: "top 80%" },
-    });
-    gsap.from(".wwt-ring", {
-      scale: 0.4, opacity: 0, duration: 2.2, ease: "expo.out",
-      scrollTrigger: { trigger: ref.current, start: "top 80%" },
-    });
-    gsap.from(".wwt-ring-2", {
-      scale: 0.5, opacity: 0, duration: 2.4, ease: "expo.out",
-      scrollTrigger: { trigger: ref.current, start: "top 80%" },
-    });
+
+    // Animate the image to zoom and fade
+    tl.to(imageRef.current, {
+      scale: 1.5,
+      opacity: 0,
+      ease: "power2.inOut"
+    })
+    // Animate content to fade out
+    .to(contentRef.current, {
+      opacity: 0,
+      y: -100,
+      ease: "power2.inOut"
+    }, 0);
+
+    // Initial animations
+    gsap.fromTo(titleRef.current,
+      { y: 100, opacity: 0 },
+      { y: 0, opacity: 1, duration: 1.5, ease: "power3.out" }
+    );
+    
+    gsap.fromTo(subtitleRef.current,
+      { y: 50, opacity: 0 },
+      { y: 0, opacity: 1, duration: 1.5, delay: 0.3, ease: "power3.out" }
+    );
+    
+    gsap.fromTo(lineRef.current,
+      { width: 0, opacity: 0 },
+      { width: 96, opacity: 1, duration: 1.5, delay: 0.6, ease: "power3.out" }
+    );
   }, { scope: ref });
 
   return (
-    <section ref={ref} className="relative bg-[#090C14] overflow-hidden py-40 md:py-56 text-[#F9F8F6]">
-
-      {/* Parallax background */}
-      <div className="wwt-bg absolute inset-0 z-0 opacity-0 overflow-hidden">
-        <img
-          src="images/Advanced-Wellness-Integration.webp"
-          alt="Why WellTech"
-          className="w-full h-full object-cover opacity-25 will-change-transform"
-        />
-        <div className="absolute inset-0 bg-gradient-to-t from-[#090C14] via-[#090C14]/65 to-[#090C14]/45" />
-        <div className="absolute inset-0 bg-gradient-to-r from-[#090C14]/60 via-transparent to-[#090C14]/60" />
-      </div>
-
-      {/* Concentric decorative rings */}
-      <div className="wwt-ring absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 w-[75vw] h-[75vw] max-w-[950px] max-h-[950px] rounded-full border border-[#A19585]/10 pointer-events-none z-10" />
-      <div className="wwt-ring-2 absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 w-[52vw] h-[52vw] max-w-[660px] max-h-[660px] rounded-full border border-[#A19585]/6 pointer-events-none z-10" />
-
-      {/* Grid overlay */}
-      <div
-        className="absolute inset-0 pointer-events-none opacity-[0.025] z-10"
-        style={{
-          backgroundImage:
-            "linear-gradient(to right,#A19585 1px,transparent 1px),linear-gradient(to bottom,#A19585 1px,transparent 1px)",
-          backgroundSize: "100px 100px",
-        }}
+    <section ref={ref} className="relative w-full h-screen overflow-hidden">
+      {/* Image with overlay */}
+      <img 
+        ref={imageRef}
+        src="images/Intelligent-Living-Tech.webp"
+        alt="Hero"
+        className="absolute inset-0 w-full h-full object-cover"
       />
-
-      <div className="wwt-inner relative z-20 max-w-[1000px] mx-auto px-8 md:px-20 text-center">
-
-        <div className="wwt-content flex items-center justify-center gap-5 mb-10">
-          <div className="w-10 h-[1px] bg-[#A19585]" />
-          <p className="text-[9px] tracking-[0.6em] uppercase text-[#A19585] font-bold">
-            The Philosophy
+      <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/40 to-black/20" />
+      
+      {/* Content */}
+      <div ref={contentRef} className="relative z-10 h-full flex items-center justify-center text-center px-4 sm:px-8">
+        <div className="max-w-4xl mx-auto">
+          <p ref={subtitleRef} className="text-[#A19585] text-xs sm:text-sm tracking-[0.3em] mb-4 sm:mb-6 opacity-0">
+            THE SCIENCE OF LIVING WELL
           </p>
-          <div className="w-10 h-[1px] bg-[#A19585]" />
+          <h1 ref={titleRef} className="font-serif text-6xl sm:text-7xl md:text-8xl lg:text-9xl text-white leading-[0.9] opacity-0">
+            WellTech
+          </h1>
+          <div ref={lineRef} className="w-24 h-[2px] bg-[#A19585] mx-auto my-6 sm:my-8 opacity-0" />
+          <p className="text-white/80 text-lg sm:text-xl max-w-2xl mx-auto px-4">
+            Where sustainability meets intelligence, and wellness becomes instinctive.
+          </p>
+        </div>
+      </div>
+    </section>
+  );
+}
+
+// ─────────────────────────────────────────────────────────────
+// SECTION 2 — SUSTAINABILITY
+// ─────────────────────────────────────────────────────────────
+function Sustainability() {
+  const ref = useRef<HTMLElement>(null);
+  const imageRef = useRef<HTMLDivElement>(null);
+  const contentRef = useRef<HTMLDivElement>(null);
+  const statRefs = useRef<(HTMLDivElement | null)[]>([]);
+  const windowSize = useWindowSize();
+  const isMobile = windowSize.width < 768;
+
+  useGSAP(() => {
+    // Parallax effect on image
+    gsap.to(imageRef.current, {
+      y: "30%",
+      scale: 1.2,
+      ease: "none",
+      scrollTrigger: {
+        trigger: ref.current,
+        start: "top bottom",
+        end: "bottom top",
+        scrub: 1.5,
+      }
+    });
+
+    // Content reveal animation
+    gsap.fromTo(contentRef.current,
+      { opacity: 0, x: -100 },
+      {
+        opacity: 1,
+        x: 0,
+        duration: 1.5,
+        ease: "power3.out",
+        scrollTrigger: {
+          trigger: ref.current,
+          start: "top bottom-=100",
+          end: "top center",
+          scrub: 1,
+        }
+      }
+    );
+
+    // Stats animation with stagger
+    gsap.fromTo(statRefs.current,
+      { scale: 0.8, opacity: 0, y: 50 },
+      {
+        scale: 1,
+        opacity: 1,
+        y: 0,
+        stagger: 0.2,
+        duration: 1,
+        ease: "back.out(1.7)",
+        scrollTrigger: {
+          trigger: ref.current,
+          start: "top center",
+          end: "center center",
+          scrub: 1,
+        }
+      }
+    );
+  }, { scope: ref });
+  
+  return (
+    <section ref={ref} className="relative w-full min-h-screen bg-[#F9F8F6] overflow-hidden py-20">
+      {/* Image Container with Parallax */}
+      <div ref={imageRef} className="absolute inset-0 w-full h-[120%]">
+        <img 
+          src="images/Pure-Water.webp"
+          alt="Sustainability"
+          className="w-full h-full object-cover"
+        />
+        <div className="absolute inset-0 bg-gradient-to-r from-[#F9F8F6] via-[#F9F8F6]/80 to-transparent" />
+      </div>
+      
+      {/* Content */}
+      <div ref={contentRef} className="relative z-10 min-h-screen flex items-center px-4 sm:px-8 md:px-16 max-w-[1400px] mx-auto">
+        <div className={`grid ${isMobile ? 'grid-cols-1 gap-8' : 'grid-cols-2 gap-16'} items-center w-full`}>
+          <div className="space-y-6 sm:space-y-8">
+            <span className="text-[#A19585] text-xs sm:text-sm tracking-[0.3em]">01 — SUSTAINABILITY</span>
+            <h2 className="font-serif text-4xl sm:text-5xl md:text-6xl lg:text-7xl text-black leading-tight">
+              Built for <span className="text-[#A19585] relative">
+                tomorrow
+                <span className="absolute -bottom-2 left-0 w-full h-[2px] bg-[#A19585]/30" />
+              </span>,<br/>crafted for today.
+            </h2>
+            <p className="text-black/60 text-base sm:text-lg md:text-xl leading-relaxed">
+              Energy-positive infrastructure that gives back more than it takes. Smart water and air purification systems that learn from usage patterns. Regenerative materials that age beautifully while reducing environmental impact.
+            </p>
+          </div>
+          
+          {/* Empty column for layout */}
+          <div className="hidden md:block" />
+        </div>
+      </div>
+    </section>
+  );
+}
+
+// ─────────────────────────────────────────────────────────────
+// SECTION 3 — WELLNESS
+// ─────────────────────────────────────────────────────────────
+function Wellness() {
+  const ref = useRef<HTMLElement>(null);
+  const imageRef = useRef<HTMLDivElement>(null);
+  const contentRef = useRef<HTMLDivElement>(null);
+  const featureRefs = useRef<(HTMLDivElement | null)[]>([]);
+  const windowSize = useWindowSize();
+  const isMobile = windowSize.width < 768;
+
+  useGSAP(() => {
+    // Parallax effect on image
+    gsap.to(imageRef.current, {
+      y: "-30%",
+      scale: 1.2,
+      ease: "none",
+      scrollTrigger: {
+        trigger: ref.current,
+        start: "top bottom",
+        end: "bottom top",
+        scrub: 1.5,
+      }
+    });
+
+    // Content reveal from right
+    gsap.fromTo(contentRef.current,
+      { opacity: 0, x: 100 },
+      {
+        opacity: 1,
+        x: 0,
+        duration: 1.5,
+        ease: "power3.out",
+        scrollTrigger: {
+          trigger: ref.current,
+          start: "top bottom-=100",
+          end: "top center",
+          scrub: 1,
+        }
+      }
+    );
+
+    // Feature items animation
+    gsap.fromTo(featureRefs.current,
+      { x: 50, opacity: 0 },
+      {
+        x: 0,
+        opacity: 1,
+        stagger: 0.15,
+        duration: 1,
+        ease: "power3.out",
+        scrollTrigger: {
+          trigger: ref.current,
+          start: "top center",
+          end: "center center",
+          scrub: 1,
+        }
+      }
+    );
+  }, { scope: ref });
+
+  const features = [
+    { name: "Cryotherapy Zones", icon: "❄️", desc: "Advanced recovery at -140°C" },
+    { name: "Hyperbaric Therapy", icon: "⭕", desc: "Cellular regeneration and healing" },
+    { name: "Infrared Integration", icon: "☀️", desc: "Deep tissue recovery" },
+    { name: "Floatation Spaces", icon: "🌊", desc: "Neural reset and meditation" }
+  ];
+
+  return (
+    <section ref={ref} className="relative w-full min-h-screen bg-[#0D1120] overflow-hidden py-10">
+      {/* Image with overlay */}
+      <div ref={imageRef} className="absolute inset-0 w-full h-[120%]">
+        <img 
+          src="images/Advanced-Wellness-Integration.webp"
+          alt="Wellness"
+          className="w-full h-full object-cover opacity-60"
+        />
+        <div className="absolute inset-0 bg-gradient-to-l from-[#0D1120] via-[#0D1120]/80 to-transparent" />
+      </div>
+      
+      {/* Content */}
+      <div ref={contentRef} className="relative z-10 min-h-screen flex items-center px-4 sm:px-8 md:px-16 max-w-[1400px] mx-auto">
+        <div className={`grid ${isMobile ? 'grid-cols-1 gap-8' : 'grid-cols-2 gap-16'} items-center w-full`}>
+          {/* Empty column for layout */}
+          <div className="hidden md:block" />
+          
+          <div className="space-y-6 sm:space-y-8">
+            <span className="text-[#A19585] text-xs sm:text-sm tracking-[0.3em]">02 — WELLNESS</span>
+            <h2 className="font-serif text-4xl sm:text-5xl md:text-6xl lg:text-7xl text-white leading-tight">
+              Health, <span className="text-[#A19585]">reimagined</span> daily.
+            </h2>
+            <p className="text-white/60 text-base sm:text-lg md:text-xl leading-relaxed">
+              Advanced recovery environments including cryotherapy zones and hyperbaric oxygen therapy become as accessible as your living room.
+            </p>
+            
+            {/* Features Grid */}
+            <div className="grid grid-cols-2 gap-4 sm:gap-6 mt-8 sm:mt-12">
+              {features.map((feature, i) => (
+                <div 
+                  key={i}
+                  ref={el => { featureRefs.current[i] = el; }}
+                  className="group bg-white/5 backdrop-blur-sm rounded-2xl p-4 sm:p-6 border border-white/10 hover:border-[#A19585]/30 transition-all duration-500 hover:transform hover:-translate-y-2"
+                >
+                  <div className="text-3xl sm:text-4xl mb-3 group-hover:scale-110 transition-transform duration-300">
+                    {feature.icon}
+                  </div>
+                  <h3 className="text-white font-serif text-base sm:text-lg mb-2">{feature.name}</h3>
+                  <p className="text-white/40 text-xs sm:text-sm">{feature.desc}</p>
+                </div>
+              ))}
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+  );
+}
+
+// ─────────────────────────────────────────────────────────────
+// SECTION 4 — INTELLIGENCE
+// ─────────────────────────────────────────────────────────────
+function Intelligence() {
+  const ref = useRef<HTMLElement>(null);
+  const imageRef = useRef<HTMLDivElement>(null);
+  const contentRef = useRef<HTMLDivElement>(null);
+  const cardRefs = useRef<(HTMLDivElement | null)[]>([]);
+  const windowSize = useWindowSize();
+  const isMobile = windowSize.width < 768;
+
+  useGSAP(() => {
+    // Zoom effect on image
+    gsap.to(imageRef.current, {
+      scale: 1.3,
+      rotation: 5,
+      ease: "none",
+      scrollTrigger: {
+        trigger: ref.current,
+        start: "top bottom",
+        end: "bottom top",
+        scrub: 1.5,
+      }
+    });
+
+    // Content fade in
+    gsap.fromTo(contentRef.current,
+      { opacity: 0, y: 50 },
+      {
+        opacity: 1,
+        y: 0,
+        duration: 1.5,
+        ease: "power3.out",
+        scrollTrigger: {
+          trigger: ref.current,
+          start: "top bottom-=100",
+          end: "top center",
+          scrub: 1,
+        }
+      }
+    );
+
+    // Cards animation with 3D effect
+    gsap.fromTo(cardRefs.current,
+      { rotationY: 30, opacity: 0, y: 50 },
+      {
+        rotationY: 0,
+        opacity: 1,
+        y: 0,
+        stagger: 0.15,
+        duration: 1,
+        ease: "back.out(1.7)",
+        scrollTrigger: {
+          trigger: ref.current,
+          start: "top center",
+          end: "center center",
+          scrub: 1,
+        }
+      }
+    );
+  }, { scope: ref });
+
+  const capabilities = [
+    { icon: "01", title: "AI Predictive", desc: "Anticipates needs before expression", color: "from-purple-500/20" },
+    { icon: "02", title: "Smart Maintenance", desc: "Prevents issues proactively", color: "from-blue-500/20" },
+    { icon: "03", title: "Wellness Data Integration", desc: "Real-time optimization", color: "from-green-500/20" },
+    { icon: "04", title: "Community Connect", desc: "Fosters genuine connection", color: "from-orange-500/20" }
+  ];
+
+  return (
+    <section ref={ref} className="relative w-full min-h-screen bg-[#F9F8F6] overflow-hidden">
+      {/* Image with artistic overlay */}
+      <div ref={imageRef} className="absolute inset-0 w-full h-full">
+        <img 
+          src="images/Airocide.webp"
+          alt="Intelligence"
+          className="w-full h-full object-cover opacity-30"
+        />
+        {/* <div className="absolute inset-0 bg-gradient-to-t from-black/40 via-black/20 to-black/10" /> */}
+        {/* <div className="absolute inset-0 bg-gradient-to-br from-[#F9F8F6] via-[#F9F8F6]/40 to-transparent" /> */}
+      </div>
+      
+      {/* Content */}
+      <div ref={contentRef} className="relative z-10 min-h-screen flex items-center px-4 sm:px-8 md:px-16 max-w-[1400px] mx-auto">
+        <div className="w-full">
+          <div className="text-center mb-12 sm:mb-16">
+            <span className="text-[#A19585] text-xs sm:text-sm tracking-[0.3em]">03 — INTELLIGENCE</span>
+            <h2 className="font-serif text-4xl sm:text-5xl md:text-6xl lg:text-7xl text-black mt-4 sm:mt-6">
+              Invisible <span className="text-[#A19585] relative">
+                technology
+                <span className="absolute -bottom-2 left-0 w-full h-[2px] bg-[#A19585]/30" />
+              </span>,<br/>visible results.
+            </h2>
+            <p className="text-black/60 text-base sm:text-lg md:text-xl max-w-2xl mx-auto mt-6">
+              AI-enabled environments that anticipate needs before they're expressed. Predictive maintenance that prevents issues before they occur.
+            </p>
+          </div>
+          
+          {/* 3D Cards Grid */}
+          <div className={`grid ${isMobile ? 'grid-cols-2 gap-4' : 'grid-cols-4 gap-6 sm:gap-8'}`}>
+            {capabilities.map((cap, i) => (
+              <div 
+                key={i}
+                ref={el => { cardRefs.current[i] = el; }}
+                className="group relative perspective-1000"
+                style={{ transformStyle: 'preserve-3d' }}
+              >
+                <div className="bg-white/80 backdrop-blur-sm rounded-2xl p-6 sm:p-8 border border-white/60 hover:border-[#A19585]/30 transition-all duration-500 hover:shadow-2xl hover:-translate-y-2 hover:rotate-2">
+                  <div className={`absolute inset-0 bg-gradient-to-br ${cap.color} to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500 rounded-2xl`} />
+                  <div className="relative z-10">
+                    <div className="text-4xl sm:text-5xl mb-4 group-hover:scale-110 transition-transform duration-300 text-[#A19585]/50">
+                      {cap.icon}
+                    </div>
+                    <h3 className="font-serif text-lg sm:text-xl md:text-2xl text-black mb-2">{cap.title}</h3>
+                    <p className="text-black/50 text-xs sm:text-sm">{cap.desc}</p>
+                  </div>
+                </div>
+              </div>
+            ))}
+          </div>
+        </div>
+      </div>
+    </section>
+  );
+}
+
+// ─────────────────────────────────────────────────────────────
+// SECTION 5 — INDOOR ENVIRONMENTS
+// ─────────────────────────────────────────────────────────────
+function IndoorEnvironments() {
+  const ref = useRef<HTMLElement>(null);
+  const imageRef = useRef<HTMLDivElement>(null);
+  const windowSize = useWindowSize();
+  const isMobile = windowSize.width < 768;
+  
+  useGSAP(() => {
+    gsap.fromTo(ref.current,
+      { opacity: 0 },
+      {
+        opacity: 1,
+        duration: 1.5,
+        scrollTrigger: {
+          trigger: ref.current,
+          start: "top bottom",
+          end: "top top",
+          scrub: 1,
+        }
+      }
+    );
+
+    // Parallax effect on the hero image
+    gsap.to(imageRef.current, {
+      y: "20%",
+      scale: 1.1,
+      ease: "none",
+      scrollTrigger: {
+        trigger: ref.current,
+        start: "top bottom",
+        end: "bottom top",
+        scrub: 1.5,
+      }
+    });
+
+    gsap.fromTo(".env-feature",
+      { y: 100, opacity: 0, scale: 0.9 },
+      {
+        y: 0,
+        opacity: 1,
+        scale: 1,
+        stagger: isMobile ? 0.1 : 0.15,
+        duration: 1,
+        ease: "back.out(1.4)",
+        scrollTrigger: {
+          trigger: ".env-grid",
+          start: "top bottom-=100",
+          end: "top center",
+          scrub: 1,
+        }
+      }
+    );
+  }, { scope: ref, dependencies: [isMobile] });
+
+  const environments = [
+    {
+      title: "Air Quality Systems",
+      description: "Enhanced air purification that outperforms nature itself, with real-time monitoring and adaptive filtration.",
+      color: "from-emerald-500 to-teal-500",
+      bgColor: "bg-emerald-50"
+    },
+    {
+      title: "Water Mineralization",
+      description: "Mineralized water solutions that nourish at the molecular level, with smart temperature and flow control.",
+      color: "from-blue-500 to-cyan-500",
+      bgColor: "bg-blue-50"
+    },
+    {
+      title: "Climate Optimization",
+      description: "Climate-optimized interiors that respond to your biology, creating microclimates throughout your home.",
+      color: "from-amber-500 to-orange-500",
+      bgColor: "bg-amber-50"
+    },
+    {
+      title: "Natural Light",
+      description: "Natural light optimization that works with your circadian rhythm, with automated shading and spectrum control.",
+      color: "from-yellow-500 to-amber-500",
+      bgColor: "bg-yellow-50"
+    }
+  ];
+
+  return (
+    <section ref={ref} className="relative w-full py-20 sm:py-32 bg-gradient-to-b from-[#0D1120] to-black overflow-hidden">
+      {/* Hero Image Background with Parallax */}
+      <div ref={imageRef} className="absolute inset-0 w-full h-[120%] opacity-20">
+        <img 
+          src="images/indoor_herbs.webp"          
+          className="w-full h-full object-cover"
+        />
+        <div className="absolute inset-0 bg-gradient-to-b from-[#0D1120] via-transparent to-black" />
+      </div>
+      
+      {/* Decorative elements */}
+      <div className="absolute inset-0 opacity-10">
+        <div className="absolute top-0 left-0 w-96 h-96 bg-[#A19585] rounded-full blur-3xl" />
+        <div className="absolute bottom-0 right-0 w-96 h-96 bg-blue-500 rounded-full blur-3xl" />
+      </div>
+      
+      <div className="relative z-10 max-w-[1400px] mx-auto px-4 sm:px-8 md:px-16">
+        <div className="text-center mb-16 sm:mb-24">
+          <span className="text-[#A19585] text-xs sm:text-sm tracking-[0.3em]">04 — INDOOR ENVIRONMENTS</span>
+          <h2 className="font-serif text-4xl sm:text-5xl md:text-6xl lg:text-7xl text-white mt-4 sm:mt-6">
+            Where you live, <span className="text-[#A19585] relative">
+              redefined
+              <svg className="absolute -bottom-2 left-0 w-full" height="4" viewBox="0 0 100 4" preserveAspectRatio="none">
+                <line x1="0" y1="2" x2="100" y2="2" stroke="#A19585" strokeWidth="2" strokeDasharray="4 4" />
+              </svg>
+            </span>.
+          </h2>
         </div>
 
-        <h2 className="font-serif text-5xl md:text-7xl lg:text-8xl tracking-tighter leading-[1.02] mb-10 flex flex-wrap justify-center gap-x-[0.25em]">
-          {["Why", "WellTech", "Matters"].map((w, i) => (
-            <span key={i} className="overflow-hidden inline-block align-bottom">
-              <span className={`wwt-title-word inline-block ${i === 1 ? "italic text-[#A19585]" : ""}`}>
-                {w}
-              </span>
-            </span>
+        <div className="env-grid grid grid-cols-1 md:grid-cols-2 gap-6 sm:gap-8">
+          {environments.map((env, i) => (
+            <div
+              key={i}
+              className="env-feature group relative overflow-hidden rounded-3xl bg-white/5 backdrop-blur-sm border border-white/10 hover:border-[#A19585]/30 transition-all duration-500 hover:shadow-2xl hover:shadow-[#A19585]/20"
+            >
+              <div className={`absolute inset-0 bg-gradient-to-br ${env.color} opacity-0 group-hover:opacity-10 transition-opacity duration-500`} />
+              
+              <div className="relative p-6 sm:p-8 lg:p-10">
+                {/* <div className="flex items-start justify-between mb-6">
+                  <div className={`w-12 h-12 rounded-full ${env.bgColor} flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity duration-500`}>
+                    <span className="text-black text-xl">→</span>
+                  </div>
+                </div> */}
+                
+                <h3 className="text-white text-2xl sm:text-3xl font-serif mb-3 group-hover:text-[#A19585] transition-colors duration-300">
+                  {env.title}
+                </h3>
+                
+                <p className="text-white/60 text-sm sm:text-base leading-relaxed">
+                  {env.description}
+                </p>
+                
+                <div className="absolute bottom-0 left-0 w-0 h-[2px] bg-gradient-to-r from-[#A19585] to-transparent group-hover:w-full transition-all duration-700" />
+              </div>
+            </div>
           ))}
-        </h2>
+        </div>
+      </div>
+    </section>
+  );
+}
 
-        <div className="wwt-content w-16 h-[1px] bg-[#A19585]/40 mx-auto mb-10" />
 
-        <p className="wwt-content text-base md:text-lg text-[#F9F8F6]/52 font-light leading-[1.9] mb-6 max-w-2xl mx-auto">
-          Modern living demands more than luxury. It requires balance — between comfort, sustainability, health, and technology.
-        </p>
+// ─────────────────────────────────────────────────────────────
+// SECTION 6 — PHILOSOPHY
+// ─────────────────────────────────────────────────────────────
+function Philosophy() {
+  const ref = useRef<HTMLElement>(null);
+  const imageRef = useRef<HTMLDivElement>(null);
+  const contentRef = useRef<HTMLDivElement>(null);
+  const windowSize = useWindowSize();
 
-        <p className="wwt-content text-base md:text-xl text-[#F9F8F6] font-serif italic leading-relaxed">
-          WellTech brings these elements together into one cohesive living philosophy.
-        </p>
+  useGSAP(() => {
+    // Subtle image animation
+    gsap.to(imageRef.current, {
+      scale: 1.1,
+      opacity: 0.5,
+      ease: "none",
+      scrollTrigger: {
+        trigger: ref.current,
+        start: "top bottom",
+        end: "bottom top",
+        scrub: 1.5,
+      }
+    });
+
+    // Content reveal
+    gsap.fromTo(contentRef.current,
+      { opacity: 0, y: 50, scale: 0.9 },
+      {
+        opacity: 1,
+        y: 0,
+        scale: 1,
+        duration: 1.5,
+        ease: "back.out(1.4)",
+        scrollTrigger: {
+          trigger: ref.current,
+          start: "top bottom-=100",
+          end: "top center",
+          scrub: 1,
+        }
+      }
+    );
+  }, { scope: ref });
+
+  return (
+    <section ref={ref} className="relative w-full min-h-screen bg-[#090C14] overflow-hidden">
+      
+      {/* Animated rings */}
+      <div className="absolute inset-0 overflow-hidden">
+        <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[300px] sm:w-[500px] h-[300px] sm:h-[500px]">
+          <div className="absolute inset-0 border-2 border-[#A19585]/10 rounded-full animate-ping" style={{ animationDuration: '4s' }} />
+          <div className="absolute inset-[15%] border-2 border-[#A19585]/20 rounded-full animate-spin" style={{ animationDuration: '8s' }} />
+          <div className="absolute inset-[30%] border-2 border-[#A19585]/30 rounded-full animate-pulse" />
+        </div>
+      </div>
+      
+      {/* Content */}
+      <div ref={contentRef} className="relative z-10 min-h-screen flex items-center justify-center px-4 sm:px-8">
+        <div className="max-w-3xl text-center">
+          <div className="flex items-center justify-center gap-2 sm:gap-4 mb-6 sm:mb-8">
+            <div className="w-8 sm:w-12 h-[2px] bg-[#A19585]" />
+            <span className="text-[#A19585] text-xs sm:text-sm tracking-[0.3em]">THE PHILOSOPHY</span>
+            <div className="w-8 sm:w-12 h-[2px] bg-[#A19585]" />
+          </div>
+          
+          <h2 className="font-serif text-4xl sm:text-5xl md:text-6xl lg:text-7xl text-white mb-6 sm:mb-8 leading-tight">
+            WellTech isn't a feature.<br/>It's the <span className="relative">
+              <span className="text-[#A19585]">foundation</span>
+              <span className="absolute -bottom-2 left-0 w-full h-[2px] bg-[#A19585]/50" />
+            </span>.
+          </h2>
+          
+          <p className="text-white/50 text-base sm:text-lg md:text-xl leading-relaxed max-w-2xl mx-auto">
+            Modern living demands more than luxury. It requires balance—between comfort, sustainability, health, and technology. WellTech brings these elements together into one cohesive living philosophy.
+          </p>
+          
+          {/* Decorative dots */}
+          <div className="flex justify-center gap-3 mt-8 sm:mt-12">
+            {[...Array(5)].map((_, i) => (
+              <div 
+                key={i} 
+                className="w-1.5 h-1.5 rounded-full bg-[#A19585]/30 animate-pulse" 
+                style={{ animationDelay: `${i * 0.2}s`, animationDuration: '2s' }}
+              />
+            ))}
+          </div>
+        </div>
       </div>
     </section>
   );
@@ -645,15 +700,46 @@ function WhyWellTech() {
 // PAGE ROOT
 // ─────────────────────────────────────────────────────────────
 export default function WellTechPage() {
+  useEffect(() => {
+    ScrollTrigger.refresh();
+    
+    // Smooth scroll with better performance
+    const handleWheel = (e: WheelEvent) => {
+      e.preventDefault();
+      const delta = Math.min(Math.max(e.deltaY, -100), 100);
+      window.scrollBy({
+        top: delta,
+        behavior: 'smooth'
+      });
+    };
+
+    window.addEventListener('wheel', handleWheel, { passive: false });
+    
+    // Refresh ScrollTrigger on resize
+    const handleResize = () => {
+      ScrollTrigger.refresh();
+    };
+    
+    window.addEventListener('resize', handleResize);
+    
+    return () => {
+      window.removeEventListener('wheel', handleWheel);
+      window.removeEventListener('resize', handleResize);
+    };
+  }, []);
+
   return (
-    <main className="bg-black">
+    <main className="bg-black overflow-x-hidden">
       <Navbar />
       
+      <div className="relative">
         <Hero />
-        <SustainableLiving />
-        <AdvancedWellness />
-        <TwinCards />
-        <WhyWellTech />
+        <Sustainability />
+        <Wellness />
+        <Intelligence />
+        <IndoorEnvironments />
+        <Philosophy />
+      </div>
       
       <Footer />
     </main>
