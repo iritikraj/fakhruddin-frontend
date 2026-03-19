@@ -2,6 +2,7 @@
 
 import { useState, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
+import { usePathname } from "next/navigation"; // Import this to detect route
 
 const navLinks = [
   { name: "Home Page", img: "https://www.fakhruddinproperties.com/wp-content/uploads/2026/01/Treppan-Living-PRIVE-GeneralView.webp" },
@@ -20,6 +21,10 @@ export default function Navbar() {
   const [scrolled, setScrolled] = useState(false);
   const [activeImage, setActiveImage] = useState(navLinks[0].img);
 
+  const pathname = usePathname();
+  // Check if we are on the specific dark-themed route
+  const isDarkRoute = pathname === "/treppan-living" || "/communities";
+
   useEffect(() => {
     const handleScroll = () => setScrolled(window.scrollY > 50);
     window.addEventListener("scroll", handleScroll);
@@ -29,6 +34,10 @@ export default function Navbar() {
   useEffect(() => {
     document.body.style.overflow = isOpen ? "hidden" : "auto";
   }, [isOpen]);
+
+  // Determine if the UI elements should be light (white) or dark (black)
+  // On /treppan-living, they stay white even if not scrolled.
+  const isLightText = scrolled || isOpen || isDarkRoute;
 
   return (
     <>
@@ -41,25 +50,29 @@ export default function Navbar() {
       >
         <img
           src={`https://www.fakhruddinproperties.com/wp-content/uploads/2026/02/FP-Logo-Light.png`}
-          className={`h-8 brightness-0 ${scrolled ? "brightness-100 mix-blend-difference" : "mix-blend-normal"}`}
+          className={`h-8 transition-all duration-500 ${isLightText ? "brightness-100" : "brightness-0"
+            }`}
           alt="Logo"
         />
 
         <button
           onClick={() => setIsOpen(!isOpen)}
-          className="flex items-center gap-6 group z-[110] text-white mix-blend-difference cursor-pointer"
+          className="flex items-center gap-6 group z-[110] cursor-pointer"
         >
           <div className="flex flex-col gap-[6px] w-8 items-end">
-            <span className={`h-[1px] ${scrolled ? "bg-white" : "bg-black"} transition-all duration-500 ${isOpen ? "-rotate-45 translate-y-2 w-8" : "w-8"}`} />
-            <span className={`h-[1px] ${scrolled ? "bg-white" : "bg-black"} transition-all duration-500 ${isOpen ? "rotate-45 -translate-y-[1px] w-8" : "w-5 group-hover:w-8"}`} />
+            <span
+              className={`h-[1px] transition-all duration-500 ${isLightText ? "bg-white" : "bg-black"
+                } ${isOpen ? "-rotate-45 translate-y-2 w-8" : "w-8"}`}
+            />
+            <span
+              className={`h-[1px] transition-all duration-500 ${isLightText ? "bg-white" : "bg-black"
+                } ${isOpen ? "rotate-45 -translate-y-[1px] w-8" : "w-5 group-hover:w-8"}`}
+            />
           </div>
         </button>
       </motion.nav>
 
-      {/* CRITICAL FIX: Wrapping AnimatePresence in a stable DOM element. 
-        This prevents the 'insertBefore' crash when Next.js tries to mount/unmount 
-        the overlay from inside a React Fragment.
-      */}
+      {/* Menu Overlay Code Remains the Same... */}
       <div className="relative z-[90]">
         <AnimatePresence>
           {isOpen && (
@@ -71,9 +84,8 @@ export default function Navbar() {
               transition={{ duration: 1.2, ease: "easeIn" }}
               className="fixed inset-0 bg-[#080808] flex flex-col md:flex-row overflow-hidden"
             >
-              {/* Background Image Morphing */}
+              {/* ... (Rest of your original code) */}
               <div className="absolute inset-0 z-0 opacity-20 transition-all duration-1000 ease-out">
-                {/* Removed mode="wait" to allow smooth crossfading without DOM queuing errors */}
                 <AnimatePresence>
                   <motion.img
                     key={activeImage}
@@ -89,7 +101,6 @@ export default function Navbar() {
               </div>
 
               <div className="relative z-20 flex flex-col md:flex-row w-full h-full px-8 md:px-20 py-32">
-                {/* Left: Navigation */}
                 <div className="flex flex-col justify-center w-full md:w-2/3">
                   {navLinks.map((link, i) => (
                     <motion.div
@@ -112,7 +123,6 @@ export default function Navbar() {
                   ))}
                 </div>
 
-                {/* Right: Editorial Content */}
                 <div className="flex flex-col justify-between w-full md:w-1/3 mt-16 md:mt-0 md:pl-20 md:border-l border-white/5">
                   <motion.div
                     initial={{ opacity: 0 }}
@@ -134,7 +144,6 @@ export default function Navbar() {
                     </div>
                   </motion.div>
 
-                  {/* Socials */}
                   <div className="flex gap-8 mt-12 md:mt-0">
                     {socials.map((social, i) => (
                       <a

@@ -2,6 +2,7 @@
 
 import { motion, useScroll, useTransform } from "framer-motion";
 import { useRef } from "react";
+import Image from "next/image";
 
 const footerLinks = [
   { category: "Portfolio", items: ["Treppan Living Prive", "Treppan Serenique", "Treppan Tower", "Mamoon Gardens"] },
@@ -33,10 +34,10 @@ export default function Footer() {
             whileInView={{ opacity: 1, x: 0 }}
             transition={{ duration: 1.5, ease: [0.19, 1, 0.22, 1] }}
           >
-            <p className="text-[10px] tracking-[0.6em] uppercase text-yellow-600/60 mb-8 font-medium italic">
+            <p className="text-[10px] tracking-[0.6em] uppercase text-yellow-600/60 mb-8 font-medium">
               Experience the Extraordinary
             </p>
-            <h2 className="font-serif text-4xl md:text-6xl lg:text-7xl leading-[1.1] tracking-tight italic">
+            <h2 className="text-4xl md:text-6xl lg:text-7xl leading-[1.1] tracking-tight">
               Your legacy begins <br />
               <span className="text-white not-italic opacity-90">in Dubai.</span>
             </h2>
@@ -67,7 +68,14 @@ export default function Footer() {
       {/* 3. The Boutique Link Grid */}
       <div className="max-w-[1400px] mx-auto py-24 grid grid-cols-2 md:grid-cols-4 lg:grid-cols-5 gap-12">
         <div className="col-span-2 space-y-8">
-          <h4 className="font-serif text-xl tracking-[0.2em] uppercase">Fakhruddin</h4>
+          <div className="relative w-[160px] h-[40px]">
+            <Image
+              src="https://www.fakhruddinproperties.com/wp-content/uploads/2026/02/FP-Logo-Dark.png"
+              alt="Fakhruddin Logo"
+              fill
+              className="object-contain"
+            />
+          </div>
           <p className="text-[11px] leading-[2] text-white/30 max-w-[280px] font-light tracking-wide">
             Crafting sanctuary since 2003. A philosophy of quiet luxury and architectural permanence.
           </p>
@@ -90,14 +98,19 @@ export default function Footer() {
       </div>
 
       {/* 4. The Monumental Branding (Parallax) */}
-      {/* 4. The Monumental Branding (Parallax) */}
       <div className="relative h-[25vh] md:h-[40vh] flex items-center justify-center overflow-hidden pointer-events-none">
-        <motion.h1
-          style={{ y, opacity }}
-          className="text-[13vw] font-serif leading-none tracking-tighter whitespace-nowrap text-white"
+        <motion.div
+          // style={{ y, opacity }}
+          className="relative w-[70vw] max-w-[900px] h-[120px] md:h-[180px] lg:h-[220px]"
         >
-          Fakhruddin
-        </motion.h1>
+          <Image
+            src="https://www.fakhruddinproperties.com/wp-content/uploads/2026/02/FP-Logo-Dark.png"
+            alt="Fakhruddin Logo"
+            fill
+            className="object-contain"
+            priority
+          />
+        </motion.div>
 
         {/* Optional: Add a subtle glow behind the text to make it "pop" from the black */}
         <motion.div
