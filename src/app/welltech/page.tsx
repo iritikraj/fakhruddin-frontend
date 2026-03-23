@@ -104,7 +104,7 @@ function Hero() {
           <p ref={subtitleRef} className="text-[#A19585] text-xs sm:text-sm tracking-[0.3em] mb-4 sm:mb-6 opacity-0">
             THE SCIENCE OF LIVING WELL
           </p>
-          <h1 ref={titleRef} className="font-serif text-6xl sm:text-7xl md:text-8xl lg:text-9xl text-white leading-[0.9] opacity-0">
+          <h1 ref={titleRef} className="text-6xl sm:text-7xl md:text-8xl lg:text-9xl text-white leading-[0.9] opacity-0">
             WellTech
           </h1>
           <div ref={lineRef} className="w-24 h-[2px] bg-[#A19585] mx-auto my-6 sm:my-8 opacity-0" />
@@ -196,7 +196,7 @@ function Sustainability() {
         <div className={`grid ${isMobile ? 'grid-cols-1 gap-8' : 'grid-cols-2 gap-16'} items-center w-full`}>
           <div className="space-y-6 sm:space-y-8">
             <span className="text-[#A19585] text-xs sm:text-sm tracking-[0.3em]">01 — SUSTAINABILITY</span>
-            <h2 className="font-serif text-4xl sm:text-5xl md:text-6xl lg:text-7xl text-black leading-tight">
+            <h2 className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl text-black leading-tight">
               Built for <span className="text-[#A19585] relative">
                 tomorrow
                 <span className="absolute -bottom-2 left-0 w-full h-[2px] bg-[#A19585]/30" />
@@ -303,7 +303,7 @@ function Wellness() {
           
           <div className="space-y-6 sm:space-y-8">
             <span className="text-[#A19585] text-xs sm:text-sm tracking-[0.3em]">02 — WELLNESS</span>
-            <h2 className="font-serif text-4xl sm:text-5xl md:text-6xl lg:text-7xl text-white leading-tight">
+            <h2 className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl text-white leading-tight">
               Health, <span className="text-[#A19585]">reimagined</span> daily.
             </h2>
             <p className="text-white/60 text-base sm:text-lg md:text-xl leading-relaxed">
@@ -321,7 +321,7 @@ function Wellness() {
                   <div className="text-3xl sm:text-4xl mb-3 group-hover:scale-110 transition-transform duration-300">
                     {feature.icon}
                   </div>
-                  <h3 className="text-white font-serif text-base sm:text-lg mb-2">{feature.name}</h3>
+                  <h3 className="text-white text-base sm:text-lg mb-2">{feature.name}</h3>
                   <p className="text-white/40 text-xs sm:text-sm">{feature.desc}</p>
                 </div>
               ))}
@@ -420,7 +420,7 @@ function Intelligence() {
         <div className="w-full">
           <div className="text-center mb-12 sm:mb-16">
             <span className="text-[#A19585] text-xs sm:text-sm tracking-[0.3em]">03 — INTELLIGENCE</span>
-            <h2 className="font-serif text-4xl sm:text-5xl md:text-6xl lg:text-7xl text-black mt-4 sm:mt-6">
+            <h2 className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl text-black mt-4 sm:mt-6">
               Invisible <span className="text-[#A19585] relative">
                 technology
                 <span className="absolute -bottom-2 left-0 w-full h-[2px] bg-[#A19585]/30" />
@@ -446,7 +446,7 @@ function Intelligence() {
                     <div className="text-4xl sm:text-5xl mb-4 group-hover:scale-110 transition-transform duration-300 text-[#A19585]/50">
                       {cap.icon}
                     </div>
-                    <h3 className="font-serif text-lg sm:text-xl md:text-2xl text-black mb-2">{cap.title}</h3>
+                    <h3 className="text-lg sm:text-xl md:text-2xl text-black mb-2">{cap.title}</h3>
                     <p className="text-black/50 text-xs sm:text-sm">{cap.desc}</p>
                   </div>
                 </div>
@@ -562,7 +562,7 @@ function IndoorEnvironments() {
       <div className="relative z-10 max-w-[1400px] mx-auto px-4 sm:px-8 md:px-16">
         <div className="text-center mb-16 sm:mb-24">
           <span className="text-[#A19585] text-xs sm:text-sm tracking-[0.3em]">04 — INDOOR ENVIRONMENTS</span>
-          <h2 className="font-serif text-4xl sm:text-5xl md:text-6xl lg:text-7xl text-white mt-4 sm:mt-6">
+          <h2 className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl text-white mt-4 sm:mt-6">
             Where you live, <span className="text-[#A19585] relative">
               redefined
               <svg className="absolute -bottom-2 left-0 w-full" height="4" viewBox="0 0 100 4" preserveAspectRatio="none">
@@ -587,7 +587,7 @@ function IndoorEnvironments() {
                   </div>
                 </div> */}
                 
-                <h3 className="text-white text-2xl sm:text-3xl font-serif mb-3 group-hover:text-[#A19585] transition-colors duration-300">
+                <h3 className="text-white text-2xl sm:text-3xl mb-3 group-hover:text-[#A19585] transition-colors duration-300">
                   {env.title}
                 </h3>
                 
@@ -669,7 +669,7 @@ function Philosophy() {
             <div className="w-8 sm:w-12 h-[2px] bg-[#A19585]" />
           </div>
           
-          <h2 className="font-serif text-4xl sm:text-5xl md:text-6xl lg:text-7xl text-white mb-6 sm:mb-8 leading-tight">
+          <h2 className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl text-white mb-6 sm:mb-8 leading-tight">
             WellTech isn't a feature.<br/>It's the <span className="relative">
               <span className="text-[#A19585]">foundation</span>
               <span className="absolute -bottom-2 left-0 w-full h-[2px] bg-[#A19585]/50" />
