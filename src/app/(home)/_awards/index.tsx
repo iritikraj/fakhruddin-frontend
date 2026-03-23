@@ -185,8 +185,8 @@ export default function Awards() {
             <p className="text-[9px] tracking-[0.6em] uppercase text-[#9D7E44] font-bold">
               Hall of Accolades
             </p>
-            <h2 className="font-serif text-5xl md:text-7xl lg:text-8xl tracking-tighter leading-[1] text-[#1A1A1A]">
-              Global <br className="hidden md:block" /> <span className="italic font-light md:opacity-60">Recognition.</span>
+            <h2 className="font-marcellus text-5xl md:text-7xl lg:text-8xl tracking-tighter leading-[1] text-[#1A1A1A]">
+              Global <br className="hidden md:block" /> <span className="font-light md:opacity-60">Recognition</span>
             </h2>
           </header>
 
@@ -204,11 +204,11 @@ export default function Awards() {
                   }`} />
 
                 <div className="flex flex-col md:flex-row md:items-center gap-2 md:gap-8">
-                  <span className={`font-serif italic text-xl md:text-3xl transition-colors duration-500 ${activeIndex === index ? "text-[#9D7E44]" : "text-[#1A1A1A]/40"
+                  <span className={`italic text-xl md:text-3xl transition-colors duration-500 ${activeIndex === index ? "text-[#9D7E44]" : "text-[#1A1A1A]/40"
                     }`}>
                     {award.year}
                   </span>
-                  <h3 className="font-serif text-2xl md:text-4xl lg:text-5xl tracking-tight text-[#1A1A1A] leading-tight">
+                  <h3 className="text-2xl md:text-4xl lg:text-5xl tracking-tight text-[#1A1A1A] leading-tight">
                     {award.title}
                   </h3>
                 </div>

@@ -21,7 +21,7 @@ const blogs = [
     tag: "Blog",
     date: "Feb 24, 2026",
     title: "Inside a Home That Elevates How You Live, Breathe, Sleep, and Recover",
-    img: "https://images.unsplash.com/photo-1613490908653-54cdb25d4af5?q=80&w=1974&auto=format&fit=crop",
+    img: "https://images.unsplash.com/photo-1600607687939-ce8a6c25118c?q=80&w=2053&auto=format&fit=crop",
     featured: false,
   },
   {
@@ -78,42 +78,17 @@ export default function Blogs() {
   }, { scope: containerRef });
 
   return (
-    <section ref={containerRef} className="bg-[#F9F8F6] text-[#1A1A1A] py-32 md:py-48 overflow-hidden relative">
+    <section ref={containerRef} className="bg-[#F9F8F6] text-[#1A1A1A] pb-32 pt-10 overflow-hidden relative">
       <div className="max-w-[1400px] mx-auto px-8 md:px-20">
 
         {/* --- Header Section --- */}
-        <div className="blog-trigger flex flex-col md:flex-row md:items-end justify-between gap-12 mb-20 md:mb-32">
-
-          <div>
-            <div className="flex items-center gap-6 mb-8">
-              <div className="w-12 h-[1px] bg-[#9D7E44]"></div>
-              <p className="text-[9px] tracking-[0.5em] uppercase text-[#9D7E44] font-bold">
-                The Journal
-              </p>
-            </div>
-
-            <h2 className="font-serif text-5xl md:text-6xl tracking-tighter leading-[1.1]">
-              <div className="overflow-hidden pb-2">
-                <div className="blog-header-line">Blogs &</div>
-              </div>
-              <div className="overflow-hidden pb-2">
-                <div className="blog-header-line italic text-[#9D7E44]">Insights.</div>
-              </div>
+        <div className="blog-trigger md:items-end justify-between gap-12 mb-20">
+          <div className="h-[40vh] flex flex-col justify-end text-center px-10 pb-24">
+            <p className="text-[10px] tracking-[0.5em] uppercase text-gray-400 mb-4 font-marcellus">Blog</p>
+            <h2 className="text-5xl md:text-6xl font-marcellus uppercase text-gray-900 leading-none">
+              News & Insights
             </h2>
           </div>
-
-          {/* View All Button */}
-          <div className="overflow-hidden pb-4">
-            <button className="blog-header-line group relative inline-flex items-center gap-6 text-[10px] tracking-[0.4em] uppercase text-[#1A1A1A] font-medium">
-              <span className="relative z-10 group-hover:text-[#9D7E44] transition-colors duration-500">
-                View All Articles
-              </span>
-              <div className="relative w-16 h-[1px] bg-[#1A1A1A]/20 overflow-hidden">
-                <div className="absolute top-0 left-0 h-full w-full bg-[#9D7E44] -translate-x-[101%] group-hover:translate-x-0 transition-transform duration-700 ease-[cubic-bezier(0.76,0,0.24,1)]" />
-              </div>
-            </button>
-          </div>
-
         </div>
 
         <div className="blog-divider w-full h-[1px] bg-[#1A1A1A]/10 mb-16 md:mb-24" />
@@ -137,7 +112,7 @@ export default function Blogs() {
                 <span className="text-[#9D7E44]">{blogs[0].tag}</span>
                 <span>{blogs[0].date}</span>
               </div>
-              <h3 className="font-serif text-3xl md:text-5xl leading-[1.15] text-[#1A1A1A] group-hover:text-[#9D7E44] transition-colors duration-500">
+              <h3 className="text-3xl md:text-5xl leading-[1.15] text-[#1A1A1A] group-hover:text-[#9D7E44] transition-colors duration-500">
                 {blogs[0].title}
               </h3>
             </div>
@@ -162,7 +137,7 @@ export default function Blogs() {
                     <span className="text-[#9D7E44]">{blog.tag}</span>
                     <span>{blog.date}</span>
                   </div>
-                  <h3 className="font-serif text-2xl md:text-3xl leading-[1.2] text-[#1A1A1A] group-hover:text-[#9D7E44] transition-colors duration-500">
+                  <h3 className="text-2xl md:text-3xl leading-[1.2] text-[#1A1A1A] group-hover:text-[#9D7E44] transition-colors duration-500">
                     {blog.title}
                   </h3>
                 </div>

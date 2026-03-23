@@ -1,139 +1,189 @@
-"use client";
+'use client';
 
-import React, { useRef } from "react";
-import gsap from "gsap";
-import { ScrollTrigger } from "gsap/ScrollTrigger";
-import { useGSAP } from "@gsap/react";
+import React, { useState, useEffect } from 'react';
+import { motion, AnimatePresence } from 'framer-motion';
 
-if (typeof window !== "undefined") {
-  gsap.registerPlugin(ScrollTrigger, useGSAP);
-}
+export default function HeroSection() {
+  const [showIntro, setShowIntro] = useState(true);
+  const [showHero, setShowHero] = useState(false);
 
-export default function Hero() {
-  const containerRef = useRef(null);
-  const textRef = useRef(null);
-  const flowerRef = useRef(null);
-  const archRef = useRef(null);
-  const buildingRef = useRef(null);
+  useEffect(() => {
+    const timer = setTimeout(() => setShowIntro(false), 4500);
+    return () => clearTimeout(timer);
+  }, []);
 
-  useGSAP(() => {
-    // --- 1. INITIAL LOAD REVEAL (Corrected Sequence) ---
-    const introTl = gsap.timeline({ defaults: { ease: "power4.out" } });
+  useEffect(() => {
+    const introTimer = setTimeout(() => {
+      setShowIntro(false);
+    }, 4500);
 
-    // 1. FIRST: Fade in the background video to establish the scene
-    introTl.fromTo(flowerRef.current,
-      { opacity: 0 },
-      { opacity: 1, duration: 2, ease: "power2.inOut" }
-    )
-      // 2. Text reveals alongside the video
-      .fromTo(textRef.current,
-        { opacity: 0, scale: 0.95, y: 20 },
-        { opacity: 1, scale: 1, y: 0, duration: 1.5, ease: "power3.out" },
-        "-=1.5" // Syncs with the video fade
-      )
-      // 3. SECOND: The Arch (building) slides up into the frame
-      .fromTo(archRef.current,
-        { y: "100%" },
-        { y: "0%", duration: 2.5, ease: "expo.out" },
-        "-=0.8" // Overlaps slightly with the end of the video fade for fluidity
-      );
+    const heroTimer = setTimeout(() => {
+      setShowHero(true);
+    }, 4500 + 1000);
 
-    // --- 2. SCROLL SEQUENCE (Unchanged) ---
-    const scrollTl = gsap.timeline({
-      scrollTrigger: {
-        trigger: containerRef.current,
-        start: "top top",
-        end: "+=350%",
-        scrub: 1,
-        pin: true,
-        anticipatePin: 1,
-        invalidateOnRefresh: true,
-      }
-    });
+    return () => {
+      clearTimeout(introTimer);
+      clearTimeout(heroTimer);
+    };
+  }, []);
 
-    // Phase 1: Expand the arch to full screen
-    scrollTl.to(archRef.current, {
-      width: "100vw",
-      height: "100vh",
-      borderRadius: "0px",
-      ease: "power2.inOut",
-      duration: 1
-    }, 0)
-      .to(textRef.current, {
-        opacity: 0,
-        duration: 0.5,
-        ease: "power2.inOut"
-      }, 0)
-      .to(flowerRef.current, {
-        opacity: 0,
-        duration: 0.2,
-      }, 0.8)
+  // Professional Cinematographic Easings
+  const luxuryEase: [number, number, number, number] = [0.16, 1, 0.3, 1];
+  const maskEase: [number, number, number, number] = [0.4, 0, 0.2, 1]; // Controlled, steady reveal
 
-      // Phase 2: The Vertical Pan (with mobile safeguard)
-      .to(buildingRef.current, {
-        y: () => {
-          const img: any = buildingRef.current;
-          if (!img || !img.naturalWidth) return 0;
-
-          const expandedHeight = (img.naturalHeight / img.naturalWidth) * window.innerWidth;
-
-          if (expandedHeight <= window.innerHeight) {
-            return 0;
-          }
-
-          return window.innerHeight - expandedHeight;
-        },
-        ease: "none",
-        duration: 2.5
-      }, 1);
-
-  }, { scope: containerRef });
+  const letterReveal = {
+    hidden: { opacity: 0, filter: "blur(12px)", y: 10 },
+    show: {
+      opacity: 1,
+      filter: "blur(0px)",
+      y: 0,
+      transition: { duration: 1.2, ease: luxuryEase }
+    }
+  };
 
   return (
-    <>
-      <link rel="preload" as="video" href="/Treppan-Living-PRIVE-Video.mp4" type="video/mp4" />
-      <section
-        ref={containerRef}
-        className="relative w-full h-screen overflow-hidden bg-white flex items-center justify-center"
+    <section className="relative h-svh w-full overflow-hidden bg-black font-marcellus">
+
+      {/* 1. BACKGROUND VIDEO */}
+      <div className="absolute inset-0 w-full h-full z-0 overflow-hidden">
+        <video
+          autoPlay
+          loop
+          muted
+          playsInline
+          className="w-full h-full object-cover scale-105"
+        >
+          <source src="/fpd-intro.mp4" type="video/mp4" />
+        </video>
+        <div className="absolute inset-0 bg-black/30" />
+      </div>
+
+      {/* 2. CINEMATIC INTRO */}
+      <AnimatePresence>
+        {showIntro && (
+          <motion.div
+            key="intro-splash"
+            exit={{
+              opacity: 0,
+              scale: 1.05,
+              filter: "blur(15px)",
+              transition: { duration: 1.5, ease: luxuryEase }
+            }}
+            className="absolute inset-0 z-50 flex flex-col items-center justify-center pointer-events-none"
+          >
+            <div className="flex flex-col items-center">
+
+              {/* LOGO REVEAL: Gradient Mask Strategy */}
+              <motion.div
+                initial={{
+                  WebkitMaskImage: 'linear-gradient(to right, black 0%, transparent 0%)',
+                  opacity: 1,
+                  filter: "blur(0px)"
+                }}
+                animate={{
+                  WebkitMaskImage: 'linear-gradient(to right, black 100%, transparent 110%)',
+                  opacity: 1,
+                  filter: "blur(0px)"
+                }}
+                exit={{
+                  opacity: 0,
+                  filter: "blur(20px)",
+                  scale: 1.08,
+                  transition: { duration: 1.6, ease: luxuryEase }
+                }}
+                transition={{ duration: 2.8, ease: maskEase, delay: 0.5 }}
+                className="relative"
+              >
+                <img
+                  src="/fp-logo.svg"
+                  alt="Fakhruddin"
+                  className="w-70 md:w-112.5 brightness-0 invert"
+                />
+              </motion.div>
+
+              {/* PROPERTIES SUBTITLE: Focus Stagger */}
+              <motion.div
+                initial="hidden"
+                animate="show"
+                variants={{
+                  show: { transition: { staggerChildren: 0.08, delayChildren: 1.8 } }
+                }}
+                className="flex mt-6 ml-2"
+              >
+                {"PROPERTIES".split("").map((char, index) => (
+                  <motion.span
+                    key={index}
+                    variants={letterReveal}
+                    className="text-base md:text-xl tracking-[0.5em] uppercase text-white/90 font-light"
+                  >
+                    {char}
+                  </motion.span>
+                ))}
+              </motion.div>
+
+              {/* DECORATIVE LINE */}
+              <motion.div
+                initial={{ scaleX: 0, opacity: 0 }}
+                animate={{ scaleX: 1, opacity: 1 }}
+                transition={{ duration: 1.5, ease: luxuryEase, delay: 2.5 }}
+                className="mt-6 h-px w-32 md:w-48 bg-linear-to-r from-transparent via-white/60 to-transparent"
+              />
+            </div>
+          </motion.div>
+        )}
+      </AnimatePresence>
+
+      {/* 3. MAIN HERO CONTENT */}
+      <div className="relative z-30 flex flex-col items-center justify-center h-full text-center px-4">
+        <div className="overflow-hidden mb-4">
+          <motion.h1
+            initial={{ y: "100%" }}
+            animate={showHero ? { y: 0 } : {}}
+            transition={{ duration: 1.5, ease: luxuryEase, delay: 0.2 }}
+            className="text-5xl md:text-6xl text-white uppercase font-marcellus drop-shadow-lg"
+          >
+            Creating Living
+          </motion.h1>
+        </div>
+
+        <div className="overflow-hidden mb-12">
+          <motion.h1
+            initial={{ y: "100%" }}
+            animate={showHero ? { y: 0 } : {}}
+            transition={{ duration: 1.5, ease: luxuryEase, delay: 0.4 }}
+            className="text-5xl md:text-6xl text-white uppercase font-marcellus drop-shadow-lg"
+          >
+            Works Of Art
+          </motion.h1>
+        </div>
+
+        <motion.button
+          initial={{ opacity: 0, y: 20 }}
+          animate={showHero ? { opacity: 1, y: 0 } : {}}
+          transition={{ duration: 1.2, ease: luxuryEase, delay: 0.8 }}
+          className="border border-white/20 text-white px-10 py-4 text-[10px] md:text-xs tracking-[0.24em] uppercase hover:bg-white hover:text-black transition-all duration-700 backdrop-blur-xs"
+        >
+          Discover More
+        </motion.button>
+      </div>
+
+      {/* 5. ANIMATED SCROLL INDICATOR */}
+      <motion.div
+        initial={{ opacity: 0 }}
+        animate={{ opacity: showIntro ? 0 : 1 }}
+        transition={{ duration: 1.2, ease: luxuryEase, delay: showIntro ? 0 : 1.2 }}
+        className="absolute bottom-8 md:bottom-12 left-1/2 -translate-x-1/2 flex flex-col items-center gap-4 z-30"
       >
-        {/* Z-INDEX 10: Background Video */}
-        <div
-          ref={flowerRef}
-          className="absolute z-10 w-screen h-screen opacity-0"
-        >
-          <video
-            src="/Treppan-Living-PRIVE-Video.mp4"
-            autoPlay
-            loop
-            muted
-            playsInline
-            preload="true"
-            className="w-full h-full object-cover opacity-90 mix-blend-multiply"
+        <span className="text-[9px] uppercase tracking-[0.3em] text-white/70 font-medium font-marcellus">Scroll</span>
+        <div className="w-px h-8 bg-white/20 overflow-hidden relative">
+          <motion.div
+            animate={{ y: ["-100%", "100%"] }}
+            transition={{ repeat: Infinity, duration: 2, ease: "linear" }}
+            className="w-full h-full bg-white/60"
           />
         </div>
+      </motion.div>
 
-        {/* Z-INDEX 20: Foreground Typography */}
-        <div ref={textRef} className="absolute z-20 w-full text-center pointer-events-none">
-          {/* Add your typography back in here when ready */}
-        </div>
-
-        {/* Z-INDEX 30: The Mask and Building */}
-        <div
-          ref={archRef}
-          data-cursor="Discover"
-          className="absolute z-30 bottom-0 overflow-hidden flex justify-center items-start w-[85vw] md:w-[35vw] h-[60vh] md:h-[70vh] rounded-t-[250px] md:rounded-t-[500px]"
-          style={{
-            willChange: "width, height, border-radius, transform"
-          }}
-        >
-          <img
-            ref={buildingRef}
-            src="/GeneralView05-Bluehour.jpg"
-            alt="Fakhruddin Building"
-            className="absolute top-0 w-full h-auto object-cover origin-top"
-          />
-        </div>
-      </section>
-    </>
+    </section>
   );
 }

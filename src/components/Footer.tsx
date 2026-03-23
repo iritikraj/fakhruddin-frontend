@@ -34,18 +34,18 @@ export default function Footer() {
             whileInView={{ opacity: 1, x: 0 }}
             transition={{ duration: 1.5, ease: [0.19, 1, 0.22, 1] }}
           >
-            <p className="text-[10px] tracking-[0.6em] uppercase text-yellow-600/60 mb-8 font-medium">
+            <p className="text-[10px] tracking-[0.6em] uppercase text-yellow-600/60 mb-8 font-medium font-marcellus">
               Experience the Extraordinary
             </p>
-            <h2 className="text-4xl md:text-6xl lg:text-7xl leading-[1.1] tracking-tight">
+            <h2 className="text-4xl md:text-6xl lg:text-7xl leading-[1.1] tracking-tight font-marcellus">
               Your legacy begins <br />
-              <span className="text-white not-italic opacity-90">in Dubai.</span>
+              <span className="text-white not-italic opacity-90">in Dubai</span>
             </h2>
           </motion.div>
 
           <div className="flex gap-12 pt-4">
             <button className="group relative text-[11px] tracking-[0.4em] uppercase py-4 px-10 border border-white/10 hover:border-yellow-600/50 transition-all duration-700 overflow-hidden">
-              <span className="relative z-10">Request Brochure</span>
+              <span className="relative z-10 font-marcellus">Request Brochure</span>
               <div className="absolute inset-0 bg-yellow-600/5 translate-y-full group-hover:translate-y-0 transition-transform duration-700" />
             </button>
           </div>
@@ -54,11 +54,11 @@ export default function Footer() {
         {/* 2. Kinetic Contact Section */}
         <div className="flex flex-col items-start lg:items-end gap-16">
           <div className="text-left lg:text-right space-y-4">
-            <p className="text-[9px] tracking-[0.6em] uppercase text-white/20">The Concierge</p>
-            <a href="tel:8003253" className="block text-5xl md:text-6xl font-serif tracking-tighter hover:text-yellow-600 transition-all duration-700">
+            <p className="text-[9px] tracking-[0.6em] uppercase text-white/60">The Concierge</p>
+            <a href="tel:8003253" className="block text-5xl md:text-6xl tracking-widest hover:text-yellow-600 transition-all duration-700 font-marcellus">
               800 3253
             </a>
-            <p className="text-xs tracking-[0.2em] text-white/40 font-light italic">
+            <p className="text-xs tracking-[0.2em] text-white/40 font-light">
               Available 24/7 for private consultations.
             </p>
           </div>

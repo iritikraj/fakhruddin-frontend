@@ -27,10 +27,6 @@ export default function BrandReveal() {
       }
     });
 
-    // ─────────────────────────────────────────────────
-    // PHASE 1: LOGO APPEARANCE — "Gold from Void"
-    // ─────────────────────────────────────────────────
-
     // 1a. Golden halo blooms first — a radial light behind the logo
     tl.fromTo(".logo-halo",
       { opacity: 0, scale: 0.4, filter: "blur(40px)" },
@@ -90,10 +86,6 @@ export default function BrandReveal() {
       1.8
     );
 
-    // ─────────────────────────────────────────────────
-    // PHASE 2: LIQUID GLASS WORLD REVEAL
-    // ─────────────────────────────────────────────────
-
     tl.fromTo(turbRef.current,
       { attr: { baseFrequency: 0.04 } },
       { attr: { baseFrequency: 0.0001 }, duration: 3.8, ease: "power2.inOut" },
@@ -117,10 +109,6 @@ export default function BrandReveal() {
       { opacity: 0.22, duration: 3.2, ease: "power2.inOut" },
       0.9
     );
-
-    // ─────────────────────────────────────────────────
-    // PHASE 3: LOGO DISMISSAL — "Ascension Dissolve"
-    // ─────────────────────────────────────────────────
 
     // 3a. Ornament lines retract first — like a closing ceremony
     tl.to(".logo-ornament",
@@ -177,10 +165,6 @@ export default function BrandReveal() {
       { opacity: 0, duration: 0.4, ease: "power1.in" },
       3.8
     );
-
-    // ─────────────────────────────────────────────────
-    // PHASE 4: CONTENT EMERGENCE
-    // ─────────────────────────────────────────────────
 
     tl.fromTo(".pdp-final-content",
       { y: 52, opacity: 0, filter: "blur(4px)" },
@@ -241,30 +225,6 @@ export default function BrandReveal() {
             borderRadius: "50%",
           }}
         />
-
-        {/* Decorative cinematic lines flanking the logo */}
-        {/* <div className="absolute flex items-center justify-center w-full" style={{ top: "calc(50% - clamp(90px, 15vw, 170px))" }}>
-          <div
-            className="deco-line-left"
-            style={{
-              width: "clamp(40px, 8vw, 120px)",
-              height: "1px",
-              background: "linear-gradient(to left, #9D7E44, transparent)",
-              marginRight: "clamp(16px, 3vw, 40px)",
-              transformOrigin: "right center",
-            }}
-          />
-          <div
-            className="deco-line-right"
-            style={{
-              width: "clamp(40px, 8vw, 120px)",
-              height: "1px",
-              background: "linear-gradient(to right, #9D7E44, transparent)",
-              marginLeft: "clamp(16px, 3vw, 40px)",
-              transformOrigin: "left center",
-            }}
-          />
-        </div> */}
 
         {/* Tagline */}
         <div className="intro-subtitle flex items-center gap-6 mb-8 opacity-0 will-change-[letter-spacing,opacity,filter]">
@@ -329,22 +289,15 @@ export default function BrandReveal() {
 
             {/* Added opacity-0 here */}
             <div className="pdp-final-content opacity-0 w-full md:w-auto">
-              {/* <button className="group relative w-full md:w-auto inline-flex items-center justify-center text-[9px] tracking-[0.5em] uppercase font-bold text-[#F9F8F6] border border-[#F9F8F6]/20 px-8 py-5 md:px-10 overflow-hidden transition-colors duration-500 hover:border-[#9D7E44] cursor-pointer">
-                <span className="relative z-10 group-hover:text-[#1A1A1A] transition-colors duration-500 delay-100">
-                  Request Access
-                </span>
-                <div className="absolute inset-0 bg-[#9D7E44] translate-y-[101%] group-hover:translate-y-0 transition-transform duration-700 ease-[cubic-bezier(0.76,0,0.24,1)]" />
-              </button> */}
               <TransitionLink
                 href="/treppan-living"
                 className="text-sm tracking-widest uppercase hover:text-gray-400 transition-colors"
-                data-cursor="Explore" // Syncs perfectly with your custom cursor!
+                data-cursor="Explore"
               >
                 View Residences
               </TransitionLink>
             </div>
           </div>
-
         </div>
       </div>
     </section>

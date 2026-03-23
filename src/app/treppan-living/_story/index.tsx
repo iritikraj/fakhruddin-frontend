@@ -460,7 +460,7 @@ export default function TreppanStory() {
       </section>
 
       {/* ══ CHAPTER 7: OUTRO (Experience Tréppan Living) ══ */}
-      <section className="outro-section relative min-h-[90vh] md:h-screen w-full flex items-center justify-center overflow-hidden bg-[#0a0a0a]">
+      <section className="outro-section relative max-w-7 min-h-[90vh] md:h-screen w-full flex items-center justify-center overflow-hidden bg-[#0a0a0a]">
 
         {/* Cinematic Background Layer */}
         <div className="absolute inset-0 z-0">

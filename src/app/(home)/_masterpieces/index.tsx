@@ -1,166 +1,160 @@
-"use client";
+'use client';
 
-import { useRef } from "react";
-import gsap from "gsap";
-import { ScrollTrigger } from "gsap/ScrollTrigger";
-import { useGSAP } from "@gsap/react";
+import React, { useRef } from 'react';
+import { motion, useScroll, useTransform } from 'framer-motion';
 
-if (typeof window !== "undefined") {
-  gsap.registerPlugin(ScrollTrigger);
-}
-
-const masterpieces = [
+const PROJECTS = [
   {
-    tagline: "Reimagining Horizons",
-    title: "Tréppan Living Privé",
-    location: "Dubai Islands",
-    img: "https://serenique.fakhruddinproperties.com/aminities-5.webp",
+    id: 1,
+    title: "Treppan Living Privé",
+    category: "Residential",
+    image: "/port-1.webp",
   },
   {
-    tagline: "Inspiring Life Within",
-    title: "Tréppan Serenique Residences",
-    location: "Dubai Islands",
-    img: "https://www.fakhruddinproperties.com/wp-content/uploads/2025/12/Exterior-03.webp",
+    id: 2,
+    title: "Treppan Serenique Residences",
+    category: "Luxury Living",
+    image: "/port-2.webp",
   },
   {
-    tagline: "Redefining Perspectives",
-    title: "Tréppan Tower",
-    location: "JVT",
-    img: "https://serenique.fakhruddinproperties.com/aminities-3.webp",
+    id: 3,
+    title: "Treppan Tower",
+    category: "Commercial",
+    image: "/port-3.webp",
   },
   {
-    tagline: "A Retreat Within The City",
+    id: 4,
     title: "Hatimi Residences",
-    location: "Dubai Islands",
-    img: "https://www.fakhruddinproperties.com/wp-content/uploads/2025/12/Exterior-Render-1_4_11.webp",
-  },
+    category: "Architecture",
+    image: "/port-4.webp",
+  }
 ];
 
-export default function Masterpieces() {
-  const containerRef = useRef<HTMLElement>(null);
+// Animation variants for the title container and individual words
+const titleContainer: any = {
+  hidden: { opacity: 0 },
+  show: {
+    opacity: 1,
+    transition: {
+      staggerChildren: 0.18,
+      delayChildren: 0.5,
+    },
+  },
+};
 
-  useGSAP(() => {
-    const panels: any = gsap.utils.toArray(".stack-panel");
-    const contents: any = gsap.utils.toArray(".stack-content");
+const wordReveal: any = {
+  hidden: {
+    y: 80,
+    z: -200,
+    rotateX: 12,
+    opacity: 0,
+    scale: 0.9,
+    filter: "blur(4px)",
+  },
+  show: {
+    y: 0,
+    z: 0,
+    rotateX: 0,
+    opacity: 1,
+    scale: 1,
+    filter: "blur(0px)",
+    transition: {
+      duration: 1.5,
+      ease: [0.16, 1, 0.3, 1],
+    },
+  },
+};
 
-    // We pin the entire container for 400% of its height to allow time to scroll through 4 cards
-    const tl = gsap.timeline({
-      scrollTrigger: {
-        trigger: containerRef.current,
-        start: "top top",
-        end: "+=400%",
-        scrub: 1.2, // Smooth lag for a heavy, expensive feel
-        pin: true,
-      },
-    });
+export default function FeaturedProjects() {
+  return (
+    <section className="relative bg-black [transform-style:preserve-3d]">
+      <div className="h-[40vh] flex flex-col justify-end text-center px-10 pb-32 bg-white">
+        <p className="text-[10px] tracking-[0.5em] uppercase text-gray-400 mb-4 font-marcellus">Portfolio</p>
+        <h2 className="text-5xl md:text-6xl font-marcellus uppercase text-gray-900 leading-none">
+          Featured Projects
+        </h2>
+      </div>
 
-    // Animate the intro text fading out slightly as the first card locks in
-    tl.to(".intro-header", { opacity: 0.2, filter: "blur(4px)", duration: 0.5 }, 0);
+      <div className="relative">
+        {PROJECTS.map((project, index) => (
+          <ProjectCard
+            key={project.id}
+            project={project}
+            index={index}
+          />
+        ))}
+      </div>
 
-    // Loop through the panels (skipping the first one, since it's already visible)
-    panels.forEach((panel: any, i: any) => {
-      if (i === 0) return;
+      <div className="h-[20vh] bg-white" />
+    </section>
+  );
+}
 
-      // 1. Slide the new panel up from the bottom
-      tl.fromTo(
-        panel,
-        { yPercent: 100, boxShadow: "0px -20px 50px rgba(0,0,0,0)" },
-        {
-          yPercent: 0,
-          boxShadow: "0px -30px 60px rgba(0,0,0,0.4)", // Drops a shadow on the card below it
-          duration: 1,
-          ease: "power2.inOut"
-        },
-        "+=0.2" // Tiny pause between panel reveals
-      );
+function ProjectCard({ project, index }: { project: any, index: number }) {
+  const container = useRef(null);
 
-      // 2. Push the previous panel backward (Scale down + Dim)
-      tl.to(
-        panels[i - 1],
-        {
-          scale: 0.92,
-          filter: "brightness(0.4)",
-          duration: 1,
-          ease: "power2.inOut"
-        },
-        "<" // Sync this perfectly with the slide-up animation above
-      );
+  const { scrollYProgress } = useScroll({
+    target: container,
+    offset: ['start start', 'end start']
+  });
 
-      // 3. Stagger the typography reveal on the new card
-      tl.fromTo(
-        contents[i].querySelectorAll(".reveal-text"),
-        { y: 50, opacity: 0 },
-        { y: 0, opacity: 1, stagger: 0.1, duration: 0.8, ease: "power3.out" },
-        "-=0.4" // Start revealing text right before the card finishes sliding into place
-      );
-    });
-  }, { scope: containerRef });
+  const scale = useTransform(scrollYProgress, [0, 1], [1, 0.9]);
 
   return (
-    <section ref={containerRef} className="bg-[#F9F8F6] flex flex-col">
-      <div className="w-full h-screen overflow-hidden flex items-center justify-center relative">
-        <div className="relative w-full md:w-[85vw] lg:w-[75vw] h-[75vh] md:h-[80vh] mt-32 md:mt-16 z-10">
-
-          {masterpieces.map((project, i) => (
-            <div
-              key={i}
-              className="stack-panel absolute inset-0 w-full h-full overflow-hidden rounded-sm will-change-transform bg-[#1A1A1A]"
-              // Give the first panel a lower z-index so subsequent panels stack on top of it properly
-              style={{ zIndex: i + 10 }}
-            >
-              {/* The Background Image */}
-              <img
-                src={project.img}
-                alt={project.title}
-                className="absolute inset-0 w-full h-full object-cover origin-bottom grayscale-[0.1]"
-              />
-
-              {/* Luxury Gradient Overlay to ensure text readability */}
-              <div className="absolute inset-0 bg-gradient-to-t from-[#050505]/90 via-[#050505]/30 to-transparent" />
-
-              {/* The Content (Title, Location, CTA) */}
-              <div className="stack-content absolute inset-0 flex flex-col justify-end px-8 md:px-16 pb-12 md:pb-16 z-20">
-
-                <div className="overflow-hidden mb-4">
-                  <p className="reveal-text text-[10px] tracking-[0.4em] uppercase text-[#9D7E44] font-bold">
-                    {project.location}
-                  </p>
-                </div>
-
-                <div className="flex flex-col md:flex-row md:items-end justify-between gap-8 w-full">
-
-                  <div className="max-w-3xl">
-                    <div className="overflow-hidden mb-2">
-                      <h3 className="reveal-text font-serif text-3xl md:text-4xl text-[#F9F8F6]/80 italic font-light">
-                        {project.tagline}
-                      </h3>
-                    </div>
-                    <div className="overflow-hidden">
-                      <h2 className="reveal-text font-serif text-4xl md:text-6xl lg:text-[5rem] leading-[0.9] tracking-tighter text-[#F9F8F6]">
-                        {project.title}
-                      </h2>
-                    </div>
-                  </div>
-
-                  <div className="overflow-hidden pb-2">
-                    <button className="reveal-text group relative inline-flex items-center gap-6 text-[10px] tracking-[0.4em] uppercase text-[#F9F8F6] font-medium">
-                      <span className="relative z-10 group-hover:text-[#9D7E44] transition-colors duration-500">
-                        Discover Project
-                      </span>
-                      <div className="relative w-16 h-[1px] bg-[#F9F8F6]/30 overflow-hidden">
-                        <div className="absolute top-0 left-0 h-full w-full bg-[#9D7E44] -translate-x-[101%] group-hover:translate-x-0 transition-transform duration-700 ease-[cubic-bezier(0.76,0,0.24,1)]" />
-                      </div>
-                    </button>
-                  </div>
-
-                </div>
-              </div>
-
-            </div>
-          ))}
-
+    <div
+      ref={container}
+      className="h-screen w-full sticky top-0 overflow-hidden"
+    >
+      <motion.div
+        style={{ scale }}
+        className="relative h-full w-full origin-top"
+      >
+        {/* Background Image - Full Cover */}
+        <div className="absolute inset-0 w-full h-full">
+          <img
+            src={project.image}
+            alt={project.title}
+            className="w-full h-full object-cover"
+          />
+          {/* Subtle Vignette */}
+          <div className="absolute inset-0 bg-linear-to-b from-black/10 to-black/40 to-black/10" />
         </div>
-      </div>
-    </section>
+
+        {/* Content Overlay */}
+        <div className="relative z-10 h-full flex flex-col items-center justify-center text-center px-4">
+          <motion.span
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.8, delay: 0.2 }}
+            className="text-[10px] md:text-xs uppercase tracking-[0.3em] text-white/70 pb-2 pl-3 pr-2 border-b border-white/30"
+          >
+            {project.category}
+          </motion.span>
+
+          <motion.h3
+            variants={titleContainer}
+            initial="hidden"
+            whileInView="show"
+            viewport={{ once: false, amount: 0.5 }}
+            className="text-5xl md:text-6xl text-white font-marcellus leading-tight flex flex-wrap justify-center gap-x-4 md:gap-x-6 [perspective:1000px]"
+          >
+            {project.title.split(" ").map((word: string, i: number) => (
+              <span key={i} className="relative overflow-hidden inline-block pb-2">
+                <motion.span variants={wordReveal} className="inline-block">
+                  {word}
+                </motion.span>
+              </span>
+            ))}
+          </motion.h3>
+        </div>
+
+        {/* Bottom Left: Project Numbering */}
+        <div className="absolute top-20 right-12 hidden md:block">
+          <p className="text-white/40 font-marcellus text-2xl">
+            0{index + 1} <span className="text-xs tracking-widest ml-2 opacity-50">/ 04</span>
+          </p>
+        </div>
+      </motion.div>
+    </div>
   );
 }

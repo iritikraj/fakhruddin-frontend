@@ -4,11 +4,11 @@ module.exports = {
     './components/**/*.{js,ts,jsx,tsx,mdx}',
     './app/**/*.{js,ts,jsx,tsx,mdx}',
   ],
-  safelist: ['font-optima'],
+  safelist: ['font-marcellus'],
   theme: {
     extend: {
       fontFamily: {
-        optima: ['var(--font-optima)'],
+        optima: ['var(--font-marcellus)'],
       },
     },
   },

@@ -54,8 +54,9 @@ export default function HeroSection() {
         <div className="absolute inset-0 opacity-[0.03] mix-blend-overlay pointer-events-none bg-[url('https://upload.wikimedia.org/wikipedia/commons/7/76/1k_Dissolve_Noise_Texture.png')] bg-repeat" />
 
         {/* Complex Gradient: Darkens edges to frame the center */}
-        <div className="absolute inset-0 bg-gradient-to-b from-black/40 via-black/10 to-black/90" />
-        <div className="absolute inset-0 bg-gradient-to-r from-black/50 via-transparent to-black/30" />
+        <div className="absolute inset-0 bg-gradient-to-b from-black/1 via-black/10 to-black/50" />
+        <div className="absolute inset-0 bg-gradient-to-r from-black/20 via-transparent to-black/30" />
+        {/* <div className="absolute inset-0 bg-linear-to-t from-black/10 via-transparent to-black/20" */}
       </motion.div>
 
       {/* 3. Content Layer */}

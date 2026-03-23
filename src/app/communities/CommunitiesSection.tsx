@@ -1,181 +1,144 @@
-// components/CommunitiesSection.tsx
 'use client';
 
-import React, { useState } from 'react';
-import { motion } from 'framer-motion';
-import Link from 'next/link';
+import React, { useRef } from 'react';
+import { motion, useScroll, useTransform } from 'framer-motion';
 import Image from 'next/image';
-import { ArrowRight, ArrowUpRight } from 'lucide-react';
-import { communitiesData } from './page'
+import { ArrowUpRight, MapPin, Wind, ShieldCheck } from 'lucide-react';
+import { communitiesData } from './page';
 
 export default function CommunitiesSection() {
-  // We duplicate the data to create a seamless infinite loop.
-  // Animating to -50% width means it scrolls exactly half the duplicated items, perfectly resetting.
-  const infiniteCards = [...communitiesData, ...communitiesData, ...communitiesData, ...communitiesData];
-
-  // State to pause the auto-scroll on hover
-  const [isHovered, setIsHovered] = useState(false);
+  const customEase: [number, number, number, number] = [0.16, 1, 0.3, 1];
 
   return (
-    <section className="bg-white text-neutral-900 py-32 min-h-screen overflow-hidden">
-      <div className="max-w-[100vw]">
-
-        {/* Header Section (Unchanged) */}
-        <div className="max-w-7xl mx-auto grid grid-cols-1 lg:grid-cols-2 gap-12 items-end mb-24">
-          <motion.div
-            initial={{ opacity: 0, y: 30 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true, margin: "-100px" }}
-            transition={{ duration: 0.8, ease: [0.76, 0, 0.24, 1] }}
-          >
-            <h2 className="text-xs tracking-[0.4em] uppercase text-[#111] mb-6 font-medium">
-              Inspired Living
-            </h2>
-            <h3 className="text-4xl md:text-5xl lg:text-7xl font-light tracking-tight text-neutral-900">
-              Communities
-            </h3>
-          </motion.div>
-
-          <motion.div
-            initial={{ opacity: 0, y: 30 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true, margin: "-100px" }}
-            transition={{ duration: 0.8, ease: [0.76, 0, 0.24, 1], delay: 0.2 }}
-            className="pb-2"
-          >
-            <motion.p
-              className="text-neutral-500 font-light leading-relaxed text-lg md:text-xl"
-              initial={{ opacity: 0, clipPath: "inset(100% 0 0 0)" }}
-              whileInView={{ opacity: 1, clipPath: "inset(0% 0 0 0)" }}
-              viewport={{ once: true, margin: "-100px" }}
-              transition={{ duration: 1, ease: [0.16, 1, 0.3, 1], delay: 0.3 }}
-            >
-              At Fakhruddin Properties, we carefully select locations within
-              master communities with strong long-term potential. Each project
-              is uniquely designed to stand apart, while thoughtfully responding
-              to the character, needs, and evolving aspirations of the community
-              it serves.
-            </motion.p>
-            <div className="mt-10">
-              <Link
-                href="/communities"
-                className="inline-flex items-center gap-3 border-b border-neutral-300 pb-2 hover:text-neutral-500 hover:border-neutral-500 transition-all duration-300 uppercase tracking-[0.2em] text-xs font-medium"
-              >
-                All Communities
-                <ArrowRight size={14} className="transition-transform group-hover:translate-x-1" />
-              </Link>
-            </div>
-          </motion.div>
-        </div>
-
-        {/* Infinite Auto-Scroll Slider Area */}
+    <section className="bg-white">
+      <div className="max-w-7xl mx-auto px-6 lg:px-12 py-32 lg:py-48 grid grid-cols-1 lg:grid-cols-2 gap-12 items-end">
         <motion.div
-          initial={{ opacity: 0 }}
-          whileInView={{ opacity: 1 }}
-          viewport={{ once: true }}
-          transition={{ duration: 1.5, delay: 0.4 }}
-          className="w-full relative py-10"
-          onMouseEnter={() => setIsHovered(true)}
-          onMouseLeave={() => setIsHovered(false)}
+          initial={{ opacity: 0, y: 40 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true, margin: "-100px" }}
+          transition={{ duration: 1, ease: customEase }}
         >
-          {/* The moving track. 
-            When hovered, duration increases massively to effectively "pause" smoothly.
-          */}
+          <h2 className="text-xs tracking-[0.4em] uppercase text-[#b69c6b] mb-6 font-medium">
+            Inspired Living
+          </h2>
+          <h3 className="text-5xl md:text-7xl font-light tracking-tighter text-[#1A1A1A] font-serif">
+            Master <br />Communities
+          </h3>
+        </motion.div>
+
+        <motion.div
+          initial={{ opacity: 0, y: 40 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true, margin: "-100px" }}
+          transition={{ duration: 1, ease: customEase, delay: 0.2 }}
+          className="pb-2"
+        >
+          <p className="text-[#1A1A1A]/60 font-light leading-relaxed text-lg md:text-xl border-l border-[#1A1A1A]/10 pl-6">
+            At Fakhruddin Properties, we carefully select locations within
+            master communities with strong long-term potential. Each project
+            is uniquely designed to stand apart, while thoughtfully responding
+            to the character, needs, and evolving aspirations of the community
+            it serves.
+          </p>
+        </motion.div>
+      </div>
+      {communitiesData.map((community, index) => (
+        <CommunityCard key={community.id} community={community} index={index} />
+      ))}
+    </section>
+  );
+}
+
+function CommunityCard({ community, index }: { community: any; index: number }) {
+  const containerRef = useRef<HTMLDivElement>(null);
+
+  const { scrollYProgress } = useScroll({
+    target: containerRef,
+    offset: ["start end", "end start"]
+  });
+
+  // Transform scale from 0.6 (small) to 1 (full screen)
+  const scale = useTransform(scrollYProgress, [0, 0.4], [0.7, 1]);
+  // Transform border radius from 500px (oval) to 0px (square)
+  const borderRadius = useTransform(scrollYProgress, [0, 0.4], ["400px", "0px"]);
+  // Opacity for the text overlay
+  const contentOpacity = useTransform(scrollYProgress, [0.35, 0.5], [0, 1]);
+  const contentY = useTransform(scrollYProgress, [0.35, 0.5], [40, 0]);
+
+  return (
+    <div ref={containerRef} className="relative h-[150vh] w-full bg-white">
+      {/* Sticky container ensures the card stays in view while it expands */}
+      <div className="sticky top-0 h-screen w-full flex items-center justify-center overflow-hidden">
+
+        <motion.div
+          style={{
+            scale,
+            borderRadius,
+            width: "100%",
+            height: "100%"
+          }}
+          className="relative overflow-hidden bg-neutral-200"
+        >
+          {/* Background Image */}
+          <Image
+            src={community.imageUrl}
+            alt={community.title}
+            fill
+            priority={index === 0}
+            className="object-cover"
+          />
+
+          {/* Dark Overlay */}
+          <div className="absolute inset-0 bg-black/40" />
+
+          {/* Content Overlay - Only visible when expanded */}
           <motion.div
-            animate={{ x: ["0%", "-50%"] }}
-            transition={{
-              x: {
-                repeat: Infinity,
-                repeatType: "loop",
-                duration: isHovered ? 200 : 35, // Slows down dramatically on hover
-                ease: "linear",
-              },
-            }}
-            className="flex gap-6 md:gap-8 w-max px-4">
-            {infiniteCards.map((community, index) => {
-              // Get original index for the numbering (e.g., 01, 02, 03)
-              const originalIndex = index % communitiesData.length;
-              const displayNum = `0${originalIndex + 1}`;
+            style={{ opacity: contentOpacity, y: contentY }}
+            className="absolute inset-0 flex flex-col justify-end p-8 md:p-20 text-white"
+          >
+            <div className="max-w-7xl mx-auto w-full grid grid-cols-1 lg:grid-cols-2 gap-12 items-end">
+              <div>
+                <span className="text-xs tracking-[0.4em] uppercase opacity-70 mb-4 block">
+                 Community
+                </span>
+                <h2 className="text-6xl md:text-8xl font-light tracking-tighter mb-8">
+                  {community.title}
+                </h2>
 
-              return (
-                <div
-                  key={`${community.id}-${index}`}
-                  className="w-[320px] md:w-[400px] flex-shrink-0"
-                >
-                  {/* Premium Editorial Card */}
-                  <Link href={community.slug} className="group block relative aspect-[3/4] overflow-hidden bg-neutral-100">
-
-                    {/* The Image */}
-                    <Image
-                      src={community.imageUrl}
-                      alt={community.title}
-                      fill
-                      sizes="(max-width: 768px) 320px, 400px"
-                      className="object-cover transition-transform duration-[2s] ease-[0.16,1,0.3,1] group-hover:scale-105"
-                    />
-
-                    {/* Sophisticated Gradient (Darkens slightly on hover to make text pop) */}
-                    <div className="absolute inset-0 bg-gradient-to-b from-black/0 via-black/0 to-black/60 opacity-60 transition-opacity duration-700 group-hover:opacity-90" />
-
-                    {/* Top Editorial Numbering */}
-                    <div className="absolute top-6 left-6 right-6 flex justify-between items-start text-white/90 overflow-hidden mix-blend-overlay">
-                      <span className="text-xs tracking-widest font-medium translate-y-[-100%] group-hover:translate-y-0 transition-transform duration-500 ease-[0.76,0,0.24,1]">
-                        Index
-                      </span>
-                      <span className="text-sm tracking-widest font-light translate-y-[-100%] group-hover:translate-y-0 transition-transform duration-500 ease-[0.76,0,0.24,1] delay-75">
-                        {displayNum}
-                      </span>
-                    </div>
-
-                    {/* Bottom Content Area */}
-                    <div className="absolute bottom-0 left-0 p-8 w-full flex flex-col justify-end">
-
-                      {/* Subtitle / Location */}
-                      <div className="overflow-hidden mb-2">
-                        <span className="block text-white/70 text-xs tracking-[0.2em] uppercase translate-y-[100%] group-hover:translate-y-0 transition-transform duration-500 ease-[0.76,0,0.24,1]">
-                          Dubai, UAE
-                        </span>
-                      </div>
-
-                      {/* Title & Icon */}
-                      <div className="flex justify-between items-end border-b border-white/20 pb-4 group-hover:border-white/50 transition-colors duration-700">
-                        <h4 className="text-white text-2xl md:text-3xl font-light tracking-wide">
-                          {community.title}
-                        </h4>
-
-                        {/* Elegant Arrow that shoots up and right on hover */}
-                        <div className="relative w-6 h-6 overflow-hidden text-white mb-1">
-                          <ArrowUpRight
-                            strokeWidth={1.5}
-                            className="absolute inset-0 transition-transform duration-500 ease-[0.76,0,0.24,1] group-hover:translate-x-full group-hover:-translate-y-full"
-                          />
-                          <ArrowUpRight
-                            strokeWidth={1.5}
-                            className="absolute inset-0 -translate-x-full translate-y-full transition-transform duration-500 ease-[0.76,0,0.24,1] group-hover:translate-x-0 group-hover:translate-y-0"
-                          />
-                        </div>
-                      </div>
-                    </div>
-                  </Link>
+                {/* Community Key Details (Hover-like effect but persistent once visible) */}
+                <div className="flex flex-wrap gap-8">
+                  <DetailItem icon={<MapPin size={18} />} label="Prime Location" value="Downtown District" />
+                  <DetailItem icon={<Wind size={18} />} label="Air Quality" value="A+ Rated" />
+                  <DetailItem icon={<ShieldCheck size={18} />} label="Security" value="24/7 Gated" />
                 </div>
-              );
-            })}
+              </div>
+
+              <div className="flex flex-col items-start lg:items-end">
+                <p className="text-lg md:text-xl font-light text-white/80 max-w-md lg:text-right mb-10 leading-relaxed">
+                  Redefining the standard of sustainable luxury with wellness-integrated
+                  architecture and vibrant social spaces.
+                </p>
+                <button className="group flex items-center gap-4 bg-white text-black px-8 py-4 rounded-full hover:bg-neutral-200 transition-colors">
+                  <span className="text-xs uppercase tracking-widest font-bold">Explore Community</span>
+                  <ArrowUpRight size={20} className="group-hover:translate-x-1 group-hover:-translate-y-1 transition-transform" />
+                </button>
+              </div>
+            </div>
           </motion.div>
         </motion.div>
       </div>
+    </div>
+  );
+}
 
-      {/* Global Explore Button */}
-      <div className="mt-16 flex justify-center">
-        <Link
-          href="/communities"
-          className="group inline-flex items-center gap-4 text-neutral-900 uppercase tracking-[0.2em] text-xs font-medium"
-        >
-          <span className="border-b border-neutral-300 pb-1 group-hover:border-neutral-900 transition-colors duration-300">
-            View All Locations
-          </span>
-          <span className="w-8 h-[1px] bg-neutral-300 group-hover:w-12 group-hover:bg-neutral-900 transition-all duration-300" />
-        </Link>
+function DetailItem({ icon, label, value }: { icon: React.ReactNode; label: string; value: string }) {
+  return (
+    <div className="flex flex-col gap-2">
+      <div className="flex items-center gap-2 text-white/50">
+        {icon}
+        <span className="text-[10px] uppercase tracking-widest">{label}</span>
       </div>
-    </section>
+      <span className="text-sm font-medium">{value}</span>
+    </div>
   );
 }
