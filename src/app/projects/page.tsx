@@ -179,7 +179,7 @@ function HeroSlider() {
           <p ref={subtitleRef} className="text-[#A19585] text-sm tracking-[0.3em] mb-4">
             FAKHRUDDIN PROPERTIES
           </p>
-          <h1 ref={titleRef} className="font-serif text-6xl md:text-7xl lg:text-8xl text-white leading-tight">
+          <h1 ref={titleRef} className="text-6xl md:text-7xl lg:text-8xl text-white leading-tight">
             Defining<br/>Modern Living
           </h1>
           <div ref={lineRef} className="h-[2px] bg-[#A19585] my-8" style={{ width: "30%" }} />
@@ -324,7 +324,7 @@ function ProjectCard({ id, title, location, description, image, specs, isNew, in
               <span className="text-[#A19585] text-xs tracking-[0.3em]">
                 {String(index + 1).padStart(2, '0')} — {location}
               </span>
-              <h2 className="font-serif text-4xl lg:text-5xl text-black">
+              <h2 className="text-4xl lg:text-5xl text-black">
                 {title}
               </h2>
             </div>
@@ -337,22 +337,22 @@ function ProjectCard({ id, title, location, description, image, specs, isNew, in
             {/* Specs Grid */}
             <div className="grid grid-cols-2 sm:grid-cols-4 gap-4 py-6">
               <div className="text-center p-4 bg-[#A19585]/20 rounded-xl">
-                <div className="font-serif text-xl text-[#A19585]">{specs.bedrooms}</div>
+                <div className="text-xl text-[#A19585]">{specs.bedrooms}</div>
                 <div className="text-black/40 text-xs">Bedrooms</div>
               </div>
               {specs.price && (
                 <div className="text-center p-4 bg-[#A19585]/20 rounded-xl">
-                  <div className="font-serif text-xl text-[#A19585]">{specs.price}</div>
+                  <div className="text-xl text-[#A19585]">{specs.price}</div>
                   <div className="text-black/40 text-xs">Starting</div>
                 </div>
               )}
               <div className="text-center p-4 bg-[#A19585]/20 rounded-xl">
-                <div className="font-serif text-xl text-[#A19585]">{specs.amenities}</div>
+                <div className="text-xl text-[#A19585]">{specs.amenities}</div>
                 <div className="text-black/40 text-xs">Amenities</div>
               </div>
               {specs.completion && (
                 <div className="text-center p-4 bg-[#A19585]/20 rounded-xl">
-                  <div className="font-serif text-xl text-[#A19585]">{specs.completion}</div>
+                  <div className="text-xl text-[#A19585]">{specs.completion}</div>
                   <div className="text-black/40 text-xs">Completion</div>
                 </div>
               )}
@@ -492,7 +492,7 @@ function ProjectShowcase() {
         {/* Section Header */}
         <div ref={titleRef} className="text-center mb-12 lg:mb-16">
           <span className="text-[#A19585] text-xs sm:text-sm tracking-[0.3em]">OUR PORTFOLIO</span>
-          <h2 className="font-serif text-3xl sm:text-4xl lg:text-5xl text-black mt-4">
+          <h2 className="text-3xl sm:text-4xl lg:text-5xl text-black mt-4">
             Defining Modern Living
           </h2>
           <p className="text-black/50 text-sm sm:text-base max-w-2xl mx-auto mt-4">
@@ -572,7 +572,7 @@ function FoundationSection() {
       <div className="relative z-10 max-w-[1400px] mx-auto px-6 md:px-12">
         <div className="text-center mb-16">
           <span className="text-[#b69c6b] text-xs tracking-[0.3em]">THE FOUNDATION</span>
-          <h2 className="font-serif text-4xl md:text-5xl text-[#191817] mt-4">
+          <h2 className="text-4xl md:text-5xl text-[#191817] mt-4">
             Every project is shaped by balance
           </h2>
         </div>
@@ -592,12 +592,12 @@ function FoundationSection() {
               
               <div className="relative p-10">                
                 {/* Number */}
-                <div className="text-[#b69c6b] font-serif text-3xl mb-4 group-hover:text-[#191817] transition-colors duration-500">
+                <div className="text-[#b69c6b] text-3xl mb-4 group-hover:text-[#191817] transition-colors duration-500">
                   {item.number}
                 </div>
                 
                 {/* Title */}
-                <h3 className="font-serif text-2xl text-[#191817] mb-4 group-hover:text-[#b69c6b] transition-colors duration-500">
+                <h3 className="text-2xl text-[#191817] mb-4 group-hover:text-[#b69c6b] transition-colors duration-500">
                   {item.title}
                 </h3>
                 
@@ -623,7 +623,7 @@ function FoundationSection() {
             { value: "20+", label: "Awards for Excellence" }
           ].map((stat, i) => (
             <div key={i} className="group">
-              <div className="font-serif text-4xl text-[#b69c6b] group-hover:scale-110 transition-transform duration-500">
+              <div className="text-4xl text-[#b69c6b] group-hover:scale-110 transition-transform duration-500">
                 {stat.value}
               </div>
               <div className="text-[#191817] tracking-wide mt-2">{stat.label}</div>
@@ -665,7 +665,7 @@ export default function ProjectsPage() {
   }, []);
 
   return (
-    <main className="bg-black overflow-x-hidden">
+    <main className="font-sans bg-black overflow-x-hidden">
       <Navbar />
       <HeroSlider />
       <ProjectShowcase />
