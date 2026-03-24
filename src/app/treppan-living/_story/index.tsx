@@ -129,9 +129,9 @@ export default function TreppanStory() {
           <Image src="https://projects.fakhruddinproperties.com/JA-Treppan-Living-Prive-Desktop.webp" alt="The Philosophy" fill className="object-cover" priority />
         </div>
         <div className="absolute inset-0 bg-gradient-to-l from-black/80 via-black/40 to-transparent z-0" />
-        <div className="relative z-10 text-center md:text-right max-w-5xl px-6 md:pr-16 mt-20">
+        <div className="relative z-10 text-center md:text-right max-w-5xl px-6 md:pr-16 mt-20 font-marcellus">
           <span className="hero-text-reveal text-[#b69c6b] text-[10px] uppercase tracking-[0.4em] mb-6 block">The Philosophy</span>
-          <h1 className="hero-text-reveal text-5xl md:text-8xl font-serif font-light text-white tracking-wider mb-8">
+          <h1 className="hero-text-reveal text-5xl md:text-8xl font-light text-white tracking-wider mb-8">
             Where Conscious<br /> <span className="text-[#b69c6b]">Living</span> Finds<br /> Its Home
           </h1>
           <div className="hero-sep w-24 h-[1px] bg-white/20 mx-auto md:ml-auto md:mr-0 mb-10" />
@@ -150,7 +150,7 @@ export default function TreppanStory() {
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-16 items-center">
           <div className="lg:col-span-5 ambassador-content">
             <span className="text-[#b69c6b] text-[10px] font-bold uppercase tracking-[0.4em] mb-6 block">Global Brand Ambassador</span>
-            <h2 className="text-5xl md:text-7xl font-serif text-[#191817] leading-tight tracking-tighter mb-8">
+            <h2 className="text-5xl md:text-7xl font-marcellus text-[#191817] leading-tight tracking-tighter mb-8">
               John <span className="font-light text-[#b69c6b]">Abraham</span>
             </h2>
             <div className="h-[1px] w-12 bg-[#b69c6b] mb-8" />
@@ -171,7 +171,7 @@ export default function TreppanStory() {
         <div className="max-w-7xl mx-auto overflow-x-auto">
           <table className="w-full text-left border-collapse min-w-[1000px]">
             <thead>
-              <tr className="border-b border-white/10 text-[#b69c6b] text-[10px] uppercase tracking-[0.3em]">
+              <tr className="border-b border-white/10 text-[#b69c6b] text-[10px] uppercase tracking-[0.3em] font-marcellus">
                 <th className="py-8 font-bold w-1/4">System</th>
                 <th className="py-8 font-bold">Cost / year</th>
                 <th className="py-8 font-bold">Plastic Discarded / year</th>
@@ -183,7 +183,7 @@ export default function TreppanStory() {
               {/* Tréppan Living Row */}
               <tr className="border-b border-white/5 bg-white/[0.02]">
                 <td className="py-12 pr-8">
-                  <span className="text-xl font-serif text-[#b69c6b] block mb-2">Tréppan Living Water System</span>
+                  <span className="text-xl font-marcellus text-[#b69c6b] block mb-2">Tréppan Living Water System</span>
                   <span className="text-xs text-white/60 font-light leading-snug block">Hydrogenated & Filtered<br />Built Into the Home</span>
                 </td>
                 <td className="py-12">
@@ -205,7 +205,7 @@ export default function TreppanStory() {
               {/* Bottled Water Row */}
               <tr className="border-b border-white/5">
                 <td className="py-12 pr-8">
-                  <span className="text-xl font-serif block mb-2">Bottled Water</span>
+                  <span className="text-xl font-marcellus block mb-2">Bottled Water</span>
                   <span className="text-xs text-white/40 font-light block">Single-use 1.5 L</span>
                 </td>
                 <td className="py-12">
@@ -227,7 +227,7 @@ export default function TreppanStory() {
               {/* 5 Gallon Jugs Row */}
               <tr className="border-b border-white/5">
                 <td className="py-12 pr-8">
-                  <span className="text-xl font-serif block mb-2">5 Gallon Jugs</span>
+                  <span className="text-xl font-marcellus block mb-2">5 Gallon Jugs</span>
                   <span className="text-xs text-white/40 font-light block">18.9 L refillable</span>
                 </td>
                 <td className="py-12">
@@ -265,8 +265,8 @@ export default function TreppanStory() {
               The Standard of Refinement
             </span>
 
-            <div className="overflow-hidden mb-2">
-              <h3 className="text-5xl md:text-[80px] lg:text-[100px] font-serif text-white leading-[0.9] tracking-tighter">
+            <div className="mb-6">
+              <h3 className="text-5xl md:text-[80px] lg:text-[100px] font-marcellus text-white leading-[0.9] tracking-tighter">
                 Tréppan Living
               </h3>
             </div>
@@ -378,8 +378,8 @@ export default function TreppanStory() {
                     <span className="text-[#b69c6b] text-sm font-bold tracking-[0.3em] uppercase">0{i + 1}</span>
                   </div>
 
-                  <h3 className="text-4xl md:text-5xl font-serif tracking-tight mb-2">{feat.t}</h3>
-                  <h4 className="text-[#b69c6b] text-xl font-light mb-6">{feat.sub}</h4>
+                  <h3 className="text-4xl md:text-5xl font-marcellus tracking-tight mb-2">{feat.t}</h3>
+                  <h4 className="text-[#b69c6b] text-xl font-light font-marcellus mb-6">{feat.sub}</h4>
 
                   <div className="w-full max-w-3xl grid md:grid-cols-2 gap-8 md:gap-16 items-end">
                     <p className="text-white/80 font-light text-lg leading-relaxed">{feat.d}</p>
@@ -404,7 +404,7 @@ export default function TreppanStory() {
         {/* Overlay Title that stays pinned on top */}
         <div className="absolute top-16 md:top-24 left-1/2 -translate-x-1/2 z-20 text-center w-full px-6 pointer-events-none">
           <span className="text-[#b69c6b] text-[10px] font-bold uppercase tracking-[0.4em] block mb-4">Living With Purpose Daily</span>
-          <h2 className="text-3xl md:text-5xl font-serif text-white tracking-tight">Conscious Choices, <span className="text-[#b69c6b]">Every Day</span></h2>
+          <h2 className="text-3xl md:text-5xl font-marcellus text-white tracking-tight">Conscious Choices, <span className="text-[#b69c6b]">Every Day</span></h2>
         </div>
 
         {/* Slide 1 */}
@@ -414,7 +414,7 @@ export default function TreppanStory() {
         </div>
         <div className="tour-text absolute inset-0 z-10 flex flex-col items-center justify-end pb-24 md:pb-32 text-center px-6 pointer-events-none">
           <span className="text-[#b69c6b] text-[10px] font-bold uppercase tracking-[0.4em] mb-4">01 Urban Farming</span>
-          <h3 className="text-5xl md:text-7xl font-serif text-white tracking-tight mb-6">Grow Your Own<br /><span className="text-[#b69c6b]">Indoor Herbs</span></h3>
+          <h3 className="text-5xl md:text-7xl font-marcellus text-white tracking-tight mb-6">Grow Your Own<br /><span className="text-[#b69c6b]">Indoor Herbs</span></h3>
           <p className="text-white/80 font-light max-w-xl mb-8">Functional greenhouses and hydroponic systems encourage local food cultivation right at home.</p>
           <div className="flex flex-wrap justify-center gap-4 text-xs md:text-sm text-white/60 uppercase tracking-widest max-w-3xl">
             <span>• Fresh produce without supermarkets</span>
@@ -431,7 +431,7 @@ export default function TreppanStory() {
         </div>
         <div className="tour-text absolute inset-0 z-10 flex flex-col items-center justify-end pb-24 md:pb-32 text-center px-6 pointer-events-none">
           <span className="text-[#b69c6b] text-[10px] font-bold uppercase tracking-[0.4em] mb-4">02 Therapies</span>
-          <h3 className="text-5xl md:text-7xl font-serif text-white tracking-tight mb-6">Biohacking<br /><span className="text-[#b69c6b]">Amenities</span></h3>
+          <h3 className="text-5xl md:text-7xl font-marcellus text-white tracking-tight mb-6">Biohacking<br /><span className="text-[#b69c6b]">Amenities</span></h3>
           <p className="text-white/80 font-light max-w-xl mb-8">Top-notch amenities that shape your health and offer longevity.</p>
           <div className="flex flex-wrap justify-center gap-4 text-xs md:text-sm text-white/60 uppercase tracking-widest max-w-3xl">
             <span>• Hyperbaric Oxygen Therapy</span>
@@ -448,7 +448,7 @@ export default function TreppanStory() {
         </div>
         <div className="tour-text absolute inset-0 z-10 flex flex-col items-center justify-end pb-24 md:pb-32 text-center px-6 pointer-events-none">
           <span className="text-[#b69c6b] text-[10px] font-bold uppercase tracking-[0.4em] mb-4">03 Mobility</span>
-          <h3 className="text-5xl md:text-7xl font-serif text-white tracking-tight mb-6">Electric<br /><span className="text-[#b69c6b]">Mobility Hub</span></h3>
+          <h3 className="text-5xl md:text-7xl font-marcellus text-white tracking-tight mb-6">Electric<br /><span className="text-[#b69c6b]">Mobility Hub</span></h3>
           <p className="text-white/80 font-light max-w-xl mb-8">EV charging integrated into community infrastructure — supporting sustainable transport seamlessly.</p>
           <div className="flex flex-wrap justify-center gap-4 text-xs md:text-sm text-white/60 uppercase tracking-widest max-w-3xl">
             <span>• EV charging stations throughout</span>
