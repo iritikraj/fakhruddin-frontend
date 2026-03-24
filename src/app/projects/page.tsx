@@ -176,7 +176,7 @@ function HeroSlider() {
           <p ref={subtitleRef} className="text-[#A19585] text-sm tracking-[0.3em] mb-4">
             FAKHRUDDIN PROPERTIES
           </p>
-          <h1 ref={titleRef} className="text-6xl md:text-7xl lg:text-8xl text-white leading-tight">
+          <h1 ref={titleRef} className="font-marcellus font-light text-6xl md:text-7xl lg:text-8xl text-white leading-tight">
             Defining<br />Modern Living
           </h1>
           <div ref={lineRef} className="h-[2px] bg-[#A19585] my-8" style={{ width: "30%" }} />
@@ -321,7 +321,7 @@ function ProjectCard({ id, title, location, description, image, specs, isNew, in
               <span className="text-[#A19585] text-xs tracking-[0.3em]">
                 {String(index + 1).padStart(2, '0')} — {location}
               </span>
-              <h2 className="text-4xl lg:text-5xl text-black">
+              <h2 className="font-marcellus font-light text-4xl lg:text-5xl text-black">
                 {title}
               </h2>
             </div>
@@ -569,7 +569,7 @@ function FoundationSection() {
       <div className="relative z-10 max-w-[1400px] mx-auto px-6 md:px-12">
         <div className="text-center mb-16">
           <span className="text-[#b69c6b] text-xs tracking-[0.3em]">THE FOUNDATION</span>
-          <h2 className="text-4xl md:text-5xl text-[#191817] mt-4">
+          <h2 className="font-marcellus font-light text-4xl md:text-5xl text-[#191817] mt-4">
             Every project is shaped by balance
           </h2>
         </div>
@@ -594,12 +594,12 @@ function FoundationSection() {
                 </div>
 
                 {/* Title */}
-                <h3 className="text-2xl text-[#191817] mb-4 group-hover:text-[#b69c6b] transition-colors duration-500">
+                <h3 className="font-marcellus font-light text-2xl text-[#191817] mb-4 group-hover:text-[#b69c6b] transition-colors duration-500">
                   {item.title}
                 </h3>
 
                 {/* Description */}
-                <p className="text-[#7a6a58] text-sm leading-relaxed group-hover:text-[#191817] transition-colors duration-500">
+                <p className="text-[#7a6a58] text-base leading-relaxed group-hover:text-[#191817] transition-colors duration-500">
                   {item.description}
                 </p>
 
