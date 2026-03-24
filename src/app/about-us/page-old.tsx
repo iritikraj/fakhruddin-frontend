@@ -9,10 +9,6 @@ import Link from "next/link";
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
 
-// ─── LUXURY EASING ─────────────────────────────────────────
-const customEase: [number, number, number, number] = [0.16, 1, 0.3, 1];
-const slowEase: [number, number, number, number] = [0.25, 1, 0.5, 1];
-
 if (typeof window !== "undefined") {
   gsap.registerPlugin(ScrollTrigger);
 }
@@ -82,14 +78,14 @@ const AWARDS_YEARS = [
 // ─────────────────────────────────────────────────────────────
 function Hero() {
   const ref = useRef<HTMLElement>(null);
-  const videoRef = useRef<HTMLVideoElement>(null);
+  const imageRef = useRef<HTMLImageElement>(null);
   const contentRef = useRef<HTMLDivElement>(null);
   const titleRef = useRef<HTMLHeadingElement>(null);
   const subtitleRef = useRef<HTMLParagraphElement>(null);
   const lineRef = useRef<HTMLDivElement>(null);
 
   useGSAP(() => {
-    // Scroll-driven content fade — video stays fixed (no zoom on video for perf)
+    // Scroll-driven zoom + fade (same as WellTech)
     const tl = gsap.timeline({
       scrollTrigger: {
         trigger: ref.current,
@@ -98,9 +94,10 @@ function Hero() {
         scrub: 1.5,
       },
     });
-    tl.to(contentRef.current, { opacity: 0, y: -80, ease: "power2.inOut" }, 0);
+    tl.to(imageRef.current, { scale: 1.4, opacity: 0.3, ease: "power2.inOut" })
+      .to(contentRef.current, { opacity: 0, y: -80, ease: "power2.inOut" }, 0);
 
-    // Entrance animations
+    // Entrance
     gsap.fromTo(subtitleRef.current,
       { y: 50, opacity: 0 },
       { y: 0, opacity: 1, duration: 1.2, ease: "power3.out" }
@@ -117,19 +114,14 @@ function Hero() {
 
   return (
     <section ref={ref} className="relative w-full h-screen overflow-hidden">
-      {/* Auto-play, muted, looping video — no controls */}
-      <video
-        ref={videoRef}
-        src="https://www.fakhruddinproperties.com/wp-content/uploads/2025/12/Treppan-Serenique-Project.mp4"
-        autoPlay
-        muted
-        loop
-        playsInline
+      <img
+        ref={imageRef}
+        src="https://www.fakhruddinproperties.com/wp-content/uploads/2025/04/LakeCentralHQ.jpg"
+        alt="About Us Hero"
         className="absolute inset-0 w-full h-full object-cover"
       />
-      {/* Light overlay — just enough to ensure text legibility */}
-      <div className="absolute inset-0 bg-gradient-to-t from-black/25 via-black/10 to-black/5" />
-      <div className="absolute inset-0 bg-gradient-to-r from-black/15 via-transparent to-transparent" />
+      <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/40 to-black/20" />
+      <div className="absolute inset-0 bg-gradient-to-r from-black/50 via-transparent to-transparent" />
 
       {/* Progress bar top */}
       <div className="absolute top-0 left-0 z-20 w-full h-[2px] bg-white/10">
@@ -152,7 +144,11 @@ function Hero() {
             Beyond Today,<br />
             <span className="text-[#A19585]">by Design.</span>
           </h1>
-          <div ref={lineRef} className="w-24 h-[2px] bg-[#A19585] mt-8 mb-6 opacity-0" />          
+          <div ref={lineRef} className="w-24 h-[2px] bg-[#A19585] mt-8 mb-6 opacity-0" />
+          <p className="text-white/70 text-base md:text-lg max-w-xl leading-relaxed">
+            Born from a 60-year legacy of entrepreneurship. Built on the belief that
+            architecture should enhance life — not merely contain it.
+          </p>
 
           {/* Anchor links */}
           <div className="flex gap-8 mt-8 flex-wrap">
@@ -228,17 +224,14 @@ function OurStory() {
           alt="Our Story"
           className="w-full h-full object-cover"
         />
-        <div className="hidden md:block absolute inset-0 bg-gradient-to-r from-transparent via-transparent to-white md:via-transparent md:to-white" />
-        {/* Mobile Overlay */}
-        <div className="block md:hidden absolute inset-0 bg-gradient-to-b from-[#F5F2EE]/30 via-[#F5F2EE]/20 to-[#F5F2EE]/60" />
-        
+        <div className="absolute inset-0 bg-gradient-to-r from-transparent via-transparent to-white md:via-transparent md:to-white" />
         <div className="absolute inset-0 bg-gradient-to-t from-white via-transparent to-transparent md:hidden" />
       </div>
 
       {/* Oversized year watermark */}
-      <div className="hidden md:block absolute bottom-10 left-4 md:left-8 pointer-events-none select-none z-0">
+      <div className="absolute bottom-10 left-4 md:left-8 pointer-events-none select-none z-0">
         <span
-          className="text-[18vw] leading-none text-black/[0.15]"
+          className="text-[18vw] leading-none text-black/[0.04]"
           style={{ fontWeight: 300, letterSpacing: "-0.04em" }}
         >
           1963
@@ -257,9 +250,9 @@ function OurStory() {
 
           <div className="w-16 h-[2px] bg-[#A19585] mb-8" />
 
-          <div className="space-y-5 text-[#FFFFFF] md:text-[#1b2946]/70 text-base leading-relaxed mb-12">
+          <div className="space-y-5 text-[#1b2946]/65 text-[15px] leading-relaxed mb-12">
             <p>
-              It began as a vision in 2003 - a quiet pursuit to reimagine what real estate could mean for the people who live within it. Born from the enduring legacy of Fakhruddin Holdings, founded in 1963, Fakhruddin Properties carries forward a tradition rooted in entrepreneurship, integrity, and a deep sense of community, now, has grown into one of the Middle East's most forward thinking property developers.
+              It began as a vision in 2003 — a quiet pursuit to reimagine what real estate could mean for the people who live within it. Born from the enduring legacy of Fakhruddin Holdings, founded in 1963, Fakhruddin Properties carries forward a tradition rooted in entrepreneurship, integrity, and a deep sense of community.
             </p>
             <p>
               What started as structures soon became stories of trust, of purpose, of homes that nurture as much as they impress. Every space we build is shaped by a belief that architecture should do more than occupy land — it should enhance life, foster connection, and leave the world a little better than it was found.
@@ -267,7 +260,7 @@ function OurStory() {
             <p>
               Today, with a presence spanning the UAE, the UK, and Uganda, Fakhruddin Properties continues to evolve — guided by the same principles that began it all: innovation grounded in responsibility, sustainability shaped by soul, and design that places people at its heart.
             </p>
-            <p className="italic text-[#FFFFFF] md:text-[#1b2946]/50">
+            <p className="italic text-[#1b2946]/40">
               This is not just our story. It is the quiet unfolding of a vision — one built to endure.
             </p>
           </div>
@@ -286,12 +279,12 @@ function OurStory() {
                 className="group"
               >
                 <div
-                  className="text-3xl md:text-4xl text-[#FFFFFF] md:text-[#A19585] group-hover:scale-105 transition-transform duration-300"
+                  className="text-3xl md:text-4xl text-[#A19585] group-hover:scale-105 transition-transform duration-300"
                   style={{ fontWeight: 300 }}
                 >
                   {s.v}
                 </div>
-                <div className="text-[#FFFFFF] md:text-[#1b2946]/50 text-xs tracking-[0.25em] uppercase mt-1">{s.l}</div>
+                <div className="text-[#1b2946]/50 text-xs tracking-[0.25em] uppercase mt-1">{s.l}</div>
               </div>
             ))}
           </div>
@@ -359,23 +352,23 @@ function Philosophy() {
   ];
 
   return (
-    <section id="philosophy" ref={ref} className="relative w-full min-h-screen bg-[#F9F9F7] overflow-hidden">
-      {/* Background image — shows clearly on light bg */}
+    <section id="philosophy" ref={ref} className="relative w-full min-h-screen bg-[#100F2B] overflow-hidden">
+      {/* Background image */}
       <div ref={imageRef} className="absolute inset-0 w-full h-[120%]">
         <img
           src="https://www.fakhruddinproperties.com/wp-content/uploads/2025/04/LakeCentralHQ.jpg"
           alt="Philosophy"
           className="w-full h-full object-cover opacity-20"
         />
-        {/* <div className="absolute inset-0 bg-gradient-to-b from-[#F5F2EE]/60 via-[#F5F2EE]/40 to-[#F5F2EE]/80" /> */}
+        <div className="absolute inset-0 bg-gradient-to-b from-[#100F2B]/70 via-[#100F2B]/50 to-[#100F2B]" />
       </div>
 
-      {/* Subtle decorative rings — using primary color, light version */}
+      {/* Animated rings (same as WellTech) */}
       <div className="absolute inset-0 overflow-hidden pointer-events-none">
         <div className="absolute top-1/2 right-0 translate-x-1/3 -translate-y-1/2 w-[500px] h-[500px] md:w-[700px] md:h-[700px]">
-          <div className="absolute inset-0 border border-[#A19585]/50 rounded-full animate-ping" style={{ animationDuration: "5s" }} />
-          <div className="absolute inset-[12%] border border-[#A19585]/55 rounded-full animate-spin" style={{ animationDuration: "12s" }} />
-          <div className="absolute inset-[25%] border border-[#A19585]/70 rounded-full animate-pulse" />
+          <div className="absolute inset-0 border border-[#A19585]/10 rounded-full animate-ping" style={{ animationDuration: "5s" }} />
+          <div className="absolute inset-[12%] border border-[#A19585]/15 rounded-full animate-spin" style={{ animationDuration: "12s" }} />
+          <div className="absolute inset-[25%] border border-[#A19585]/20 rounded-full animate-pulse" />
         </div>
       </div>
 
@@ -387,35 +380,35 @@ function Philosophy() {
             <span className="text-[#A19585] text-xs tracking-[0.35em] uppercase">The Fakhruddin Philosophy</span>
           </div>
           <h2
-            className="font-marcellus font-light text-4xl md:text-5xl lg:text-6xl text-[#1b2946] leading-tight"
+            className="font-marcellus font-light text-4xl md:text-5xl lg:text-6xl text-white leading-tight"
             style={{ fontWeight: 300 }}
           >
             Multidisciplinary<br />
-            <span className="text-[#A19585]/100">by Design.</span>
+            <span className="text-[#A19585]">by Design.</span>
           </h2>
-          <p className="text-[#1b2946]/90 text-base md:text-lg mt-6 leading-relaxed">
+          <p className="text-white/50 text-base md:text-lg mt-6 leading-relaxed">
             Our strength lies not just in what we build, but in how we think together.
             Architects, engineers, designers, technologists, and sustainability visionaries
             unite under one purpose — to craft living spaces that feel as intelligent as they look.
           </p>
         </div>
 
-        {/* Pillar cards — light version */}
-        <div className="ph-pillars grid grid-cols-1 md:grid-cols-3 gap-[1px] bg-[#A19585]/10">
+        {/* Pillar cards */}
+        <div className="ph-pillars grid grid-cols-1 md:grid-cols-3 gap-[1px] bg-white/5">
           {pillars.map((p, i) => (
             <div
               key={i}
-              className="ph-pillar group relative bg-[#F5F2EE] p-8 md:p-10 hover:bg-white transition-colors duration-500 overflow-hidden"
+              className="ph-pillar group relative bg-[#100F2B] p-8 md:p-10 hover:bg-white/5 transition-colors duration-500 overflow-hidden"
             >
               <div className="absolute top-0 left-0 right-0 h-[2px] bg-[#A19585] scale-x-0 group-hover:scale-x-100 transition-transform duration-700 origin-left" />
-              <div className="text-[#A19585]/30 text-5xl mb-6 group-hover:text-[#A19585] transition-colors duration-400" style={{ fontWeight: 300 }}>
+              <div className="text-[#A19585]/30 text-5xl mb-6 group-hover:text-[#A19585]/60 transition-colors duration-400" style={{ fontWeight: 300 }}>
                 {p.n}
               </div>
-              <h3 className="text-[#1b2946] text-xl md:text-2xl mb-4 group-hover:text-[#A19585] transition-colors duration-400" style={{ fontWeight: 300 }}>
+              <h3 className="text-white text-xl md:text-2xl mb-4 group-hover:text-[#A19585] transition-colors duration-400" style={{ fontWeight: 300 }}>
                 {p.title}
               </h3>
               <div className="w-8 h-[1px] bg-[#A19585]/40 group-hover:w-14 transition-all duration-500 mb-4" />
-              <p className="text-[#1b2946]/75 text-base leading-relaxed group-hover:text-[#1b2946]/80 transition-colors duration-400">
+              <p className="text-white/45 text-sm leading-relaxed group-hover:text-white/65 transition-colors duration-400">
                 {p.body}
               </p>
             </div>
@@ -423,8 +416,8 @@ function Philosophy() {
         </div>
 
         {/* Quote */}
-        <blockquote className="mt-16 border-l-2 border-[#A19585]/50 pl-6 max-w-2xl">
-          <p className="text-[#1b2946] text-base md:text-lg italic leading-relaxed" style={{ fontWeight: 300 }}>
+        <blockquote className="mt-16 border-l-2 border-[#A19585]/40 pl-6 max-w-2xl">
+          <p className="text-white/35 text-base md:text-lg italic leading-relaxed" style={{ fontWeight: 300 }}>
             It is in this harmony of disciplines that we create places with quiet permanence
             — spaces that breathe, move, and belong.
           </p>
@@ -435,8 +428,8 @@ function Philosophy() {
 }
 
 // ─────────────────────────────────────────────────────────────
-// MANAGEMENT TEAM — Equal portrait cards only, no text sidebar
-// Name + role displayed on each card. Unique staggered reveal.
+// MANAGEMENT TEAM — Editorial split: left text column, right staggered portraits
+// Name + role always visible. No hover required to see identity.
 // ─────────────────────────────────────────────────────────────
 function ManagementTeam() {
   const ref = useRef<HTMLElement>(null);
@@ -449,12 +442,20 @@ function ManagementTeam() {
         scrollTrigger: { trigger: ref.current, start: "top bottom-=150" },
       }
     );
-    // Cards cascade in with stagger
-    gsap.fromTo(".team-portrait",
-      { y: 80, opacity: 0, scale: 0.96 },
+    // Left column text lines stagger
+    gsap.fromTo(".team-left-line",
+      { x: -40, opacity: 0 },
       {
-        y: 0, opacity: 1, scale: 1, stagger: 0.22, duration: 1.3, ease: "power3.out",
-        scrollTrigger: { trigger: ".team-cards-wrap", start: "top bottom-=80" },
+        x: 0, opacity: 1, stagger: 0.12, duration: 1.1, ease: "power3.out",
+        scrollTrigger: { trigger: ".team-left", start: "top bottom-=120" },
+      }
+    );
+    // Portrait cards cascade in
+    gsap.fromTo(".team-portrait",
+      { y: 70, opacity: 0 },
+      {
+        y: 0, opacity: 1, stagger: 0.18, duration: 1.3, ease: "power3.out",
+        scrollTrigger: { trigger: ".team-right", start: "top bottom-=80" },
       }
     );
     // Stats
@@ -470,21 +471,25 @@ function ManagementTeam() {
   const leaders = [
     {
       name: "Yousuf Fakhruddin",
+      nameLines: ["Yousuf", "Fakhruddin"],
       role: "Chief Executive Officer",
       img: "https://www.fakhruddinproperties.com/wp-content/uploads/2025/12/Yousuf-Fakhruddin-CEO.webp",
+      index: "01",
     },
     {
       name: "Fatema Yousuf Fakhruddin",
+      nameLines: ["Fatema Yousuf", "Fakhruddin"],
       role: "Chief Operating Officer",
       img: "https://www.fakhruddinproperties.com/wp-content/uploads/2025/12/Fatema-Fakhruddin-COO.webp",
+      index: "02",
     },
   ];
 
   return (
     <section id="team" ref={ref} className="relative w-full bg-white overflow-hidden">
 
-      {/* Section header */}
-      <div className="px-6 md:px-16 lg:px-24 pt-20 md:pt-28 pb-14">
+      {/* ── TOP BAND: dark header strip ── */}
+      <div className="bg-[#ffffff] px-6 md:px-16 lg:px-24 pt-12 md:pt-20">
         <div className="team-heading max-w-[1400px] mx-auto flex flex-col md:flex-row md:items-end justify-between gap-6">
           <div>
             <span className="text-[#A19585] text-xs tracking-[0.4em] uppercase block mb-5">Management Team</span>
@@ -493,58 +498,112 @@ function ManagementTeam() {
               <span className="text-[#A19585]">the Scenes.</span>
             </h2>
           </div>
-          <p className="text-[#1b2946]/50 text-sm max-w-xs leading-relaxed pb-1">
+          <p className="text-[#1b2946]/50 text-sm max-w-xs leading-relaxed pb-4">
             Visionaries who have turned a 60-year legacy into a living philosophy.
           </p>
         </div>
       </div>
+      
 
-      {/* Portrait cards — equal width, clear gap, no left sidebar */}
-      <div className="team-cards-wrap max-w-[1400px] mx-auto px-6 md:px-16 lg:px-24 pb-0">
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-8 lg:gap-12">
-          {leaders.map((l, i) => (
-            <div
-              key={i}
-              className="team-portrait group relative overflow-hidden cursor-default"
-              style={{ aspectRatio: "1/1" }}
-            >
-              {/* Portrait image */}
-              <img
-                src={l.img}
-                alt={l.name}
-                className="absolute inset-0 w-full h-full object-cover object-top transition-transform duration-[1400ms] ease-[cubic-bezier(0.76,0,0.24,1)] group-hover:scale-[1.04]"
-              />
+      {/* ── MAIN LAYOUT: left meta column + right staggered portraits ── */}
+      <div className="max-w-[1400px] mx-auto px-6 md:px-16 lg:px-24 py-0">
+        <div className="grid grid-cols-1 lg:grid-cols-12 gap-0">
 
-              {/* Permanent bottom gradient — name always readable */}
-              <div className="absolute inset-0 bg-gradient-to-t from-black/85 via-black/15 to-transparent" />
-
-              {/* Top gold accent line sweeps in on hover */}
-              <div className="absolute top-0 left-0 right-0 h-[3px] bg-[#A19585] scale-x-0 group-hover:scale-x-100 transition-transform duration-700 origin-left" />
-
-              {/* Bottom-left name + role */}
-              <div className="absolute bottom-0 left-0 right-0 px-8 py-8 z-10">
-                <div className="w-8 h-[1px] bg-[#A19585] group-hover:w-16 transition-all duration-500 mb-4" />
-                <h3
-                  className="text-white leading-snug mb-1.5"
-                  style={{
-                    fontWeight: 300,
-                    letterSpacing: "-0.01em",
-                    fontSize: "clamp(1.25rem, 2.2vw, 1.75rem)",
-                  }}
+          {/* LEFT COLUMN — index numbers + labels, vertically centred */}
+          <div className="team-left hidden lg:flex lg:col-span-3 flex-col justify-center gap-12 py-20 border-r border-black/6 pr-10">
+            {leaders.map((l, i) => (
+              <div key={i} className="team-left-line flex flex-col gap-3">
+                {/* Big index */}
+                <span
+                  className="text-[5rem] leading-none text-[#A19585]/15 select-none"
+                  style={{ fontWeight: 300 }}
                 >
-                  {l.name}
-                </h3>
-                <p className="text-[#A19585] text-base tracking-[0.2em] uppercase">
+                  {l.index}
+                </span>
+                {/* Divider */}
+                <div className="w-10 h-[1px] bg-[#A19585]/40" />
+                {/* Name stacked */}
+                <div>
+                  {l.nameLines.map((line, li) => (
+                    <p
+                      key={li}
+                      className="text-[#1b2946] text-xl leading-snug"
+                      style={{ fontWeight: 300 }}
+                    >
+                      {line}
+                    </p>
+                  ))}
+                </div>
+                <p className="text-[#A19585] text-[9px] tracking-[0.45em] uppercase">
                   {l.role}
                 </p>
               </div>
-            </div>
-          ))}
+            ))}
+          </div>
+
+          {/* RIGHT — staggered offset portraits, no grid box, pure editorial */}
+          <div className="team-right lg:col-span-9 lg:pl-12 flex flex-col md:flex-row gap-0 items-end py-0 md:py-12">
+            {leaders.map((l, i) => (
+              <div
+                key={i}
+                className="team-portrait group relative flex-1 cursor-default"
+                style={{
+                  /* Second card is offset upward to break the grid */
+                  marginTop: i === 1 ? "0" : "0",
+                  zIndex: i === 0 ? 2 : 1,
+                }}
+              >
+                {/* Portrait image — tall, slight overlap via negative margin on desktop */}
+                <div
+                  className={`relative overflow-hidden bg-[#1a1a2e] ${i === 0 ? "md:-mr-6 mr-0" : ""}`}
+                  style={{
+                    aspectRatio: "1/1",
+                    marginTop: i === 1 ? "48px" : "0",
+                  }}
+                >
+                  <img
+                    src={l.img}
+                    alt={l.name}
+                    className="w-full h-full object-cover object-top transition-transform duration-[1400ms] ease-[cubic-bezier(0.76,0,0.24,1)] group-hover:scale-[1.04]"
+                  />
+                  {/* Permanent gradient — name always readable */}
+                  <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/10 to-transparent" />
+
+                  {/* Hover accent top */}
+                  <div className="absolute top-0 left-0 right-0 h-[3px] bg-[#A19585] scale-x-0 group-hover:scale-x-100 transition-transform duration-700 origin-left" />
+
+                  {/* Name + role ALWAYS at bottom — no hover required */}
+                  <div className="absolute bottom-0 left-0 right-0 p-6 md:p-8">
+                    {/* Animated accent line */}
+                    <div className="w-6 h-[1px] bg-[#A19585] group-hover:w-12 transition-all duration-500 mb-4" />
+                    <h3
+                      className="text-white leading-tight mb-1"
+                      style={{
+                        fontWeight: 300,
+                        letterSpacing: "-0.01em",
+                        fontSize: "clamp(1.2rem, 2.5vw, 1.75rem)",
+                      }}
+                    >
+                      {l.name}
+                    </h3>
+                    <p className="text-[#A19585] text-[9px] tracking-[0.45em] uppercase">
+                      {l.role}
+                    </p>
+                  </div>
+
+                  {/* Mobile: show index badge */}
+                  <div className="absolute top-5 left-5 lg:hidden">
+                    <span className="text-white/25 text-xs tracking-[0.3em]">{l.index}</span>
+                  </div>
+                </div>
+              </div>
+            ))}
+          </div>
         </div>
       </div>
 
-      {/* Stats band */}
-      <div className="team-stats grid grid-cols-1 sm:grid-cols-3 gap-[1px] bg-black/5 border-t border-black/6 mt-14">
+      {/* ── STATS BAND ── */}
+      <div className="team-stats grid grid-cols-1 sm:grid-cols-3 gap-[1px] bg-black/6 border-t border-black/6">
         {[
           { v: "20+",      l: "Years of Purposeful Development" },
           { v: "60%",      l: "Carbon Footprint Reduced Across Projects" },
@@ -569,7 +628,7 @@ function ManagementTeam() {
 }
 
 // ─────────────────────────────────────────────────────────────
-// AWARD POPUP
+// AWARD POPUP — image left, content right (per screenshot)
 // ─────────────────────────────────────────────────────────────
 interface AwardPopupProps {
   award: typeof AWARD_CARDS[0] | null;
@@ -650,7 +709,7 @@ function AwardPopup({ award, onClose }: AwardPopupProps) {
 }
 
 // ─────────────────────────────────────────────────────────────
-// AWARDS — infinite marquee
+// AWARDS — Framer-motion infinite marquee (like CommunitiesSection)
 // ─────────────────────────────────────────────────────────────
 function Awards() {
   const ref = useRef<HTMLElement>(null);
@@ -679,7 +738,13 @@ function Awards() {
   }, { scope: ref });
 
   return (
-    <section id="awards" ref={ref} className="relative w-full bg-[#F5F2EE] overflow-hidden py-24 md:py-36">
+    <section id="awards" ref={ref} className="relative w-full bg-[#100F2B] overflow-hidden py-24 md:py-36">
+
+      {/* Background glow */}
+      <div className="absolute inset-0 opacity-10 pointer-events-none">
+        <div className="absolute top-0 left-1/4 w-96 h-96 bg-[#A19585] rounded-full blur-[120px]" />
+        <div className="absolute bottom-0 right-1/4 w-96 h-96 bg-[#A19585] rounded-full blur-[120px]" />
+      </div>
 
       {/* ── Header ── */}
       <div ref={titleRef} className="relative z-10 max-w-[1400px] mx-auto px-6 md:px-16 lg:px-24 mb-16">
@@ -690,14 +755,14 @@ function Awards() {
               <span className="text-[#A19585] text-xs tracking-[0.4em] uppercase">Awards & Recognition</span>
             </div>
             <h2
-              className="font-marcellus font-light text-4xl md:text-5xl lg:text-6xl text-[#1b2946] leading-tight"
+              className="font-marcellus font-light text-4xl md:text-5xl lg:text-6xl text-white leading-tight"
               style={{ fontWeight: 300 }}
             >
               Industry Recognition,<br />
               <span className="text-[#A19585]">Year by Year.</span>
             </h2>
           </div>
-          <p className="text-[#1b2946]/45 text-sm max-w-xs leading-relaxed">
+          <p className="text-white/35 text-sm max-w-xs leading-relaxed">
             Click any award card to view details.
           </p>
         </div>
@@ -721,8 +786,8 @@ function Awards() {
               repeatType: "loop",
               // ── MARQUEE SPEED ──────────────────────────────────────────
               // Increase the number to make it slower, decrease to speed it up.
-              // On hover the duration jumps to 300 (effectively paused).
-              // Normal scroll speed: 200 seconds for one full loop.
+              // On hover the duration jumps to 200 (effectively paused).
+              // Normal scroll speed: 70 seconds for one full loop.
               // ──────────────────────────────────────────────────────────
               duration: isHovered ? 300 : 200,
               ease: "linear",
@@ -737,7 +802,7 @@ function Awards() {
               onClick={() => setSelectedAward(award)}
             >
               {/* Card — square 1:1 ratio, image only */}
-              <div className="group relative aspect-square overflow-hidden bg-[#E8E4DF]">
+              <div className="group relative aspect-square overflow-hidden bg-[#1a1940]">
                 <img
                   src={award.img}
                   alt={award.title}
@@ -745,45 +810,45 @@ function Awards() {
                 />
 
                 {/* Gradient overlay */}
-                <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-black/10 to-transparent opacity-70 group-hover:opacity-90 transition-opacity duration-500" />
+                <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-black/10 to-transparent opacity-70 group-hover:opacity-90 transition-opacity duration-500" />
 
                 {/* Click hint bottom */}
                 <div className="absolute bottom-5 left-5 right-5">
                   <div className="w-5 h-[1px] bg-[#A19585] group-hover:w-10 transition-all duration-400 mb-3" />
-                  <p className="text-white/0 group-hover:text-white/60 text-[10px] tracking-[0.3em] uppercase transition-all duration-400">
+                  <p className="text-white/0 group-hover:text-white/50 text-[10px] tracking-[0.3em] uppercase transition-all duration-400">
                     View Details
                   </p>
                 </div>
 
                 {/* Tap ripple indicator */}
-                <div className="absolute top-4 right-4 w-7 h-7 border border-white/25 flex items-center justify-center group-hover:border-[#A19585] transition-colors duration-400">
-                  <span className="text-white/50 group-hover:text-[#A19585] text-xs transition-colors duration-400">+</span>
+                <div className="absolute top-4 right-4 w-7 h-7 border border-white/20 flex items-center justify-center group-hover:border-[#A19585] transition-colors duration-400">
+                  <span className="text-white/40 group-hover:text-[#A19585] text-xs transition-colors duration-400">+</span>
                 </div>
               </div>
             </div>
           ))}
         </motion.div>
 
-        {/* Edge fades — match light bg */}
-        <div className="absolute left-0 top-0 bottom-0 w-20 bg-gradient-to-r from-[#F5F2EE] to-transparent pointer-events-none z-20" />
-        <div className="absolute right-0 top-0 bottom-0 w-20 bg-gradient-to-l from-[#F5F2EE] to-transparent pointer-events-none z-20" />
+        {/* Edge fades */}
+        <div className="absolute left-0 top-0 bottom-0 w-20 bg-gradient-to-r from-[#100F2B] to-transparent pointer-events-none z-20" />
+        <div className="absolute right-0 top-0 bottom-0 w-20 bg-gradient-to-l from-[#100F2B] to-transparent pointer-events-none z-20" />
       </motion.div>
 
       {/* ── Awards by Year (list) ── */}
       <div className="relative z-10 max-w-[1400px] mx-auto px-6 md:px-16 lg:px-24 mt-20">
-        <div className="w-full h-[1px] bg-[#A19585]/20 mb-14" />
+        <div className="w-full h-[1px] bg-white/8 mb-14" />
         <div className="awards-year-grid grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-x-10 gap-y-12">
           {AWARDS_YEARS.map((yr, i) => (
             <div key={i} className="awards-year-col">
-              <div className="text-[#A19585]/80 text-[4rem] leading-none mb-4 select-none" style={{ fontWeight: 300 }}>
+              <div className="text-[#A19585]/50 text-[4rem] leading-none mb-4 select-none" style={{ fontWeight: 300 }}>
                 {yr.year}
               </div>
-              <div className="w-full h-[2px] bg-[#A19585]/20 mb-4" />
+              <div className="w-full h-[2px] bg-white/10 mb-4" />
               <ul className="space-y-0">
                 {yr.awards.map((award, ai) => (
                   <li
                     key={ai}
-                    className="text-[#1b2946]/65 text-[14px] leading-relaxed py-2.5 border-b border-[#1b2946]/8 hover:text-[#1b2946]/90 hover:pl-2 transition-all duration-300 cursor-default"
+                    className="text-white/45 text-[14px] leading-relaxed py-2.5 border-b border-white/5 hover:text-white/75 hover:pl-2 transition-all duration-300 cursor-default"
                   >
                     {award}
                   </li>
@@ -921,24 +986,6 @@ export default function AboutPage() {
   return (
     <main className="bg-black overflow-x-hidden">
       <Navbar />
-
-      {/* CURTAIN REVEAL */}
-      <motion.div
-        initial={{ y: 0 }}
-        animate={{ x: "-100%" }}
-        transition={{ duration: 1.4, ease: customEase, delay: 0.2 }}
-        className="fixed inset-0 z-50 bg-black pointer-events-none flex items-center justify-center"
-      >
-        {/* Subtle logo pulse during load */}
-        <motion.div
-          animate={{ opacity: [0.5, 1, 0.5] }}
-          transition={{ duration: 1.5, repeat: Infinity }}
-          className="w-16 h-16 rounded-full flex items-center justify-center"
-        >
-          <span className="text-gray-400 text-xs tracking-widest">Fakhruddin Properties</span>
-        </motion.div>
-      </motion.div>
-
       <Hero />
       <OurStory />
       <Philosophy />
