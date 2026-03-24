@@ -92,7 +92,7 @@ export default function HeroSection() {
                 </motion.p>
               </div>
 
-              <h1 className="text-white text-5xl md:text-7xl lg:text-[6rem] font-light tracking-tight leading-[1.25] overflow-hidden">
+              <h1 className="text-white text-5xl md:text-7xl lg:text-[6rem] font-light tracking-tight leading-[1.25] overflow-hidden font-marcellus">
                 <div className="overflow-hidden">
                   <motion.span
                     initial={{ y: "100%" }}

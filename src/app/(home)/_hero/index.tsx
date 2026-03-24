@@ -51,6 +51,7 @@ export default function HeroSection() {
           loop
           muted
           playsInline
+          preload="auto"
           className="w-full h-full object-cover scale-105"
         >
           <source src="/fpd-intro.mp4" type="video/mp4" />
@@ -79,12 +80,12 @@ export default function HeroSection() {
                   WebkitMaskImage: 'linear-gradient(to right, black 0%, transparent 0%)',
                   opacity: 1,
                   filter: "blur(0px)"
-                }}
+                } as any}
                 animate={{
                   WebkitMaskImage: 'linear-gradient(to right, black 100%, transparent 110%)',
                   opacity: 1,
                   filter: "blur(0px)"
-                }}
+                } as any}
                 exit={{
                   opacity: 0,
                   filter: "blur(20px)",

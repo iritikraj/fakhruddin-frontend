@@ -21,7 +21,7 @@ export default function CommunitiesSection() {
           <h2 className="text-xs tracking-[0.4em] uppercase text-[#b69c6b] mb-6 font-medium">
             Inspired Living
           </h2>
-          <h3 className="text-5xl md:text-7xl font-light tracking-tighter text-[#1A1A1A] font-serif">
+          <h3 className="text-5xl md:text-7xl font-light tracking-tighter text-[#1A1A1A] font-marcellus">
             Master <br />Communities
           </h3>
         </motion.div>
@@ -101,7 +101,7 @@ function CommunityCard({ community, index }: { community: any; index: number }) 
                 <span className="text-xs tracking-[0.4em] uppercase opacity-70 mb-4 block">
                  Community
                 </span>
-                <h2 className="text-6xl md:text-8xl font-light tracking-tighter mb-8">
+                <h2 className="text-6xl md:text-8xl font-light tracking-tighter mb-8 font-marcellus">
                   {community.title}
                 </h2>
 
@@ -118,8 +118,8 @@ function CommunityCard({ community, index }: { community: any; index: number }) 
                   Redefining the standard of sustainable luxury with wellness-integrated
                   architecture and vibrant social spaces.
                 </p>
-                <button className="group flex items-center gap-4 bg-white text-black px-8 py-4 rounded-full hover:bg-neutral-200 transition-colors">
-                  <span className="text-xs uppercase tracking-widest font-bold">Explore Community</span>
+                <button className="group flex items-center gap-4 bg-white/10 text-white px-8 py-4 hover:bg-white/40 transition-colors backdrop-blur-xs">
+                  <span className="text-xs uppercase tracking-widest font-bold font-marcellus">Explore Community</span>
                   <ArrowUpRight size={20} className="group-hover:translate-x-1 group-hover:-translate-y-1 transition-transform" />
                 </button>
               </div>

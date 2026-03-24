@@ -115,7 +115,7 @@ export default function Navbar() {
                         <span className="text-[10px] font-light text-white/20 group-hover:text-yellow-600 transition-colors duration-500">
                           0{i + 1}
                         </span>
-                        <h2 className="font-serif text-3xl md:text-5xl lg:text-6xl text-white/90 group-hover:text-white group-hover:italic group-hover:translate-x-4 transition-all duration-700">
+                        <h2 className="font-marcellus text-3xl md:text-5xl lg:text-6xl text-white/90 group-hover:text-white group-hover:italic group-hover:translate-x-4 transition-all duration-700">
                           {link.name}
                         </h2>
                       </a>
@@ -134,7 +134,7 @@ export default function Navbar() {
                       <p className="text-[8px] tracking-[0.6em] uppercase text-yellow-600/60 font-medium">Inquiry</p>
                       <p className="text-sm md:text-md text-white/80 font-light tracking-wide leading-relaxed">
                         If in doubt. <br />
-                        <span className="font-serif text-2xl text-white">reach out.</span>
+                        <span className="font-marcellus text-2xl text-white">reach out.</span>
                       </p>
                     </div>
 

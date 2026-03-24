@@ -24,6 +24,15 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en" className={marcellus.variable}>
+      <head>
+        <link
+          rel="preload"
+          as="video"
+          href="/fpd-intro.mp4"
+          type="video/mp4"
+          crossOrigin="anonymous"
+        />
+      </head>
       <body className="font-sans antialiased bg-black text-white selection:bg-luxury-gold selection:text-black">
         <CustomCursor />
         <PageTransition />

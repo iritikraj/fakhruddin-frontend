@@ -129,7 +129,7 @@ function HeroSection() {
             transition={{ duration: 1, delay: 0.5, ease: customEase }}
             className="block text-[#B2904C] tracking-[0.4em] uppercase text-xs font-bold"
           >
-            Nakheel Masterplan
+            Masterplan
           </motion.span>
         </div>
         <div className="overflow-hidden">
@@ -137,25 +137,12 @@ function HeroSection() {
             initial={{ y: "100%" }}
             animate={{ y: 0 }}
             transition={{ duration: 1.2, delay: 0.6, ease: customEase }}
-            className="text-white text-6xl md:text-8xl lg:text-[9rem] font-serif italic font-light tracking-tight leading-[0.9]"
+            className="text-white text-6xl md:text-8xl lg:text-[9rem] font-marcellus font-light tracking-tight leading-[0.9]"
           >
             Dubai Islands.
           </motion.h1>
         </div>
       </div>
-
-      <motion.div
-        initial={{ opacity: 0 }}
-        animate={{ opacity: 1 }}
-        transition={{ delay: 1.5, duration: 1 }}
-        className="absolute bottom-0 left-1/2 -translate-x-1/2 h-24 w-[1px] bg-white/20 overflow-hidden hidden md:block"
-      >
-        <motion.div
-          animate={{ y: ["-100%", "100%"] }}
-          transition={{ repeat: Infinity, duration: 2, ease: "linear" }}
-          className="w-full h-1/2 bg-white"
-        />
-      </motion.div>
     </section>
   );
 }
@@ -173,11 +160,11 @@ function EditorialSection() {
               <path id="circlePath" d="M 50, 50 m -37, 0 a 37,37 0 1,1 74,0 a 37,37 0 1,1 -74,0" fill="transparent" />
               <text className="text-[10px] uppercase tracking-widest fill-current font-bold">
                 <textPath href="#circlePath">
-                  Fakhruddin Properties • Master Developer •
+                  Dubai Islands • Fakhruddin Pro •
                 </textPath>
               </text>
             </svg>
-            <div className="absolute inset-0 flex items-center justify-center font-serif text-2xl italic">FP</div>
+            <div className="absolute inset-0 flex items-center justify-center font-marcellus text-2xl">FP</div>
           </motion.div>
         </div>
       </div>
@@ -189,7 +176,7 @@ function EditorialSection() {
             whileInView={{ y: 0, rotate: 0 }}
             viewport={{ once: true, margin: "-100px" }}
             transition={{ duration: 1.2, ease: customEase }}
-            className="text-4xl md:text-6xl lg:text-7xl font-light leading-[1.1] text-[#1C1C1C] font-serif"
+            className="text-4xl md:text-6xl lg:text-7xl font-light leading-[1.1] text-[#1C1C1C] font-marcellus"
           >
             Experience inspired living in an expansive waterfront community.
           </motion.h2>
@@ -229,7 +216,7 @@ function HorizontalGallery() {
     <section ref={ref} className="relative h-[200vh] bg-[#111] text-white">
       <div className="sticky top-0 h-screen w-full overflow-hidden flex flex-col justify-center">
         <div className="px-6 md:px-16 mb-12 flex justify-between items-end w-full max-w-[1600px] mx-auto">
-          <h2 className="text-4xl md:text-6xl font-serif italic font-light">The Masterplan</h2>
+          <h2 className="text-4xl md:text-6xl font-marcellus font-light">The Masterplan</h2>
           <span className="text-[10px] tracking-[0.3em] uppercase text-white/50 hidden md:block">Scroll to explore</span>
         </div>
 
@@ -268,7 +255,7 @@ function VisionaryQuote() {
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
           transition={{ duration: 1.5, ease: customEase }}
-          className="text-3xl md:text-5xl lg:text-6xl font-serif italic text-[#1C1C1C] leading-tight mb-12"
+          className="text-3xl md:text-5xl lg:text-6xl font-marcellus text-[#1C1C1C] leading-tight mb-12"
         >
           Not just a residence, but a living, breathing legacy built on the pristine waters of Dubai.
         </motion.h3>
@@ -305,7 +292,7 @@ function StickyStorytelling() {
                 <span className={`text-[10px] tracking-[0.3em] uppercase mb-2 transition-colors duration-500 font-bold ${isActive ? 'text-[#B2904C]' : 'text-[#1C1C1C]/30 group-hover:text-[#1C1C1C]/60'}`}>
                   0{idx + 1}
                 </span>
-                <span className={`text-xl font-serif transition-all duration-500 ${isActive ? 'text-[#1C1C1C] italic' : 'text-[#1C1C1C]/40 hover:text-[#1C1C1C]'}`}>
+                <span className={`text-xl font-marcellus transition-all duration-500 ${isActive ? 'text-[#1C1C1C]' : 'text-[#1C1C1C]/40 hover:text-[#1C1C1C]'}`}>
                   {sec.tab}
                 </span>
               </button>
@@ -336,7 +323,7 @@ function StickyStorytelling() {
                   <span className="text-[10px] tracking-[0.4em] uppercase text-[#B2904C] font-bold mb-6 block">
                     {sec.subtitle}
                   </span>
-                  <h3 className="text-4xl md:text-5xl font-serif text-[#1C1C1C] mb-8 leading-[1.1]">
+                  <h3 className="text-4xl md:text-5xl font-marcellus text-[#1C1C1C] mb-8 leading-[1.1]">
                     {sec.title}
                   </h3>
                   <p className="text-[#1C1C1C]/60 font-light leading-relaxed mb-10 text-lg">
@@ -368,7 +355,7 @@ function ContactForm() {
       <div className="max-w-[1400px] mx-auto px-6 flex flex-col lg:flex-row gap-16 lg:gap-24">
         <div className="w-full lg:w-1/3">
           <span className="text-[10px] tracking-[0.3em] uppercase text-[#B2904C] font-bold block mb-6">Inquiries</span>
-          <h2 className="text-5xl md:text-7xl font-serif italic font-light leading-[1.1]">Begin your <br />journey.</h2>
+          <h2 className="text-5xl md:text-7xl font-marcellus font-light leading-[1.1]">Begin your <br />journey</h2>
         </div>
 
         <div className="w-full lg:w-2/3">
@@ -394,12 +381,10 @@ function ContactForm() {
             </motion.div>
 
             <motion.div variants={{ hidden: { opacity: 0, y: 20 }, show: { opacity: 1, y: 0 } }} className="pt-8">
-              <Magnetic>
-                <button type="button" className="bg-[#B2904C] text-[#1C1C1C] px-12 py-5 rounded-full text-[10px] tracking-[0.3em] uppercase font-bold hover:bg-[#F9F9F8] transition-colors duration-500 flex items-center gap-4 w-fit">
-                  Submit Inquiry
-                  <ArrowUpRight size={14} />
-                </button>
-              </Magnetic>
+              <button type="button" className="bg-black/20 font-marcellus opacity-80 text-white px-12 py-5 backdrop-blur-xs text-[10px] tracking-[0.3em] uppercase font-bold hover:scale-105 transition-colors duration-500 flex items-center gap-4 w-fit">
+                Submit Inquiry
+                <ArrowUpRight size={14} />
+              </button>
             </motion.div>
           </motion.form>
         </div>

@@ -164,7 +164,7 @@ function SophisticationSection() {
         style={{ y: textY }}
         className="absolute top-20 left-6 z-0 opacity-[0.03] pointer-events-none select-none"
       >
-        <h2 className="text-[15vw] font-serif leading-none uppercase">Sophisticated</h2>
+        <h2 className="text-[11vw] font-marcellus leading-none uppercase text-center">Sophisticated</h2>
       </motion.div>
 
       <div className="relative grid grid-cols-12 gap-4 items-start">
@@ -180,7 +180,7 @@ function SophisticationSection() {
               className="text-4xl md:text-6xl font-light tracking-tight text-gray-900 leading-[1.1]"
             >
               Step into <br />
-              <span className="font-serif italic text-[#CBA153]">A World Of Sophistication</span>
+              <span className="font-marcellus">A World Of Sophistication</span>
             </motion.h2>
           </div>
 
@@ -215,7 +215,7 @@ function SophisticationSection() {
             {/* Floating Detail Label */}
             <div className="absolute bottom-10 left-10 text-white">
               <p className="text-[10px] tracking-[0.4em] uppercase font-bold mb-2">Exclusively</p>
-              <h4 className="text-2xl font-serif italic">Dubai Islands</h4>
+              <h4 className="text-2xl font-marcellus">Dubai Islands</h4>
             </div>
           </motion.div>
 
@@ -321,7 +321,7 @@ export default function CommunityPage() {
               <div className="w-14 h-14 rounded-full border border-[#CBA153] flex items-center justify-center mb-4 bg-[#CBA153]/5">
                 <span className="text-[#CBA153] text-[10px] tracking-widest font-serif">FP</span>
               </div>
-              <h2 className="text-xl md:text-2xl font-serif tracking-wide text-center xl:text-left text-gray-900">DUBAI ISLANDS</h2>
+              <h2 className="text-xl md:text-2xl font-marcellus tracking-wide text-center xl:text-left text-gray-900">DUBAI ISLANDS</h2>
             </motion.div>
 
             <div className="xl:w-3/4 flex flex-col w-full">
@@ -403,7 +403,7 @@ export default function CommunityPage() {
                   transition={{ duration: 1.2, ease: customEase, delay: 0.2 }}
                   className="text-3xl md:text-5xl font-light leading-[1.3] text-gray-800"
                 >
-                  community in <span className="font-serif italic text-[#CBA153]">Dubai Islands.</span>
+                  community in <span className="font-marcellus">Dubai Islands.</span>
                 </motion.h2>
               </div>
             </div>
@@ -448,7 +448,7 @@ export default function CommunityPage() {
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true }}
                 transition={{ duration: 1, ease: customEase }}
-                className="text-xs md:text-sm tracking-[0.4em] uppercase text-white/80 font-medium block mb-4"
+                className="text-xs md:text-sm tracking-[0.4em] uppercase text-white/80 font-medium block mb-4 font-marcellus"
               >
                 In the heart of
               </motion.span>
@@ -458,7 +458,7 @@ export default function CommunityPage() {
                   whileInView={{ y: 0, skewY: 0 }}
                   viewport={{ once: true }}
                   transition={{ duration: 1.2, ease: customEase, delay: 0.1 }}
-                  className="text-7xl md:text-[10rem] font-serif italic text-white drop-shadow-2xl leading-none"
+                  className="text-7xl md:text-[10rem] font-marcellus text-white drop-shadow-2xl leading-none"
                 >
                   Dubai
                 </motion.h2>
@@ -498,7 +498,7 @@ export default function CommunityPage() {
                     <span className={`text-[10px] tracking-[0.4em] uppercase mb-1 transition-colors duration-500 ${isActive ? 'text-[#CBA153] opacity-100' : 'text-gray-300 opacity-0 group-hover:opacity-100'}`}>
                       0{idx + 1}
                     </span>
-                    <span className={`text-xl font-serif transition-all duration-500 ${isActive ? 'text-black translate-x-2 italic' : 'text-gray-400 font-light hover:text-gray-600'}`}>
+                    <span className={`text-xl font-marcellus transition-all duration-500 ${isActive ? 'text-black translate-x-2' : 'text-gray-400 font-light hover:text-gray-600'}`}>
                       {sec.tab}
                     </span>
                   </button>
@@ -554,7 +554,7 @@ export default function CommunityPage() {
                         </span>
                       </div>
 
-                      <h3 className="text-4xl md:text-5xl font-serif text-gray-900 mb-8 leading-[1.1] italic font-light">
+                      <h3 className="text-4xl md:text-5xl font-marcellus text-gray-900 mb-8 leading-[1.1] font-light">
                         {sec.title}
                       </h3>
 
@@ -599,7 +599,7 @@ export default function CommunityPage() {
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true }}
                 transition={{ duration: 0.8, ease: customEase }}
-                className="text-sm tracking-[0.3em] uppercase mb-4 block text-[#CBA153]"
+                className="text-sm tracking-[0.3em] uppercase mb-4 block text-[#CBA153] font-marcellus"
               >
                 Right in the
               </motion.span>
@@ -608,7 +608,7 @@ export default function CommunityPage() {
                 whileInView={{ y: 0 }}
                 viewport={{ once: true }}
                 transition={{ duration: 1.2, ease: customEase, delay: 0.1 }}
-                className="text-5xl md:text-[5.5rem] font-serif italic leading-none"
+                className="text-5xl md:text-[5.5rem] font-marcellus leading-none"
               >
                 Centre of Dubai
               </motion.h2>
@@ -625,7 +625,7 @@ export default function CommunityPage() {
                   className="flex items-center justify-end gap-6 text-white group cursor-default"
                 >
                   <div className="text-right">
-                    <h4 className="text-xl font-serif tracking-wide">{loc.label}</h4>
+                    <h4 className="text-xl font-marcellus tracking-wide">{loc.label}</h4>
                     <span className="text-xs tracking-[0.2em] uppercase text-white/50">{loc.time}</span>
                   </div>
                   <div className="w-12 h-12 rounded-full bg-white/10 backdrop-blur-md border border-white/20 flex items-center justify-center group-hover:bg-[#CBA153] group-hover:border-[#CBA153] transition-colors duration-500">
@@ -648,7 +648,7 @@ export default function CommunityPage() {
                 whileInView={{ y: 0 }}
                 viewport={{ once: true }}
                 transition={{ duration: 1, ease: customEase }}
-                className="text-5xl md:text-7xl font-serif text-gray-900 tracking-tight"
+                className="text-5xl md:text-7xl font-marcellus text-gray-900 tracking-tight"
               >
                 FAQs
               </motion.h2>
@@ -703,12 +703,6 @@ export default function CommunityPage() {
             9. CONTACT FORM (Input Focus Animations)
         ══════════════════════════════════════════ */}
         <section className="relative bg-[#F9F9F7] py-32 md:py-56 overflow-hidden">
-
-          {/* Background Decorative Text - "Inquiry" */}
-          <div className="absolute top-0 right-0 opacity-[0.02] pointer-events-none select-none">
-            <h2 className="text-[25vw] font-serif leading-none uppercase -mr-20">Inquiry</h2>
-          </div>
-
           <div className="max-w-[1400px] mx-auto px-6 relative z-10">
             <div className="flex flex-col lg:flex-row gap-20 lg:gap-32">
 
@@ -723,7 +717,7 @@ export default function CommunityPage() {
                   <span className="text-[10px] tracking-[0.5em] uppercase text-[#CBA153] font-bold block mb-8">
                     Personalized Service
                   </span>
-                  <h2 className="text-6xl md:text-8xl font-serif text-gray-900 leading-[0.9] mb-12">
+                  <h2 className="text-6xl md:text-8xl font-marcellus text-gray-900 leading-[0.9] mb-12">
                     Hear <br /> <span className=" font-light">From You</span>
                   </h2>
 

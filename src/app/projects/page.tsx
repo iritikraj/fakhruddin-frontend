@@ -74,21 +74,21 @@ function HeroSlider() {
       { y: 50, opacity: 0 },
       { y: 0, opacity: 1, duration: 1.2, ease: "power3.out" }
     )
-    .fromTo(titleRef.current,
-      { y: 100, opacity: 0 },
-      { y: 0, opacity: 1, duration: 1.2, ease: "power3.out" },
-      "-=0.8"
-    )
-    .fromTo(descRef.current,
-      { y: 100, opacity: 0 },
-      { y: 0, opacity: 1, duration: 1.2, ease: "power3.out" },
-      "-=0.8"
-    )
-    .fromTo(lineRef.current,
-      { width: 0, opacity: 0 },
-      { width: "30%", opacity: 1, duration: 1, ease: "power3.out" },
-      "-=0.6"
-    );
+      .fromTo(titleRef.current,
+        { y: 100, opacity: 0 },
+        { y: 0, opacity: 1, duration: 1.2, ease: "power3.out" },
+        "-=0.8"
+      )
+      .fromTo(descRef.current,
+        { y: 100, opacity: 0 },
+        { y: 0, opacity: 1, duration: 1.2, ease: "power3.out" },
+        "-=0.8"
+      )
+      .fromTo(lineRef.current,
+        { width: 0, opacity: 0 },
+        { width: "30%", opacity: 1, duration: 1, ease: "power3.out" },
+        "-=0.6"
+      );
   }, { scope: sectionRef });
 
   // Animate current image - NO BLUR
@@ -97,13 +97,13 @@ function HeroSlider() {
     imageRefs.current.forEach((ref, index) => {
       if (ref) {
         gsap.killTweensOf(ref);
-        
+
         if (index === currentIndex) {
           // Current image - gentle zoom only, NO BLUR
           gsap.fromTo(ref,
             { scale: 1 },
-            { 
-              scale: 1.1, 
+            {
+              scale: 1.1,
               duration: 8,
               ease: "none",
               repeat: -1,
@@ -129,9 +129,8 @@ function HeroSlider() {
         <div
           key={index}
           ref={el => { imageRefs.current[index] = el; }}
-          className={`absolute inset-0 w-full h-full transition-opacity duration-2000 ${
-            index === currentIndex ? "opacity-100" : "opacity-0"
-          }`}
+          className={`absolute inset-0 w-full h-full transition-opacity duration-2000 ${index === currentIndex ? "opacity-100" : "opacity-0"
+            }`}
         >
           <img
             src={img.url}
@@ -139,11 +138,10 @@ function HeroSlider() {
             className="w-full h-full object-cover"
           />
           <div className="absolute inset-0 bg-gradient-to-r from-black/40 via-black/20 to-transparent" />
-          
+
           {/* Image Label */}
-          <div className={`absolute bottom-24 right-12 text-white/30 text-sm tracking-[0.3em] transition-opacity duration-1000 ${
-            index === currentIndex ? "opacity-100" : "opacity-0"
-          }`}>
+          <div className={`absolute bottom-24 right-12 text-white/30 text-sm tracking-[0.3em] transition-opacity duration-1000 ${index === currentIndex ? "opacity-100" : "opacity-0"
+            }`}>
             {img.title}
           </div>
         </div>
@@ -151,7 +149,7 @@ function HeroSlider() {
 
       {/* Progress Bar */}
       <div className="absolute top-0 left-0 z-20 w-full h-1 bg-white/10">
-        <div 
+        <div
           className="h-full bg-[#A19585] transition-all duration-500"
           style={{ width: `${((currentIndex + 1) / heroImages.length) * 100}%` }}
         />
@@ -163,11 +161,10 @@ function HeroSlider() {
           <button
             key={index}
             onClick={() => setCurrentIndex(index)}
-            className={`h-1 transition-all duration-500 ${
-              index === currentIndex 
-                ? "w-12 bg-[#A19585]" 
+            className={`h-1 transition-all duration-500 ${index === currentIndex
+                ? "w-12 bg-[#A19585]"
                 : "w-8 bg-white/30 hover:bg-white/50"
-            }`}
+              }`}
             aria-label={`Go to slide ${index + 1}`}
           />
         ))}
@@ -180,10 +177,10 @@ function HeroSlider() {
             FAKHRUDDIN PROPERTIES
           </p>
           <h1 ref={titleRef} className="text-6xl md:text-7xl lg:text-8xl text-white leading-tight">
-            Defining<br/>Modern Living
+            Defining<br />Modern Living
           </h1>
           <div ref={lineRef} className="h-[2px] bg-[#A19585] my-8" style={{ width: "30%" }} />
-          
+
           <p ref={descRef} className="text-white/90 text-base md:text-lg max-w-2xl">
             Where visionary architecture meets human-centric design, creating spaces that inspire, nurture, and endure.
           </p>
@@ -222,10 +219,10 @@ interface ProjectCardProps {
 }
 
 function ProjectCard({ id, title, location, description, image, specs, isNew, index, align = 'left' }: ProjectCardProps) {
-  const cardRef = useRef<HTMLDivElement>(null);
-  const imageRef = useRef<HTMLDivElement>(null);
-  const contentRef = useRef<HTMLDivElement>(null);
-  const buttonsRef = useRef<HTMLDivElement>(null);
+  const cardRef: any = useRef<HTMLDivElement>(null);
+  const imageRef: any = useRef<HTMLDivElement>(null);
+  const contentRef: any = useRef<HTMLDivElement>(null);
+  const buttonsRef: any = useRef<HTMLDivElement>(null);
 
   useGSAP(() => {
     // Card reveal animation
@@ -294,7 +291,7 @@ function ProjectCard({ id, title, location, description, image, specs, isNew, in
   }, { scope: cardRef });
 
   return (
-    <div 
+    <div
       ref={cardRef}
       className="relative w-full bg-white rounded-3xl overflow-hidden shadow-2xl mb-16 last:mb-0"
     >
@@ -307,7 +304,7 @@ function ProjectCard({ id, title, location, description, image, specs, isNew, in
             className="w-full h-full object-cover"
           />
           <div className="absolute inset-0 bg-gradient-to-t from-black/30 via-transparent to-transparent" />
-          
+
           {/* New Badge */}
           {isNew && (
             <div className="absolute top-6 left-6 bg-[#A19585] text-white text-xs px-4 py-2 rounded-full tracking-wider">
@@ -369,7 +366,7 @@ function ProjectCard({ id, title, location, description, image, specs, isNew, in
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 8l4 4m0 0l-4 4m4-4H3" />
                 </svg>
               </Link>
-              
+
               <button
                 onClick={() => window.open('/contact', '_blank')}
                 className="group flex-1 flex items-center justify-center gap-3 px-6 py-4 bg-transparent border-2 border-black/10 text-black rounded-full hover:bg-[#A19585] hover:text-white hover:border-[#A19585] transition-all duration-500"
@@ -544,7 +541,7 @@ function FoundationSection() {
     {
       number: "01",
       title: "Designing for What's Next",
-      description: "As cities evolve, our developments anticipate what tomorrow's residents truly need: wellness, sustainability, and intelligent infrastructure. From water-positive designs to integrated work-life wellness zones, every Fakhruddin project is engineered as a blueprint for future-ready urban living.",      
+      description: "As cities evolve, our developments anticipate what tomorrow's residents truly need: wellness, sustainability, and intelligent infrastructure. From water-positive designs to integrated work-life wellness zones, every Fakhruddin project is engineered as a blueprint for future-ready urban living.",
       color: "from-amber-900/20"
     },
     {
@@ -586,26 +583,26 @@ function FoundationSection() {
             >
               {/* Gradient overlay on hover */}
               <div className={`absolute inset-0 bg-gradient-to-br ${item.color} to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-700`} />
-              
+
               {/* Decorative corner */}
               <div className="absolute top-0 right-0 w-24 h-24 bg-[#b69c6b]/10 rounded-bl-3xl transform translate-x-12 -translate-y-12 group-hover:translate-x-0 group-hover:translate-y-0 transition-transform duration-700" />
-              
-              <div className="relative p-10">                
+
+              <div className="relative p-10">
                 {/* Number */}
                 <div className="text-[#b69c6b] text-3xl mb-4 group-hover:text-[#191817] transition-colors duration-500">
                   {item.number}
                 </div>
-                
+
                 {/* Title */}
                 <h3 className="text-2xl text-[#191817] mb-4 group-hover:text-[#b69c6b] transition-colors duration-500">
                   {item.title}
                 </h3>
-                
+
                 {/* Description */}
                 <p className="text-[#7a6a58] text-sm leading-relaxed group-hover:text-[#191817] transition-colors duration-500">
                   {item.description}
                 </p>
-                
+
                 {/* Decorative line */}
                 <div className="absolute bottom-0 left-0 w-0 h-[2px] bg-gradient-to-r from-[#b69c6b] to-transparent group-hover:w-full transition-all duration-700" />
               </div>
@@ -641,7 +638,7 @@ function FoundationSection() {
 export default function ProjectsPage() {
   useEffect(() => {
     ScrollTrigger.refresh();
-    
+
     // Smooth scroll
     const handleWheel = (e: WheelEvent) => {
       window.scrollBy({
@@ -651,13 +648,13 @@ export default function ProjectsPage() {
     };
 
     window.addEventListener('wheel', handleWheel, { passive: true });
-    
+
     const handleResize = () => {
       ScrollTrigger.refresh();
     };
-    
+
     window.addEventListener('resize', handleResize);
-    
+
     return () => {
       window.removeEventListener('wheel', handleWheel);
       window.removeEventListener('resize', handleResize);
@@ -669,7 +666,7 @@ export default function ProjectsPage() {
       <Navbar />
       <HeroSlider />
       <ProjectShowcase />
-      <FoundationSection />      
+      <FoundationSection />
       <Footer />
     </main>
   );
