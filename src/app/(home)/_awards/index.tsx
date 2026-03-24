@@ -16,25 +16,25 @@ const awardsList = [
     year: "2025",
     title: "Sustainable Developer of the Year",
     organization: "Forbes Middle East",
-    img: "https://images.unsplash.com/photo-1600607686527-6fb886090705?q=80&w=2000&auto=format&fit=crop",
+    img: "/Our-Story-04-1024x1024.webp",
   },
   {
     year: "2024",
     title: "Pioneering AI Infrastructure",
     organization: "Global Smart City Expo",
-    img: "https://images.unsplash.com/photo-1546412414-28524ac58329?q=80&w=2340&auto=format&fit=crop",
+    img: "/Our-Story-07-1024x1024.webp",
   },
   {
     year: "2024",
     title: "Excellence in Wellness Design",
     organization: "International Property Awards",
-    img: "https://images.unsplash.com/photo-1512917774080-9991f1c4c750?q=80&w=2000&auto=format&fit=crop",
+    img: "/Our-Story-02-760x760.webp",
   },
   {
     year: "2023",
     title: "Best Longevity Living Project",
     organization: "Arabian Business",
-    img: "https://images.unsplash.com/photo-1600596542815-ffad4c1539a9?q=80&w=2000&auto=format&fit=crop",
+    img: "/Our-Story-08-1024x1024.webp",
   },
 ];
 
@@ -170,7 +170,7 @@ export default function Awards() {
           {/* Mobile: Fades up from bottom */}
           <div className="absolute inset-0 bg-gradient-to-t from-[#F9F8F6] via-[#F9F8F6]/80 to-transparent lg:hidden pointer-events-none" />
           {/* Desktop: Fades right to cover behind the text */}
-          <div className="absolute inset-0 bg-gradient-to-r from-transparent via-[#F9F8F6]/80 to-[#F9F8F6] hidden lg:block pointer-events-none" />
+          <div className="absolute inset-0 bg-gradient-to-r from-transparent via-[#F9F8F6]/10 to-[#F9F8F6] hidden lg:block pointer-events-none" />
 
         </div>
       </div>

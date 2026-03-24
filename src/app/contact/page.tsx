@@ -14,7 +14,7 @@ const OFFICES = [
     city: "Dubai",
     region: "United Arab Emirates",
     address: "HC Floor, Lake Central Tower<br/>Al Marasi Drive, Business Bay<br/>P.O. Box. 191327",
-    image: "https://images.unsplash.com/photo-1512453979798-5ea266f8880c?q=80&w=2560",
+    image: "/port-2.webp",
     color: "bg-[#0b1320]"
   },
   {
@@ -152,8 +152,6 @@ export default function ContactPage() {
             transition={{ duration: 1.2, ease: luxuryEase }}
             className="max-w-4xl mx-auto text-2xl md:text-4xl lg:text-[42px] font-marcellus text-[#0d1833] leading-[1.4] md:leading-[1.6]"
           >
-            Our offices are more than just an address — it’s the heart of our vision. Whether you're looking to explore investment opportunities, schedule a private tour, or collaborate with us on the future of sustainable living, we’re here to connect.
-            <br /><br />
             <span className="text-[#b69c6b]">Let’s build something lasting, together.</span>
           </motion.p>
         </section>
