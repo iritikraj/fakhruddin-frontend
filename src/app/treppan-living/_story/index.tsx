@@ -5,7 +5,7 @@ import Image from 'next/image';
 import gsap from 'gsap';
 import { ScrollTrigger } from 'gsap/dist/ScrollTrigger';
 import {
-  Wind, Cpu, Droplets, Leaf, Coffee, Activity, Car, CheckCircle2
+  Wind, Cpu, Droplets, Leaf, Coffee,
 } from 'lucide-react';
 import GreenhousePremium from '../_green-house';
 
@@ -22,19 +22,32 @@ export default function TreppanStory() {
     if (!containerRef.current) return;
 
     const ctx = gsap.context(() => {
-      // 1. HERO ENTRANCE
-      const heroTl = gsap.timeline({ defaults: { ease: "expo.out" } });
-      heroTl
-        .fromTo('.hero-bg-zoom', { scale: 1.3, filter: 'blur(20px)' }, { scale: 1, filter: 'blur(0px)', duration: 3.5 })
-        .fromTo('.hero-text-reveal', { y: 120, opacity: 0 }, { y: 0, opacity: 1, duration: 2, stagger: 0.1 }, "-=2.5")
-        .fromTo('.hero-sep', { scaleX: 0 }, { scaleX: 1, duration: 2.5 }, "-=1.5");
+      // 1. NEW VIDEO HERO ENTRANCE (Page Load)
+      const videoTl = gsap.timeline({ defaults: { ease: "expo.out" } });
+      videoTl
+        .fromTo('.video-overlay', { opacity: 1 }, { opacity: 0, duration: 2, delay: 0.5 })
+        .fromTo('.video-text-reveal', { y: 50, opacity: 0 }, { y: 0, opacity: 1, duration: 2, stagger: 0.2 }, "-=1.5")
+        .fromTo('.scroll-indicator', { opacity: 0 }, { opacity: 1, duration: 1 }, "-=1");
 
-      // 2. AMBASSADOR REVEAL
+      // 2. PHILOSOPHY SECTION (Old Hero, now triggers on scroll)
+      const philTl = gsap.timeline({
+        scrollTrigger: {
+          trigger: '.philosophy-section',
+          start: 'top 70%'
+        },
+        defaults: { ease: "expo.out" }
+      });
+      philTl
+        .fromTo('.philosophy-bg-zoom', { scale: 1.2, filter: 'blur(15px)' }, { scale: 1, filter: 'blur(0px)', duration: 3 })
+        .fromTo('.philosophy-text-reveal', { y: 80, opacity: 0 }, { y: 0, opacity: 1, duration: 1.5, stagger: 0.1 }, "-=2.5")
+        .fromTo('.philosophy-sep', { scaleX: 0 }, { scaleX: 1, duration: 2 }, "-=1.5");
+
+      // 3. AMBASSADOR REVEAL
       gsap.from('.ambassador-content', {
         opacity: 0, y: 50, duration: 1.5, scrollTrigger: { trigger: '.ambassador-section', start: 'top 70%' }
       });
 
-      // 3. AUDIT COUNTERS
+      // 4. AUDIT COUNTERS
       const animateCounter = (ref: any, target: number) => {
         gsap.fromTo(ref, { innerHTML: 0 }, {
           innerHTML: target, duration: 3, snap: { innerHTML: 1 },
@@ -44,14 +57,14 @@ export default function TreppanStory() {
       if (counter1Ref.current) animateCounter(counter1Ref.current, 2580);
       if (counter2Ref.current) animateCounter(counter2Ref.current, 205);
 
-      // 4. TAKEOVER PINNING
+      // 5. TAKEOVER PINNING
       const expandTl = gsap.timeline({
         scrollTrigger: { trigger: '.takeover-section', start: 'top top', end: '+=150%', scrub: 1.2, pin: true, anticipatePin: 1 }
       });
       expandTl.to('.takeover-card', { width: '100vw', height: '100vh', borderRadius: '0px', ease: 'none' })
         .to('.takeover-content', { opacity: 1, y: 0, duration: 0.5 }, 0.2);
 
-      // 5. SMART LIVING STACKING CARDS (Features 01-05)
+      // 6. SMART LIVING STACKING CARDS (Features 01-05)
       const smartCards: any = gsap.utils.toArray('.smart-stack-card');
 
       smartCards.forEach((card: any, i: number) => {
@@ -79,7 +92,7 @@ export default function TreppanStory() {
         }
       });
 
-      // 6. CINEMATIC VISUAL TOUR PINNING (Living With Purpose 01-03)
+      // 7. CINEMATIC VISUAL TOUR PINNING
       const tourImages: any = gsap.utils.toArray('.tour-image');
       const tourTexts: any = gsap.utils.toArray('.tour-text');
 
@@ -95,12 +108,10 @@ export default function TreppanStory() {
         pin: true,
         scrub: 1,
         animation: gsap.timeline()
-          // Slide 1 to 2
           .to(tourImages[0], { opacity: 0, scale: 1.1, duration: 1 })
           .to(tourTexts[0], { opacity: 0, y: -20, duration: 0.5 }, "<")
           .to(tourImages[1], { opacity: 1, scale: 1, duration: 1 }, "<0.5")
           .to(tourTexts[1], { opacity: 1, y: 0, duration: 0.5 }, "<0.5")
-          // Slide 2 to 3
           .to(tourImages[1], { opacity: 0, scale: 1.1, duration: 1 })
           .to(tourTexts[1], { opacity: 0, y: -20, duration: 0.5 }, "<")
           .to(tourImages[2], { opacity: 1, scale: 1, duration: 1 }, "<0.5")
@@ -116,6 +127,49 @@ export default function TreppanStory() {
         { y: 0, opacity: 1, duration: 1.2, stagger: 0.2, ease: 'power3.out', scrollTrigger: { trigger: '.outro-section', start: 'top 60%' } }
       );
 
+      // 1.5 CINEMATIC PARALLAX WIPE (Replaces the rounded card effect)
+      // The video sinks into the background and darkens
+      gsap.to('.video-hero-inner', {
+        yPercent: 30,
+        filter: 'brightness(0.3)',
+        ease: 'none',
+        scrollTrigger: {
+          trigger: '.philosophy-section',
+          start: 'top bottom',
+          end: 'top top',
+          scrub: true
+        }
+      });
+
+      // The new background pulls upward, creating extreme depth
+      gsap.fromTo('.philosophy-bg-zoom',
+        { yPercent: -20, scale: 1.15 },
+        {
+          yPercent: 0, scale: 1,
+          ease: 'none',
+          scrollTrigger: {
+            trigger: '.philosophy-section',
+            start: 'top bottom',
+            end: 'top top',
+            scrub: true
+          }
+        }
+      );
+
+      // The Gold Logo emerges from the shadows with a premium blur reveal
+      gsap.fromTo('.gold-logo-reveal',
+        { y: 80, opacity: 0, filter: 'blur(10px)', scale: 0.9 },
+        {
+          y: 0, opacity: 1, filter: 'blur(0px)', scale: 1,
+          duration: 2,
+          ease: 'expo.out',
+          scrollTrigger: {
+            trigger: '.philosophy-section',
+            start: 'top 40%', // Triggers right as the section centers on screen
+          }
+        }
+      );
+
     }, containerRef);
     return () => ctx.revert();
   }, []);
@@ -123,50 +177,89 @@ export default function TreppanStory() {
   return (
     <div ref={containerRef} className="bg-[#fffcf8] text-[#191817] selection:bg-[#b69c6b] overflow-x-hidden">
 
-      {/* ══ CHAPTER 1: HERO (The Philosophy) ══ */}
-      <section className="hero-section relative h-screen w-full flex items-center justify-end bg-[#0a0a0a]">
-        <div className="hero-bg-zoom absolute inset-0 opacity-100">
-          <Image src="https://projects.fakhruddinproperties.com/JA-Treppan-Living-Prive-Desktop.webp" alt="The Philosophy" fill className="object-cover" priority />
-        </div>
-        <div className="absolute inset-0 bg-gradient-to-l from-black/80 via-black/40 to-transparent z-0" />
-        <div className="relative z-10 text-center md:text-right max-w-5xl px-6 md:pr-16 mt-20 font-marcellus">
-          <span className="hero-text-reveal text-[#b69c6b] text-[10px] uppercase tracking-[0.4em] mb-6 block">The Philosophy</span>
-          <h1 className="hero-text-reveal text-5xl md:text-8xl font-light text-white tracking-wider mb-8">
-            Where Conscious<br /> <span className="text-[#b69c6b]">Living</span> Finds<br /> Its Home
-          </h1>
-          <div className="hero-sep w-24 h-[1px] bg-white/20 mx-auto md:ml-auto md:mr-0 mb-10" />
-          <p className="hero-text-reveal text-white/80 text-lg md:text-xl font-light tracking-wide max-w-2xl ml-auto leading-relaxed">
-            Tréppan Living is not just designed for comfort. It is created for balance. A place where wellbeing, environmental responsibility, and intelligent technology come together so your everyday life feels lighter, healthier, and more meaningful.
-          </p>
-        </div>
-        <div className="absolute bottom-12 left-1/2 -translate-x-1/2 flex flex-col items-center gap-4">
-          <div className="w-[1px] h-12 bg-gradient-to-b from-[#b69c6b] to-transparent" />
-          <span className="text-[9px] uppercase tracking-[0.3em] text-white/40 rotate-90 origin-left">Scroll</span>
+      {/* ══ NEW CHAPTER 1: VIDEO HERO ══ */}
+      <section className="relative h-screen w-full overflow-hidden bg-black z-0">
+        {/* We wrap the videos in this inner div so GSAP can push them down independently */}
+        <div className="video-hero-inner absolute inset-0 w-full h-full flex items-center justify-center">
+          <video
+            src="https://www.fakhruddinproperties.com/wp-content/uploads/2026/03/Treppan-Living-Landscape-2.mp4"
+            poster="https://www.fakhruddinproperties.com/wp-content/uploads/2026/03/Treppan-Living-Desktop-Cover.webp"
+            autoPlay
+            loop
+            muted
+            playsInline
+            className="absolute inset-0 w-full h-full object-cover hidden md:block"
+          />
+
+          <video
+            src="https://www.fakhruddinproperties.com/wp-content/uploads/2026/03/Treppan-Living-Mobile.mp4"
+            poster="https://www.fakhruddinproperties.com/wp-content/uploads/2026/03/Treppan-Living-Mobile-Cover.webp"
+            autoPlay
+            muted
+            loop
+            playsInline
+            className="absolute inset-0 w-full h-full object-cover md:hidden"
+          />
         </div>
       </section>
 
-      {/* ══ CHAPTER 2: AMBASSADOR ══ */}
+      {/* ══ CHAPTER 2: THE PHILOSOPHY (Editorial Sharp Wipe) ══ */}
+      {/* Removed the rounded corners and margins. This is now a sharp, edge-to-edge cinematic wipe */}
+      <section className="philosophy-section relative h-screen w-full flex items-center justify-center md:justify-end bg-[#0a0a0a] overflow-hidden z-10 shadow-[0_-20px_50px_rgba(0,0,0,0.5)]">
+
+        {/* Background Image with intense Parallax Zoom */}
+        <div className="philosophy-bg-zoom absolute inset-0 w-full h-full will-change-transform origin-bottom">
+          <Image
+            src="https://www.fakhruddinproperties.com/wp-content/uploads/2026/03/JA-TL-Cover.webp"
+            alt="The Philosophy"
+            fill
+            className="object-cover hidden md:block"
+            priority
+          />
+          <Image
+            src="https://www.fakhruddinproperties.com/wp-content/uploads/2026/02/JA-Treppan-Living-Mobile.webp"
+            alt="The Philosophy"
+            fill
+            className="object-cover md:hidden"
+            priority
+          />
+        </div>
+
+        {/* The Golden Logo */}
+        <div className="gold-logo-reveal relative z-10 w-[70vw] sm:w-[50vw] md:w-[40vw] max-w-[500px] aspect-square md:mr-12 lg:mr-32 mt-32 md:mt-0 hidden md:block">
+          <Image
+            src="https://www.fakhruddinproperties.com/wp-content/uploads/2026/03/Gold-TT-Logo.webp"
+            alt="Treppan Gold Logo"
+            fill
+            className="object-contain drop-shadow-[0_15px_40px_rgba(0,0,0,0.6)]"
+            priority
+          />
+        </div>
+
+      </section>
+
+      {/* ══ CHAPTER 3: AMBASSADOR ══ */}
       <section className="ambassador-section py-32 md:py-48 px-6 max-w-7xl mx-auto">
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-16 items-center">
           <div className="lg:col-span-5 ambassador-content">
-            <span className="text-[#b69c6b] text-[10px] font-bold uppercase tracking-[0.4em] mb-6 block">Global Brand Ambassador</span>
-            <h2 className="text-5xl md:text-7xl font-marcellus text-[#191817] leading-tight tracking-tighter mb-8">
-              John <span className="font-light text-[#b69c6b]">Abraham</span>
+            <span className="text-[#b69c6b] text-[10px] font-bold uppercase tracking-[0.4em] mb-6 block">The Philosophy</span>
+            <h2 className="philosophy-text-reveal text-5xl md:text-7xl font-light text-black tracking-wider mb-8 font-marcellus">
+              Where Conscious<br /> <span className="text-[#b69c6b]">Living</span> Finds<br /> Its Home
             </h2>
-            <div className="h-[1px] w-12 bg-[#b69c6b] mb-8" />
+            <div className="h-px w-12 bg-[#b69c6b] mb-8" />
             <div className="space-y-6 text-[#7a6a58] font-light text-xl md:text-3xl leading-relaxed">
-              <p>
-                "This is living that supports you — not the other way around."
+              <p className='font-marcellus'>
+                Tréppan Living is not just designed for comfort. It is created for balance. A place where wellbeing, environmental responsibility, and intelligent technology come together so your everyday life feels lighter, healthier, and more meaningful.
               </p>
             </div>
           </div>
           <div className="lg:col-span-7 relative h-[600px] md:h-[800px] rounded-[40px] overflow-hidden shadow-2xl">
-            <Image src="https://cdn-ilehell.nitrocdn.com/SQOQCxUDFIpvXLPQuxQlVxTUoPdlbjEY/assets/images/optimized/rev-212928e/www.fakhruddinproperties.com/wp-content/uploads/2026/03/Community-Wellbeing-Spaces.webp" alt="John Abraham" fill className="object-cover" />
+            <Image src="https://www.fakhruddinproperties.com/wp-content/uploads/2026/03/Community-Wellbeing-Spaces.webp" alt="John Abraham" fill className="object-cover" />
           </div>
         </div>
       </section>
 
-      {/* ══ CHAPTER 3: THE AUDIT ══ */}
+      {/* ══ CHAPTER 4: THE AUDIT ══ */}
       <section className="bg-[#191817] py-32 md:py-48 px-6 rounded-t-[100px] z-10 relative">
         <div className="max-w-7xl mx-auto overflow-x-auto">
           <table className="w-full text-left border-collapse min-w-[1000px]">
@@ -297,7 +390,7 @@ export default function TreppanStory() {
       </section>
 
       {/* ══ CHAPTER 5: SMART LIVING FEATURES (Features 01-05) ══ */}
-      <section className="bg-[#191817] py-32 md:py-48 px-4 sm:px-8 relative z-20">
+      <section className="bg-[#f0eae1] py-32 md:py-48 px-4 sm:px-8 relative z-20">
         <div className="max-w-7xl mx-auto">
           <div className="smart-stack-container relative w-full pb-[10vh]">
             {[
@@ -367,30 +460,29 @@ export default function TreppanStory() {
                 className={`smart-stack-card relative w-full h-[80vh] md:h-[75vh] rounded-[30px] md:rounded-[40px] overflow-hidden shadow-[0_-20px_40px_rgba(0,0,0,0.4)] border border-white/10 ${i > 0 ? 'mt-[100vh]' : ''}`}
               >
                 <Image src={feat.img} alt={feat.t} fill className="object-cover" />
-                <div className="absolute inset-0 bg-gradient-to-t from-[#0a0a0a] via-[#191817]/80 to-transparent" />
-                <div className="absolute inset-0 bg-black/30" />
+                <div className="absolute inset-0 bg-gradient-to-t from-[#0a0a0a]/60 via-[#191817]/30 to-transparent" />
+                {/* <div className="absolute inset-0 bg-black/30" /> */}
 
                 <div className="absolute inset-0 p-8 md:p-16 flex flex-col justify-end text-[#fffcf8]">
                   <div className="flex items-center gap-6 mb-6">
                     <div className="w-14 h-14 rounded-full border border-[#b69c6b]/40 backdrop-blur-md flex items-center justify-center bg-black/20">
-                      <feat.i className="text-[#b69c6b] w-6 h-6" />
+                      <feat.i className="text-[#dec79d] w-6 h-6" />
                     </div>
-                    <span className="text-[#b69c6b] text-sm font-bold tracking-[0.3em] uppercase">0{i + 1}</span>
                   </div>
 
                   <h3 className="text-4xl md:text-5xl font-marcellus tracking-tight mb-2">{feat.t}</h3>
-                  <h4 className="text-[#b69c6b] text-xl font-light font-marcellus mb-6">{feat.sub}</h4>
+                  <h4 className="text-[#dec79d] text-xl font-light font-marcellus mb-6">{feat.sub}</h4>
 
                   <div className="w-full max-w-3xl grid md:grid-cols-2 gap-8 md:gap-16 items-end">
                     <p className="text-white/80 font-light text-lg leading-relaxed">{feat.d}</p>
-                    <ul className="space-y-4">
+                    {/* <ul className="space-y-4">
                       {feat.list.map((item, idx) => (
                         <li key={idx} className="flex items-start gap-3">
                           <CheckCircle2 className="w-5 h-5 text-[#b69c6b] shrink-0 mt-0.5" />
                           <span className="text-sm md:text-base text-white/70 font-light">{item}</span>
                         </li>
                       ))}
-                    </ul>
+                    </ul> */}
                   </div>
                 </div>
               </div>
@@ -404,63 +496,63 @@ export default function TreppanStory() {
         {/* Overlay Title that stays pinned on top */}
         <div className="absolute top-16 md:top-24 left-1/2 -translate-x-1/2 z-20 text-center w-full px-6 pointer-events-none">
           <span className="text-[#b69c6b] text-[10px] font-bold uppercase tracking-[0.4em] block mb-4">Living With Purpose Daily</span>
-          <h2 className="text-3xl md:text-5xl font-marcellus text-white tracking-tight">Conscious Choices, <span className="text-[#b69c6b]">Every Day</span></h2>
+          <h2 className="text-3xl md:text-5xl font-marcellus text-white tracking-tight">Conscious Choices, <span className="">Every Day</span></h2>
         </div>
 
         {/* Slide 1 */}
         <div className="tour-image absolute inset-0 z-0 will-change-transform">
-          <Image src="https://projects.fakhruddinproperties.com/treppan-living-prive-images/exterior/GeneralView05-Bluehour.webp" alt="Urban Farming" fill className="object-cover opacity-70" />
-          <div className="absolute inset-0 bg-gradient-to-t from-[#0a0a0a] via-[#0a0a0a]/20 to-transparent" />
+          <Image src="http://www.fakhruddinproperties.com/wp-content/uploads/2025/04/Sustainability_Slider.jpg" alt="Urban Farming" fill className="object-cover opacity-70" />
+          <div className="absolute inset-0 bg-gradient-to-t from-[#0a0a0a]/20 via-[#0a0a0a]/10 to-transparent" />
         </div>
         <div className="tour-text absolute inset-0 z-10 flex flex-col items-center justify-end pb-24 md:pb-32 text-center px-6 pointer-events-none">
-          <span className="text-[#b69c6b] text-[10px] font-bold uppercase tracking-[0.4em] mb-4">01 Urban Farming</span>
+          <span className="text-[#b69c6b] text-[10px] font-bold uppercase tracking-[0.4em] mb-4">Urban Farming</span>
           <h3 className="text-5xl md:text-7xl font-marcellus text-white tracking-tight mb-6">Grow Your Own<br /><span className="text-[#b69c6b]">Indoor Herbs</span></h3>
-          <p className="text-white/80 font-light max-w-xl mb-8">Functional greenhouses and hydroponic systems encourage local food cultivation right at home.</p>
-          <div className="flex flex-wrap justify-center gap-4 text-xs md:text-sm text-white/60 uppercase tracking-widest max-w-3xl">
+          {/* <p className="text-white/80 font-light max-w-xl mb-8">Functional greenhouses and hydroponic systems encourage local food cultivation right at home.</p> */}
+          {/* <div className="flex flex-wrap justify-center gap-4 text-xs md:text-sm text-white/60 uppercase tracking-widest max-w-3xl">
             <span>• Fresh produce without supermarkets</span>
             <span>• Community participation encouraged</span>
             <span>• Hydroponic technology integrated</span>
-          </div>
+          </div> */}
           <span className="absolute bottom-8 right-8 md:bottom-12 md:right-12 text-[#b69c6b] font-serif text-xl md:text-2xl">01 / 03</span>
         </div>
 
         {/* Slide 2 */}
         <div className="tour-image absolute inset-0 z-0 will-change-transform">
           <Image src="https://projects.fakhruddinproperties.com/treppan-living-prive-images/exterior/BalconyDusk02.webp" alt="Therapies" fill className="object-cover opacity-70" />
-          <div className="absolute inset-0 bg-gradient-to-t from-[#0a0a0a] via-[#0a0a0a]/20 to-transparent" />
+          <div className="absolute inset-0 bg-gradient-to-t from-[#0a0a0a]/20 via-[#0a0a0a]/10 to-transparent" />
         </div>
         <div className="tour-text absolute inset-0 z-10 flex flex-col items-center justify-end pb-24 md:pb-32 text-center px-6 pointer-events-none">
-          <span className="text-[#b69c6b] text-[10px] font-bold uppercase tracking-[0.4em] mb-4">02 Therapies</span>
+          <span className="text-[#b69c6b] text-[10px] font-bold uppercase tracking-[0.4em] mb-4">Therapies</span>
           <h3 className="text-5xl md:text-7xl font-marcellus text-white tracking-tight mb-6">Biohacking<br /><span className="text-[#b69c6b]">Amenities</span></h3>
-          <p className="text-white/80 font-light max-w-xl mb-8">Top-notch amenities that shape your health and offer longevity.</p>
-          <div className="flex flex-wrap justify-center gap-4 text-xs md:text-sm text-white/60 uppercase tracking-widest max-w-3xl">
+          {/* <p className="text-white/80 font-light max-w-xl mb-8">Top-notch amenities that shape your health and offer longevity.</p> */}
+          {/* <div className="flex flex-wrap justify-center gap-4 text-xs md:text-sm text-white/60 uppercase tracking-widest max-w-3xl">
             <span>• Hyperbaric Oxygen Therapy</span>
             <span>• Red Light Therapy</span>
             <span>• Floatation Therapy and Cryotherapy</span>
-          </div>
+          </div> */}
           <span className="absolute bottom-8 right-8 md:bottom-12 md:right-12 text-[#b69c6b] font-serif text-xl md:text-2xl">02 / 03</span>
         </div>
 
         {/* Slide 3 */}
         <div className="tour-image absolute inset-0 z-0 will-change-transform">
           <Image src="https://www.fakhruddinproperties.com/wp-content/uploads/2025/04/electricstation.png" alt="Mobility" fill className="object-cover opacity-70" />
-          <div className="absolute inset-0 bg-gradient-to-t from-[#0a0a0a] via-[#0a0a0a]/20 to-transparent" />
+          <div className="absolute inset-0 bg-gradient-to-t from-[#0a0a0a]/20 via-[#0a0a0a]/10 to-transparent" />
         </div>
         <div className="tour-text absolute inset-0 z-10 flex flex-col items-center justify-end pb-24 md:pb-32 text-center px-6 pointer-events-none">
-          <span className="text-[#b69c6b] text-[10px] font-bold uppercase tracking-[0.4em] mb-4">03 Mobility</span>
+          <span className="text-[#b69c6b] text-[10px] font-bold uppercase tracking-[0.4em] mb-4">Mobility</span>
           <h3 className="text-5xl md:text-7xl font-marcellus text-white tracking-tight mb-6">Electric<br /><span className="text-[#b69c6b]">Mobility Hub</span></h3>
-          <p className="text-white/80 font-light max-w-xl mb-8">EV charging integrated into community infrastructure — supporting sustainable transport seamlessly.</p>
-          <div className="flex flex-wrap justify-center gap-4 text-xs md:text-sm text-white/60 uppercase tracking-widest max-w-3xl">
+          {/* <p className="text-white/80 font-light max-w-xl mb-8">EV charging integrated into community infrastructure — supporting sustainable transport seamlessly.</p> */}
+          {/* <div className="flex flex-wrap justify-center gap-4 text-xs md:text-sm text-white/60 uppercase tracking-widest max-w-3xl">
             <span>• EV charging stations throughout</span>
             <span>• Sustainable transport fully supported</span>
             <span>• Earns wellness loyalty points</span>
-          </div>
+          </div> */}
           <span className="absolute bottom-8 right-8 md:bottom-12 md:right-12 text-[#b69c6b] font-serif text-xl md:text-2xl">03 / 03</span>
         </div>
       </section>
 
       {/* ══ CHAPTER 7: OUTRO (Experience Tréppan Living) ══ */}
-      <section className="outro-section relative max-w-7 min-h-[90vh] md:h-screen w-full flex items-center justify-center overflow-hidden bg-[#0a0a0a]">
+      <section className="outro-section relative min-h-[90vh] md:h-screen w-full flex items-center justify-center overflow-hidden bg-[#0a0a0a]">
 
         {/* Cinematic Background Layer */}
         <div className="absolute inset-0 z-0">
@@ -473,7 +565,7 @@ export default function TreppanStory() {
             />
           </div>
           {/* Dramatic Gradients for Movie-Poster lighting */}
-          <div className="absolute inset-0 bg-gradient-to-t from-[#0a0a0a]/10 via-[#0a0a0a]/0 to-[#191817]/10" />
+          {/* <div className="absolute inset-0 bg-gradient-to-t from-[#0a0a0a]/10 via-[#0a0a0a]/0 to-[#191817]/10" /> */}
           <div className="absolute inset-0 bg-[radial-gradient(circle_at_center,transparent_0%,#0a0a0a_100%)] opacity-70" />
         </div>
 
@@ -483,19 +575,15 @@ export default function TreppanStory() {
             The Next Chapter
           </span>
 
-          <h2 className="text-5xl md:text-[80px] lg:text-[100px] font-serif text-white tracking-tighter leading-[0.9] mb-12">
+          <h2 className="text-5xl md:text-[80px] lg:text-[100px] font-marcellus text-white tracking-tighter leading-[0.9] mb-12">
             Experience <br />
-            <span className="italic text-[#b69c6b]">Tréppan Living</span>
+            <span className="text-[#b69c6b]">Tréppan Living</span>
           </h2>
 
-          <div className="w-[1px] h-16 md:h-24 bg-gradient-to-b from-[#b69c6b] to-transparent mb-10" />
+          {/* <div className="w-[1px] h-16 md:h-24 bg-gradient-to-b from-[#b69c6b] to-transparent mb-10" /> */}
 
           <p className="text-white/80 text-lg md:text-2xl font-light leading-relaxed max-w-2xl mb-8">
             Step into a lifestyle where wellbeing, thoughtful design, and intelligent living come together effortlessly.
-          </p>
-
-          <p className="text-[#b69c6b] text-xl md:text-3xl font-serif italic drop-shadow-lg">
-            Discover a new way to live with balance, comfort, and purpose.
           </p>
         </div>
       </section>

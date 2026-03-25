@@ -65,13 +65,16 @@ export default function Navbar() {
         initial={{ y: -100 }}
         animate={{ y: 0 }}
         transition={{ duration: 1, ease: luxuryEase }}
-        className={`fixed top-0 left-0 w-full z-[100] flex justify-between items-center px-8 md:px-12 py-6 transition-all duration-700 ${scrolled && !isOpen ? "bg-black/20 backdrop-blur-xl py-4 border-b border-white/5" : "bg-transparent"
+        className={`fixed top-0 left-0 w-full z-[100] flex justify-between items-center px-8 md:px-16 transition-all duration-700 ${scrolled && !isOpen
+            ? "bg-black/20 backdrop-blur-xl py-4 md:py-4 border-b border-white/5"
+            : "bg-transparent py-6 md:py-10"
           }`}
       >
         <Link href="/" onClick={() => setIsOpen(false)}>
           <img
             src="https://www.fakhruddinproperties.com/wp-content/uploads/2026/02/FP-Logo-Light.png"
-            className={`h-8 transition-all duration-500 ${isLightText ? "brightness-100" : "brightness-0"}`}
+            className={`h-8 transition-all duration-500 ${isLightText ? "brightness-100" : "brightness-0"
+              }`}
             alt="Fakhruddin Properties"
           />
         </Link>
@@ -83,11 +86,13 @@ export default function Navbar() {
         >
           <div className="flex flex-col gap-1.5 w-8 items-end">
             <span
-              className={`h-[1.5px] transition-all duration-500 ${isLightText ? "bg-white" : "bg-[#0d1833]"} ${isOpen ? "-rotate-45 translate-y-[6px] w-8" : "w-8"
+              className={`h-[1.5px] transition-all duration-500 ${isLightText ? "bg-white" : "bg-[#0d1833]"
+                } ${isOpen ? "-rotate-45 translate-y-[6px] w-8" : "w-8"
                 }`}
             />
             <span
-              className={`h-[1.5px] transition-all duration-500 ${isLightText ? "bg-white" : "bg-[#0d1833]"} ${isOpen ? "rotate-45 -translate-y-[1.5px] w-8" : "w-5 group-hover:w-8"
+              className={`h-[1.5px] transition-all duration-500 ${isLightText ? "bg-white" : "bg-[#0d1833]"
+                } ${isOpen ? "rotate-45 -translate-y-[1.5px] w-8" : "w-8"
                 }`}
             />
           </div>
