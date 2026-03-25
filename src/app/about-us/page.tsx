@@ -6,8 +6,13 @@ import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { useGSAP } from "@gsap/react";
 import Link from "next/link";
+import Journey from "./_journey";
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
+
+// ─── LUXURY EASING ─────────────────────────────────────────
+const customEase: [number, number, number, number] = [0.16, 1, 0.3, 1];
+const slowEase: [number, number, number, number] = [0.25, 1, 0.5, 1];
 
 if (typeof window !== "undefined") {
   gsap.registerPlugin(ScrollTrigger);
@@ -16,43 +21,6 @@ if (typeof window !== "undefined") {
 // ─────────────────────────────────────────────────────────────
 // DATA
 // ─────────────────────────────────────────────────────────────
-const AWARD_CARDS = [
-  {
-    id: 1,
-    tag: "Initiative", 
-    img: "https://www.fakhruddinproperties.com/wp-content/uploads/2025/04/Our-Story-02.jpg",
-    title: "Dubai Land Department \u2013 SHE Pioneers Initiative",    
-    desc: "Participation and sponsorship of the SHE Pioneers programme by Dubai Land Department, supporting women's growing impact in real estate and initiatives promoting inclusivity and industry advancement.",
-  },
-  {
-    id: 2,
-    tag: "2024",
-    img: "https://www.fakhruddinproperties.com/wp-content/uploads/2025/04/Our-Story-04.jpg",
-    title: "Gulf Business \u2013 Sustainable Project of the Year",    
-    desc: "Awarded by Gulf Business at the Game Changer: UAE Real Estate Outlook for Treppan Tower (Jumeirah Village Triangle), recognising excellence in sustainable development and forward-thinking residential design.",
-  },
-  {
-    id: 3,
-    tag: "Jan\u2013Mar 2024",
-    img: "https://www.fakhruddinproperties.com/wp-content/uploads/2025/04/Our-Story-06.jpg",
-    title: "REM Times Industry Feature",
-    desc: "Recognised by REM Times with an editorial cover for pioneering sustainability-focused developments, AI-enabled living infrastructure, and progressive real estate initiatives.",
-  },
-  {
-    id: 4,
-    tag: "Leadership Insight",
-    img: "https://www.fakhruddinproperties.com/wp-content/uploads/2025/04/Our-Story-07.jpg",
-    title: "Gulf Business Feature",
-    desc: "Our CEO, Yousuf Fakhruddin featured in Gulf Business discussing integrated urban ecosystems, sustainable city planning, and forward-looking real estate innovation shaping future communities.",
-  },
-  {
-    id: 5,
-    tag: "2025",
-    img: "https://www.fakhruddinproperties.com/wp-content/uploads/2025/04/Our-Story-08.jpg",
-    title: "Forbes Middle East \u2013 Most Impactful Real Estate Leaders",
-    desc: "Our CEO, Yousuf Fakhruddin, recognised by Forbes Middle East among Most Impactful Real Estate Leaders for his leadership impact, innovation-driven developments, and contributions shaping modern real estate towards sustainability and wellness.",
-  },
-];
 
 const AWARDS_YEARS = [
   {
@@ -73,19 +41,57 @@ const AWARDS_YEARS = [
   },
 ];
 
+const JOURNEY_DATA = [
+  {
+    year: "1963",
+    title: "The Foundation",
+    description: "Fakhruddin Holdings is established, laying the cornerstone of a legacy built on entrepreneurship, integrity, and community values.",
+    image: "https://images.unsplash.com/photo-1507208773393-40d9fc670acf?q=80&w=2070&auto=format&fit=crop"
+  },
+  {
+    year: "1975",
+    title: "Expanding Horizons",
+    description: "First international expansion, establishing presence beyond the UAE and beginning a journey of cross-border excellence.",
+    image: "https://images.unsplash.com/photo-1464822759023-fed622ff2c3b?q=80&w=2070&auto=format&fit=crop"
+  },
+  {
+    year: "1983",
+    title: "Architectural Innovation",
+    description: "Pioneering new architectural approaches that blend modern design with timeless elegance and functionality.",
+    image: "https://images.unsplash.com/photo-1546768292-fb12f6c92568?q=80&w=2070&auto=format&fit=crop"
+  },
+  {
+    year: "2001",
+    title: "A New Millennium",
+    description: "Embracing sustainability as a core principle, introducing green building practices before they became industry standard.",
+    image: "https://images.unsplash.com/photo-1516156008625-3a9d6067fab5?q=80&w=2070&auto=format&fit=crop"
+  },
+  {
+    year: "2015",
+    title: "Wellness Revolution",
+    description: "Launch of wellness-focused developments, prioritizing human-centric design and holistic living experiences.",
+    image: "https://images.unsplash.com/photo-1519641471654-76ce0107ad1b?q=80&w=2070&auto=format&fit=crop"
+  },
+  {
+    year: "2026",
+    title: "The Future Unfolds",
+    description: "Leading the next generation of sustainable, AI-integrated communities that redefine urban living.",
+    image: "https://images.unsplash.com/photo-1480714378408-67cf0d13bc1b?q=80&w=2070&auto=format&fit=crop"
+  }
+];
+
 // ─────────────────────────────────────────────────────────────
-// HERO SECTION
+// HERO SECTION (unchanged)
 // ─────────────────────────────────────────────────────────────
 function Hero() {
   const ref = useRef<HTMLElement>(null);
-  const imageRef = useRef<HTMLImageElement>(null);
+  const videoRef = useRef<HTMLVideoElement>(null);
   const contentRef = useRef<HTMLDivElement>(null);
   const titleRef = useRef<HTMLHeadingElement>(null);
   const subtitleRef = useRef<HTMLParagraphElement>(null);
   const lineRef = useRef<HTMLDivElement>(null);
 
   useGSAP(() => {
-    // Scroll-driven zoom + fade (same as WellTech)
     const tl = gsap.timeline({
       scrollTrigger: {
         trigger: ref.current,
@@ -94,10 +100,8 @@ function Hero() {
         scrub: 1.5,
       },
     });
-    tl.to(imageRef.current, { scale: 1.4, opacity: 0.3, ease: "power2.inOut" })
-      .to(contentRef.current, { opacity: 0, y: -80, ease: "power2.inOut" }, 0);
+    tl.to(contentRef.current, { opacity: 0, y: -80, ease: "power2.inOut" }, 0);
 
-    // Entrance
     gsap.fromTo(subtitleRef.current,
       { y: 50, opacity: 0 },
       { y: 0, opacity: 1, duration: 1.2, ease: "power3.out" }
@@ -114,16 +118,18 @@ function Hero() {
 
   return (
     <section ref={ref} className="relative w-full h-screen overflow-hidden">
-      <img
-        ref={imageRef}
-        src="https://www.fakhruddinproperties.com/wp-content/uploads/2025/04/LakeCentralHQ.jpg"
-        alt="About Us Hero"
+      <video
+        ref={videoRef}
+        src="https://www.fakhruddinproperties.com/wp-content/uploads/2025/12/Treppan-Serenique-Project.mp4"
+        autoPlay
+        muted
+        loop
+        playsInline
         className="absolute inset-0 w-full h-full object-cover"
       />
-      <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/40 to-black/20" />
-      <div className="absolute inset-0 bg-gradient-to-r from-black/50 via-transparent to-transparent" />
+      <div className="absolute inset-0 bg-gradient-to-t from-black/25 via-black/10 to-black/5" />
+      <div className="absolute inset-0 bg-gradient-to-r from-black/15 via-transparent to-transparent" />
 
-      {/* Progress bar top */}
       <div className="absolute top-0 left-0 z-20 w-full h-[2px] bg-white/10">
         <div className="h-full bg-[#A19585]" style={{ width: "100%" }} />
       </div>
@@ -138,21 +144,16 @@ function Hero() {
           </p>
           <h1
             ref={titleRef}
-            className="text-5xl sm:text-6xl md:text-7xl lg:text-8xl text-white leading-[0.92] opacity-0"
+            className="text-5xl sm:text-6xl md:text-7xl lg:text-8xl text-white leading-[0.92] opacity-0 font-marcellus font-light"
             style={{ fontWeight: 300, letterSpacing: "-0.02em" }}
           >
             Beyond Today,<br />
-            <span className="text-[#A19585] italic">by Design.</span>
+            <span className="text-[#A19585]">by Design.</span>
           </h1>
-          <div ref={lineRef} className="w-24 h-[2px] bg-[#A19585] mt-8 mb-6 opacity-0" />
-          <p className="text-white/70 text-base md:text-lg max-w-xl leading-relaxed">
-            Born from a 60-year legacy of entrepreneurship. Built on the belief that
-            architecture should enhance life — not merely contain it.
-          </p>
+          <div ref={lineRef} className="w-24 h-[2px] bg-[#A19585] mt-8 mb-6 opacity-0" />          
 
-          {/* Anchor links */}
           <div className="flex gap-8 mt-8 flex-wrap">
-            {["Our Story", "Philosophy", "Team", "Awards"].map((item, i) => (
+            {["Our Story", "Our Journey", "Philosophy", "Team", "Awards"].map((item, i) => (
               <a
                 key={i}
                 href={`#${item.toLowerCase().replace(" ", "-")}`}
@@ -165,7 +166,6 @@ function Hero() {
         </div>
       </div>
 
-      {/* Scroll indicator */}
       <div className="absolute bottom-10 right-12 z-20 flex flex-col items-center gap-2">
         <span className="text-white/30 text-[10px] tracking-[0.3em] uppercase">Scroll</span>
         <div className="w-[1px] h-14 bg-gradient-to-b from-[#A19585] to-transparent animate-pulse" />
@@ -175,7 +175,7 @@ function Hero() {
 }
 
 // ─────────────────────────────────────────────────────────────
-// OUR STORY
+// OUR STORY (FULL WIDTH - DIFFERENT LAYOUT)
 // ─────────────────────────────────────────────────────────────
 function OurStory() {
   const ref = useRef<HTMLElement>(null);
@@ -196,9 +196,9 @@ function OurStory() {
       },
     });
 
-    // Content slide in
+    // Content slide in - now from left instead of right
     gsap.fromTo(contentRef.current,
-      { opacity: 0, x: 80 },
+      { opacity: 0, x: -80 },
       {
         opacity: 1, x: 0, duration: 1.5, ease: "power3.out",
         scrollTrigger: { trigger: ref.current, start: "top bottom-=100", end: "top center", scrub: 1 },
@@ -217,50 +217,48 @@ function OurStory() {
 
   return (
     <section id="our-story" ref={ref} className="relative w-full min-h-screen bg-white overflow-hidden">
-      {/* Full-bleed parallax image - left half */}
-      <div ref={imageRef} className="absolute left-0 top-0 w-full md:w-1/2 h-[130%]">
+      {/* Full-bleed parallax image - right half (swapped from left to right) */}
+      <div ref={imageRef} className="absolute right-0 top-0 w-full md:w-1/2 h-[130%]">
         <img
           src="https://www.fakhruddinproperties.com/wp-content/uploads/2025/04/3.jpg"
           alt="Our Story"
           className="w-full h-full object-cover"
         />
-        <div className="absolute inset-0 bg-gradient-to-r from-transparent via-transparent to-white md:via-transparent md:to-white" />
+        {/* Gradient overlay for text readability - now on the left side */}
+        <div className="hidden md:block absolute inset-0 bg-gradient-to-l from-transparent via-transparent to-white md:via-transparent md:to-white" />
+        {/* Mobile Overlay */}
+        <div className="block md:hidden absolute inset-0 bg-gradient-to-b from-[#F5F2EE]/30 via-[#F5F2EE]/20 to-[#F5F2EE]/60" />
+        
         <div className="absolute inset-0 bg-gradient-to-t from-white via-transparent to-transparent md:hidden" />
       </div>
 
-      {/* Oversized year watermark */}
-      <div className="absolute bottom-10 left-4 md:left-8 pointer-events-none select-none z-0">
+      {/* Oversized year watermark - now on the right side */}
+      <div className="hidden md:block absolute bottom-10 right-4 md:right-8 pointer-events-none select-none z-0">
         <span
-          className="text-[18vw] leading-none text-black/[0.04]"
+          className="text-[18vw] leading-none text-black/[0.15]"
           style={{ fontWeight: 300, letterSpacing: "-0.04em" }}
         >
           1963
         </span>
       </div>
 
-      {/* Content — right side */}
-      <div ref={contentRef} className="relative z-10 min-h-screen flex items-center justify-end px-6 md:px-16 lg:px-24">
+      {/* Content — left side (swapped from right to left) */}
+      <div ref={contentRef} className="relative z-10 min-h-screen flex items-center justify-start px-6 md:px-16 lg:px-24">
         <div className="w-full md:w-[55%] lg:w-[50%] py-24 md:py-32">
           <span className="text-[#A19585] text-xs tracking-[0.35em] uppercase block mb-6">Our Story</span>
 
-          <h2 className="text-4xl md:text-5xl lg:text-6xl text-[#1b2946] leading-tight mb-8" style={{ fontWeight: 300 }}>
+          <h2 className="font-marcellus font-light text-4xl md:text-5xl lg:text-6xl text-[#1b2946] leading-tight mb-8" style={{ fontWeight: 300 }}>
             A Vision<br />
-            <span className="text-[#A19585] italic">Built to Endure.</span>
+            <span className="text-[#A19585]">Built to Endure.</span>
           </h2>
 
           <div className="w-16 h-[2px] bg-[#A19585] mb-8" />
 
-          <div className="space-y-5 text-[#1b2946]/65 text-[15px] leading-relaxed mb-12">
+          <div className="space-y-5 text-[#FFFFFF] md:text-[#1b2946]/70 text-base leading-relaxed mb-12">
             <p>
-              It began as a vision in 2003 — a quiet pursuit to reimagine what real estate could mean for the people who live within it. Born from the enduring legacy of Fakhruddin Holdings, founded in 1963, Fakhruddin Properties carries forward a tradition rooted in entrepreneurship, integrity, and a deep sense of community.
-            </p>
-            <p>
-              What started as structures soon became stories of trust, of purpose, of homes that nurture as much as they impress. Every space we build is shaped by a belief that architecture should do more than occupy land — it should enhance life, foster connection, and leave the world a little better than it was found.
-            </p>
-            <p>
-              Today, with a presence spanning the UAE, the UK, and Uganda, Fakhruddin Properties continues to evolve — guided by the same principles that began it all: innovation grounded in responsibility, sustainability shaped by soul, and design that places people at its heart.
-            </p>
-            <p className="italic text-[#1b2946]/40">
+              It began as a vision in 2003 - a quiet pursuit to reimagine what real estate could mean for the people who live within it. Born from the enduring legacy of Fakhruddin Holdings, founded in 1963, Fakhruddin Properties carries forward a tradition rooted in entrepreneurship, integrity, and a deep sense of community, now, has grown into one of the Middle East's most forward thinking property developers.
+            </p>            
+            <p className="italic text-[#FFFFFF] md:text-[#1b2946]/50">
               This is not just our story. It is the quiet unfolding of a vision — one built to endure.
             </p>
           </div>
@@ -279,12 +277,12 @@ function OurStory() {
                 className="group"
               >
                 <div
-                  className="text-3xl md:text-4xl text-[#A19585] group-hover:scale-105 transition-transform duration-300"
+                  className="text-3xl md:text-4xl text-[#FFFFFF] md:text-[#A19585] group-hover:scale-105 transition-transform duration-300"
                   style={{ fontWeight: 300 }}
                 >
                   {s.v}
                 </div>
-                <div className="text-[#1b2946]/50 text-xs tracking-[0.25em] uppercase mt-1">{s.l}</div>
+                <div className="text-[#FFFFFF] md:text-[#1b2946]/50 text-xs tracking-[0.25em] uppercase mt-1">{s.l}</div>
               </div>
             ))}
           </div>
@@ -294,145 +292,13 @@ function OurStory() {
   );
 }
 
-// ─────────────────────────────────────────────────────────────
-// PHILOSOPHY SECTION
-// ─────────────────────────────────────────────────────────────
-function Philosophy() {
-  const ref = useRef<HTMLElement>(null);
-  const imageRef = useRef<HTMLDivElement>(null);
-  const contentRef = useRef<HTMLDivElement>(null);
-
-  useGSAP(() => {
-    gsap.to(imageRef.current, {
-      scale: 1.15,
-      opacity: 0.6,
-      ease: "none",
-      scrollTrigger: {
-        trigger: ref.current,
-        start: "top bottom",
-        end: "bottom top",
-        scrub: 1.5,
-      },
-    });
-
-    gsap.fromTo(contentRef.current,
-      { opacity: 0, y: 60 },
-      {
-        opacity: 1, y: 0, duration: 1.5, ease: "power3.out",
-        scrollTrigger: { trigger: ref.current, start: "top bottom-=150", end: "top center", scrub: 1 },
-      }
-    );
-
-    // Pillar cards stagger
-    gsap.fromTo(".ph-pillar",
-      { y: 50, opacity: 0 },
-      {
-        y: 0, opacity: 1, stagger: 0.2, duration: 1, ease: "power3.out",
-        scrollTrigger: { trigger: ".ph-pillars", start: "top bottom-=100", end: "top center", scrub: 1 },
-      }
-    );
-  }, { scope: ref });
-
-  const pillars = [
-    {
-      n: "01",
-      title: "Human-First Residences",
-      body: "Every line we draw begins with a question: how will people live here? Our residential communities are designed for movement, wellness, and moments of meaning.",
-    },
-    {
-      n: "02",
-      title: "Design with Purpose",
-      body: "Our developments blend place-making, environmental integrity, and social responsibility — leaving a legacy that is both lived in and looked up to.",
-    },
-    {
-      n: "03",
-      title: "Design that Moves You",
-      body: "We design spaces that respond to the rhythms of everyday life. Every curve, material, and corridor is guided by one question: how will this make someone feel?",
-    },
-  ];
-
-  return (
-    <section id="philosophy" ref={ref} className="relative w-full min-h-screen bg-[#100F2B] overflow-hidden">
-      {/* Background image */}
-      <div ref={imageRef} className="absolute inset-0 w-full h-[120%]">
-        <img
-          src="https://www.fakhruddinproperties.com/wp-content/uploads/2025/04/LakeCentralHQ.jpg"
-          alt="Philosophy"
-          className="w-full h-full object-cover opacity-20"
-        />
-        <div className="absolute inset-0 bg-gradient-to-b from-[#100F2B]/70 via-[#100F2B]/50 to-[#100F2B]" />
-      </div>
-
-      {/* Animated rings (same as WellTech) */}
-      <div className="absolute inset-0 overflow-hidden pointer-events-none">
-        <div className="absolute top-1/2 right-0 translate-x-1/3 -translate-y-1/2 w-[500px] h-[500px] md:w-[700px] md:h-[700px]">
-          <div className="absolute inset-0 border border-[#A19585]/10 rounded-full animate-ping" style={{ animationDuration: "5s" }} />
-          <div className="absolute inset-[12%] border border-[#A19585]/15 rounded-full animate-spin" style={{ animationDuration: "12s" }} />
-          <div className="absolute inset-[25%] border border-[#A19585]/20 rounded-full animate-pulse" />
-        </div>
-      </div>
-
-      <div ref={contentRef} className="relative z-10 max-w-[1400px] mx-auto px-6 md:px-16 lg:px-24 py-32">
-        {/* Header */}
-        <div className="max-w-2xl mb-20">
-          <div className="flex items-center gap-4 mb-6">
-            <div className="w-12 h-[2px] bg-[#A19585]" />
-            <span className="text-[#A19585] text-xs tracking-[0.35em] uppercase">The Fakhruddin Philosophy</span>
-          </div>
-          <h2
-            className="text-4xl md:text-5xl lg:text-6xl text-white leading-tight"
-            style={{ fontWeight: 300 }}
-          >
-            Multidisciplinary<br />
-            <span className="text-[#A19585] italic">by Design.</span>
-          </h2>
-          <p className="text-white/50 text-base md:text-lg mt-6 leading-relaxed">
-            Our strength lies not just in what we build, but in how we think together.
-            Architects, engineers, designers, technologists, and sustainability visionaries
-            unite under one purpose — to craft living spaces that feel as intelligent as they look.
-          </p>
-        </div>
-
-        {/* Pillar cards */}
-        <div className="ph-pillars grid grid-cols-1 md:grid-cols-3 gap-[1px] bg-white/5">
-          {pillars.map((p, i) => (
-            <div
-              key={i}
-              className="ph-pillar group relative bg-[#100F2B] p-8 md:p-10 hover:bg-white/5 transition-colors duration-500 overflow-hidden"
-            >
-              <div className="absolute top-0 left-0 right-0 h-[2px] bg-[#A19585] scale-x-0 group-hover:scale-x-100 transition-transform duration-700 origin-left" />
-              <div className="text-[#A19585]/30 text-5xl mb-6 group-hover:text-[#A19585]/60 transition-colors duration-400" style={{ fontWeight: 300 }}>
-                {p.n}
-              </div>
-              <h3 className="text-white text-xl md:text-2xl mb-4 group-hover:text-[#A19585] transition-colors duration-400" style={{ fontWeight: 300 }}>
-                {p.title}
-              </h3>
-              <div className="w-8 h-[1px] bg-[#A19585]/40 group-hover:w-14 transition-all duration-500 mb-4" />
-              <p className="text-white/45 text-sm leading-relaxed group-hover:text-white/65 transition-colors duration-400">
-                {p.body}
-              </p>
-            </div>
-          ))}
-        </div>
-
-        {/* Quote */}
-        <blockquote className="mt-16 border-l-2 border-[#A19585]/40 pl-6 max-w-2xl">
-          <p className="text-white/35 text-base md:text-lg italic leading-relaxed" style={{ fontWeight: 300 }}>
-            It is in this harmony of disciplines that we create places with quiet permanence
-            — spaces that breathe, move, and belong.
-          </p>
-        </blockquote>
-      </div>
-    </section>
-  );
-}
 
 // ─────────────────────────────────────────────────────────────
-// MANAGEMENT TEAM — Editorial split: left text column, right staggered portraits
-// Name + role always visible. No hover required to see identity.
+// MANAGEMENT TEAM (ROUND IMAGES)
 // ─────────────────────────────────────────────────────────────
 function ManagementTeam() {
   const ref = useRef<HTMLElement>(null);
+  const [hoveredIndex, setHoveredIndex] = useState<number | null>(null);
 
   useGSAP(() => {
     gsap.fromTo(".team-heading",
@@ -442,28 +308,11 @@ function ManagementTeam() {
         scrollTrigger: { trigger: ref.current, start: "top bottom-=150" },
       }
     );
-    // Left column text lines stagger
-    gsap.fromTo(".team-left-line",
-      { x: -40, opacity: 0 },
+    gsap.fromTo(".team-card",
+      { y: 80, opacity: 0, scale: 0.9 },
       {
-        x: 0, opacity: 1, stagger: 0.12, duration: 1.1, ease: "power3.out",
-        scrollTrigger: { trigger: ".team-left", start: "top bottom-=120" },
-      }
-    );
-    // Portrait cards cascade in
-    gsap.fromTo(".team-portrait",
-      { y: 70, opacity: 0 },
-      {
-        y: 0, opacity: 1, stagger: 0.18, duration: 1.3, ease: "power3.out",
-        scrollTrigger: { trigger: ".team-right", start: "top bottom-=80" },
-      }
-    );
-    // Stats
-    gsap.fromTo(".team-stat",
-      { y: 36, opacity: 0 },
-      {
-        y: 0, opacity: 1, stagger: 0.12, duration: 1, ease: "back.out(1.5)",
-        scrollTrigger: { trigger: ".team-stats", start: "top bottom-=100" },
+        y: 0, opacity: 1, scale: 1, stagger: 0.2, duration: 1.2, ease: "back.out(1.2)",
+        scrollTrigger: { trigger: ".team-cards-wrap", start: "top bottom-=80" },
       }
     );
   }, { scope: ref });
@@ -471,411 +320,189 @@ function ManagementTeam() {
   const leaders = [
     {
       name: "Yousuf Fakhruddin",
-      nameLines: ["Yousuf", "Fakhruddin"],
       role: "Chief Executive Officer",
       img: "https://www.fakhruddinproperties.com/wp-content/uploads/2025/12/Yousuf-Fakhruddin-CEO.webp",
-      index: "01",
+      bio: "Visionary leader driving innovation and sustainable growth across the Middle East's real estate landscape.",
     },
     {
       name: "Fatema Yousuf Fakhruddin",
-      nameLines: ["Fatema Yousuf", "Fakhruddin"],
       role: "Chief Operating Officer",
       img: "https://www.fakhruddinproperties.com/wp-content/uploads/2025/12/Fatema-Fakhruddin-COO.webp",
-      index: "02",
+      bio: "Operational excellence leader ensuring seamless execution of visionary projects with precision.",
     },
   ];
 
   return (
-    <section id="team" ref={ref} className="relative w-full bg-white overflow-hidden">
-
-      {/* ── TOP BAND: dark header strip ── */}
-      <div className="bg-[#ffffff] px-6 md:px-16 lg:px-24 pt-12 md:pt-20">
-        <div className="team-heading max-w-[1400px] mx-auto flex flex-col md:flex-row md:items-end justify-between gap-6">
-          <div>
-            <span className="text-[#A19585] text-xs tracking-[0.4em] uppercase block mb-5">Management Team</span>
-            <h2 className="text-[#1b2946] text-4xl md:text-5xl lg:text-6xl leading-tight" style={{ fontWeight: 300 }}>
-              The Team Behind<br />
-              <span className="text-[#A19585] italic">the Scenes.</span>
-            </h2>
-          </div>
-          <p className="text-[#1b2946]/50 text-sm max-w-xs leading-relaxed pb-4">
-            Visionaries who have turned a 60-year legacy into a living philosophy.
-          </p>
+    <section id="team" ref={ref} className="relative w-full bg-white overflow-hidden py-20 md:py-28">
+      <div className="max-w-[1400px] mx-auto px-6 md:px-16 lg:px-24">
+        <div className="team-heading text-center mb-16 md:mb-20">
+          <span className="text-[#A19585] text-xs tracking-[0.4em] uppercase block mb-4">Leadership</span>
+          <h2 className="font-marcellus font-light text-[#1b2946] text-4xl md:text-5xl lg:text-6xl leading-tight">
+            The Minds Behind<br />
+            <span className="text-[#A19585]">the Vision.</span>
+          </h2>
+          <div className="w-16 h-[2px] bg-[#A19585] mx-auto mt-6" />
         </div>
-      </div>
-      
 
-      {/* ── MAIN LAYOUT: left meta column + right staggered portraits ── */}
-      <div className="max-w-[1400px] mx-auto px-6 md:px-16 lg:px-24 py-0">
-        <div className="grid grid-cols-1 lg:grid-cols-12 gap-0">
-
-          {/* LEFT COLUMN — index numbers + labels, vertically centred */}
-          <div className="team-left hidden lg:flex lg:col-span-3 flex-col justify-center gap-12 py-20 border-r border-black/6 pr-10">
-            {leaders.map((l, i) => (
-              <div key={i} className="team-left-line flex flex-col gap-3">
-                {/* Big index */}
-                <span
-                  className="text-[5rem] leading-none text-[#A19585]/15 select-none"
-                  style={{ fontWeight: 300 }}
-                >
-                  {l.index}
-                </span>
-                {/* Divider */}
-                <div className="w-10 h-[1px] bg-[#A19585]/40" />
-                {/* Name stacked */}
-                <div>
-                  {l.nameLines.map((line, li) => (
-                    <p
-                      key={li}
-                      className="text-[#1b2946] text-xl leading-snug"
-                      style={{ fontWeight: 300 }}
-                    >
-                      {line}
-                    </p>
-                  ))}
-                </div>
-                <p className="text-[#A19585] text-[9px] tracking-[0.45em] uppercase">
-                  {l.role}
-                </p>
-              </div>
-            ))}
-          </div>
-
-          {/* RIGHT — staggered offset portraits, no grid box, pure editorial */}
-          <div className="team-right lg:col-span-9 lg:pl-12 flex flex-col md:flex-row gap-0 items-end py-0 md:py-12">
-            {leaders.map((l, i) => (
-              <div
-                key={i}
-                className="team-portrait group relative flex-1 cursor-default"
-                style={{
-                  /* Second card is offset upward to break the grid */
-                  marginTop: i === 1 ? "0" : "0",
-                  zIndex: i === 0 ? 2 : 1,
-                }}
-              >
-                {/* Portrait image — tall, slight overlap via negative margin on desktop */}
-                <div
-                  className={`relative overflow-hidden bg-[#1a1a2e] ${i === 0 ? "md:-mr-6 mr-0" : ""}`}
-                  style={{
-                    aspectRatio: "1/1",
-                    marginTop: i === 1 ? "48px" : "0",
-                  }}
-                >
-                  <img
-                    src={l.img}
-                    alt={l.name}
-                    className="w-full h-full object-cover object-top transition-transform duration-[1400ms] ease-[cubic-bezier(0.76,0,0.24,1)] group-hover:scale-[1.04]"
-                  />
-                  {/* Permanent gradient — name always readable */}
-                  <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/10 to-transparent" />
-
-                  {/* Hover accent top */}
-                  <div className="absolute top-0 left-0 right-0 h-[3px] bg-[#A19585] scale-x-0 group-hover:scale-x-100 transition-transform duration-700 origin-left" />
-
-                  {/* Name + role ALWAYS at bottom — no hover required */}
-                  <div className="absolute bottom-0 left-0 right-0 p-6 md:p-8">
-                    {/* Animated accent line */}
-                    <div className="w-6 h-[1px] bg-[#A19585] group-hover:w-12 transition-all duration-500 mb-4" />
-                    <h3
-                      className="text-white leading-tight mb-1"
-                      style={{
-                        fontWeight: 300,
-                        letterSpacing: "-0.01em",
-                        fontSize: "clamp(1.2rem, 2.5vw, 1.75rem)",
-                      }}
-                    >
-                      {l.name}
-                    </h3>
-                    <p className="text-[#A19585] text-[9px] tracking-[0.45em] uppercase">
-                      {l.role}
-                    </p>
-                  </div>
-
-                  {/* Mobile: show index badge */}
-                  <div className="absolute top-5 left-5 lg:hidden">
-                    <span className="text-white/25 text-xs tracking-[0.3em]">{l.index}</span>
-                  </div>
-                </div>
-              </div>
-            ))}
-          </div>
-        </div>
-      </div>
-
-      {/* ── STATS BAND ── */}
-      <div className="team-stats grid grid-cols-1 sm:grid-cols-3 gap-[1px] bg-black/6 border-t border-black/6">
-        {[
-          { v: "20+",      l: "Years of Purposeful Development" },
-          { v: "60%",      l: "Carbon Footprint Reduced Across Projects" },
-          { v: "AED 120M", l: "Invested in Wellness-Focused Living" },
-        ].map((s, i) => (
-          <div
-            key={i}
-            className="team-stat group bg-white hover:bg-[#F9F8F6] transition-colors duration-400 px-10 py-10"
-          >
-            <div
-              className="text-3xl md:text-4xl text-[#A19585] group-hover:scale-105 transition-transform duration-300 mb-2"
-              style={{ fontWeight: 300 }}
+        <div className="team-cards-wrap grid grid-cols-1 md:grid-cols-2 gap-12 lg:gap-16 max-w-5xl mx-auto">
+          {leaders.map((leader, idx) => (
+            <motion.div
+              key={idx}
+              className="team-card relative"
+              onHoverStart={() => setHoveredIndex(idx)}
+              onHoverEnd={() => setHoveredIndex(null)}
+              whileHover={{ y: -8 }}
+              transition={{ duration: 0.4 }}
             >
-              {s.v}
-            </div>
-            <div className="text-[#1b2946]/45 text-xs tracking-[0.25em] uppercase leading-relaxed">{s.l}</div>
-          </div>
-        ))}
+              <div className="relative overflow-hidden rounded-2xl bg-gradient-to-br from-[#F9F8F6] to-white shadow-xl">
+                {/* Image Container - Circular with elegant framing */}
+                <div className="relative pt-8 px-8">
+                  <div className="relative rounded-full overflow-hidden aspect-square max-w-[280px] mx-auto ring-4 ring-[#A19585]/20 group-hover:ring-[#A19585]/40 transition-all duration-500">
+                    <img
+                      src={leader.img}
+                      alt={leader.name}
+                      className="w-full h-full object-cover object-top transform transition-transform duration-700 group-hover:scale-110"
+                    />
+                    {/* Decorative gold ring */}
+                    <div className="absolute inset-0 rounded-full border-2 border-[#A19585]/0 group-hover:border-[#A19585]/30 transition-all duration-500" />
+                  </div>
+                  
+                  {/* Decorative corner elements */}
+                  <div className="absolute top-12 left-8 w-12 h-12 border-l-2 border-t-2 border-[#A19585]/20" />
+                  <div className="absolute top-12 right-8 w-12 h-12 border-r-2 border-t-2 border-[#A19585]/20" />
+                </div>
+
+                {/* Content */}
+                <div className="text-center p-8 pt-4">
+                  <h3 className="text-2xl md:text-3xl text-[#1b2946] font-marcellus font-light mb-2">
+                    {leader.name}
+                  </h3>
+                  <p className="text-[#A19585] text-sm tracking-[0.2em] uppercase mb-4">
+                    {leader.role}
+                  </p>                 
+                  
+                  {/* Social/Contact Icons */}
+                  <div className="flex justify-center gap-4 mt-6">
+                    <motion.a
+                      href="#"
+                      className="w-8 h-8 rounded-full bg-[#1b2946]/5 flex items-center justify-center text-[#1b2946]/40 hover:bg-[#A19585] hover:text-white transition-all duration-300"
+                      whileHover={{ scale: 1.1 }}
+                    >
+                      <svg className="w-4 h-4" fill="currentColor" viewBox="0 0 24 24">
+                        <path d="M22 12c0-5.523-4.477-10-10-10S2 6.477 2 12c0 4.991 3.657 9.128 8.438 9.879v-6.99h-2.54V12h2.54V9.797c0-2.506 1.492-3.89 3.777-3.89 1.094 0 2.238.195 2.238.195v2.46h-1.26c-1.243 0-1.63.771-1.63 1.562V12h2.773l-.443 2.89h-2.33v6.99C18.343 21.128 22 16.991 22 12z"/>
+                      </svg>
+                    </motion.a>
+                    <motion.a
+                      href="#"
+                      className="w-8 h-8 rounded-full bg-[#1b2946]/5 flex items-center justify-center text-[#1b2946]/40 hover:bg-[#A19585] hover:text-white transition-all duration-300"
+                      whileHover={{ scale: 1.1 }}
+                    >
+                      <svg className="w-4 h-4" fill="currentColor" viewBox="0 0 24 24">
+                        <path d="M23.953 4.57a10 10 0 01-2.825.775 4.958 4.958 0 002.163-2.723c-.951.555-2.005.959-3.127 1.184a4.92 4.92 0 00-8.384 4.482C7.69 8.095 4.067 6.13 1.64 3.162a4.822 4.822 0 00-.666 2.475c0 1.71.87 3.213 2.188 4.096a4.904 4.904 0 01-2.228-.616v.06a4.923 4.923 0 003.946 4.827 4.996 4.996 0 01-2.212.085 4.937 4.937 0 004.604 3.417 9.868 9.868 0 01-6.102 2.104c-.39 0-.779-.023-1.17-.067a13.995 13.995 0 0021.257-11.858c0-.21-.009-.42-.028-.63A9.935 9.935 0 0024 4.59z"/>
+                      </svg>
+                    </motion.a>
+                  </div>
+                </div>
+
+                {/* Bottom decorative line */}
+                <div className="absolute bottom-0 left-0 right-0 h-[2px] bg-gradient-to-r from-transparent via-[#A19585] to-transparent transform scale-x-0 group-hover:scale-x-100 transition-transform duration-700" />
+              </div>
+            </motion.div>
+          ))}
+        </div>
       </div>
     </section>
   );
 }
 
 // ─────────────────────────────────────────────────────────────
-// AWARD POPUP — image left, content right (per screenshot)
+// AWARDS (ELEGANT TIMELINE STYLE)
 // ─────────────────────────────────────────────────────────────
-interface AwardPopupProps {
-  award: typeof AWARD_CARDS[0] | null;
-  onClose: () => void;
-}
-
-function AwardPopup({ award, onClose }: AwardPopupProps) {
-  if (!award) return null;
-
-  return (
-    <AnimatePresence>
-      <motion.div
-        initial={{ opacity: 0 }}
-        animate={{ opacity: 1 }}
-        exit={{ opacity: 0 }}
-        transition={{ duration: 0.3 }}
-        className="fixed inset-0 z-[100] flex items-center justify-center p-4 md:p-8"
-        onClick={onClose}
-      >
-        {/* Backdrop */}
-        <div className="absolute inset-0 bg-black/70 backdrop-blur-sm" />
-
-        {/* Modal — image LEFT, content RIGHT */}
-        <motion.div
-          initial={{ opacity: 0, scale: 0.94, y: 24 }}
-          animate={{ opacity: 1, scale: 1, y: 0 }}
-          exit={{ opacity: 0, scale: 0.96, y: 16 }}
-          transition={{ duration: 0.4, ease: [0.16, 1, 0.3, 1] }}
-          className="relative z-10 w-full max-w-4xl bg-white overflow-hidden flex flex-col md:flex-row"
-          style={{ minHeight: "340px" }}
-          onClick={(e) => e.stopPropagation()}
-        >
-          {/* Left — square image 1:1 */}
-          <div className="relative w-full md:w-[50%] flex-shrink-0 aspect-square md:aspect-auto overflow-hidden bg-[#100F2B]">
-            <img
-              src={award.img}
-              alt={award.title}
-              className="w-full h-full object-cover"
-            />
-            {/* Year badge bottom-left over image */}            
-          </div>
-
-          {/* Right — content */}
-          <div className="flex flex-col justify-between p-7 md:p-8 flex-1">
-            {/* Top accent bar */}
-            <div className="absolute top-0 left-0 right-0 h-[3px] bg-[#A19585]" />
-
-            <div>
-              <div className="bg-[#A08040]/15 backdrop-blur-sm px-3 py-1.5 mb-4 w-fit border border-[#A08040]/40 rounded-full">
-                <span className="text-[#A19585] tracking-[0.2em] uppercase text-sm">
-                  {award.tag}
-                </span>
-              </div>
-              <h3
-                className="text-[#1b2946] text-xl md:text-2xl leading-tight mb-4"
-                style={{ fontWeight: 300 }}
-              >
-                {award.title}
-              </h3>
-              <div className="w-8 h-[2px] bg-[#A19585] mb-5" />
-              <p className="text-[#1b2946]/70 text-md leading-relaxed">
-                {award.desc}
-              </p>
-            </div>
-
-            {/* Close */}
-            <button
-              onClick={onClose}
-              className="mt-8 w-full py-3.5 border border-[#1b2946]/12 text-[#1b2946]/40 text-[9px] tracking-[0.4em] uppercase hover:bg-[#100F2B] hover:text-white hover:border-[#100F2B] transition-all duration-400"
-            >
-              Close
-            </button>
-          </div>
-        </motion.div>
-      </motion.div>
-    </AnimatePresence>
-  );
-}
-
-// ─────────────────────────────────────────────────────────────
-// AWARDS — Framer-motion infinite marquee (like CommunitiesSection)
-// ─────────────────────────────────────────────────────────────
-function Awards() {
+function AwardsSection() {
   const ref = useRef<HTMLElement>(null);
-  const titleRef = useRef<HTMLDivElement>(null);
-  const [isHovered, setIsHovered] = useState(false);
-  const [selectedAward, setSelectedAward] = useState<typeof AWARD_CARDS[0] | null>(null);
-
-  // Quadruple cards for seamless infinite loop
-  const infiniteCards = [...AWARD_CARDS, ...AWARD_CARDS, ...AWARD_CARDS, ...AWARD_CARDS];
-
+  
   useGSAP(() => {
-    gsap.fromTo(titleRef.current,
+    gsap.fromTo(".awards-header",
       { y: 60, opacity: 0 },
       {
         y: 0, opacity: 1, duration: 1.4, ease: "power3.out",
         scrollTrigger: { trigger: ref.current, start: "top bottom-=150" },
       }
     );
-    gsap.fromTo(".awards-year-col",
-      { y: 40, opacity: 0 },
+    gsap.fromTo(".award-card-item",
+      { y: 50, opacity: 0 },
       {
-        y: 0, opacity: 1, stagger: 0.15, duration: 1, ease: "power3.out",
-        scrollTrigger: { trigger: ".awards-year-grid", start: "top bottom-=100" },
+        y: 0, opacity: 1, stagger: 0.12, duration: 0.8, ease: "power3.out",
+        scrollTrigger: { trigger: ".awards-grid", start: "top bottom-=100" },
       }
     );
   }, { scope: ref });
 
   return (
-    <section id="awards" ref={ref} className="relative w-full bg-[#100F2B] overflow-hidden py-24 md:py-36">
-
-      {/* Background glow */}
-      <div className="absolute inset-0 opacity-10 pointer-events-none">
-        <div className="absolute top-0 left-1/4 w-96 h-96 bg-[#A19585] rounded-full blur-[120px]" />
-        <div className="absolute bottom-0 right-1/4 w-96 h-96 bg-[#A19585] rounded-full blur-[120px]" />
-      </div>
-
-      {/* ── Header ── */}
-      <div ref={titleRef} className="relative z-10 max-w-[1400px] mx-auto px-6 md:px-16 lg:px-24 mb-16">
-        <div className="flex flex-col md:flex-row md:items-end justify-between gap-6">
-          <div>
-            <div className="flex items-center gap-4 mb-5">
-              <div className="w-10 h-[2px] bg-[#A19585]" />
-              <span className="text-[#A19585] text-xs tracking-[0.4em] uppercase">Awards & Recognition</span>
-            </div>
-            <h2
-              className="text-4xl md:text-5xl lg:text-6xl text-white leading-tight"
-              style={{ fontWeight: 300 }}
-            >
-              Industry Recognition,<br />
-              <span className="text-[#A19585] italic">Year by Year.</span>
-            </h2>
+    <section id="awards" ref={ref} className="relative w-full bg-[#F5F2EE] overflow-hidden py-24 md:py-32">
+      <div className="max-w-[1400px] mx-auto px-6 md:px-16 lg:px-24">
+        <div className="awards-header text-center mb-16">
+          <div className="flex items-center justify-center gap-4 mb-4">
+            <div className="w-10 h-[2px] bg-[#A19585]" />
+            <span className="text-[#A19585] text-xs tracking-[0.4em] uppercase">Recognition</span>
+            <div className="w-10 h-[2px] bg-[#A19585]" />
           </div>
-          <p className="text-white/35 text-sm max-w-xs leading-relaxed">
-            Click any award card to view details.
-          </p>
+          <h2 className="font-marcellus font-light text-4xl md:text-5xl lg:text-6xl text-[#1b2946] leading-tight">
+            Industry Recognition,<br />
+            <span className="text-[#A19585]">Year by Year.</span>
+          </h2>
+          <div className="w-16 h-[2px] bg-[#A19585] mx-auto mt-6" />
+        </div>
+
+        {/* Awards by Year - Elegant Timeline */}
+        <div className="relative">
+          <div className="absolute left-8 top-0 bottom-0 w-[1px] bg-[#A19585]/20 hidden md:block" />
+          <div className="space-y-12">
+            {AWARDS_YEARS.map((yr, i) => (
+              <motion.div
+                key={i}
+                initial={{ opacity: 0, x: -20 }}
+                whileInView={{ opacity: 1, x: 0 }}
+                transition={{ delay: i * 0.1, duration: 0.6 }}
+                viewport={{ once: true }}
+                className="relative pl-0 md:pl-16"
+              >
+                <div className="hidden md:block absolute left-0 top-0 w-16 h-[2px] bg-[#A19585]/30" />
+                <div className="flex flex-col md:flex-row md:items-start gap-6">
+                  <div className="md:w-32 flex-shrink-0">
+                    <span className="text-[#A19585] text-4xl md:text-5xl font-light">{yr.year}</span>
+                  </div>
+                  <div className="flex-1">
+                    <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
+                      {yr.awards.map((award, ai) => (
+                        <div
+                          key={ai}
+                          className="group flex items-center gap-3 p-3 rounded-lg hover:bg-white/50 transition-all duration-300 cursor-default"
+                        >
+                          <div className="w-1.5 h-1.5 rounded-full bg-[#A19585]/40 group-hover:bg-[#A19585] transition-colors duration-300" />
+                          <span className="text-[#1b2946]/70 text-sm group-hover:text-[#1b2946] transition-colors duration-300">
+                            {award}
+                          </span>
+                        </div>
+                      ))}
+                    </div>
+                  </div>
+                </div>
+              </motion.div>
+            ))}
+          </div>
         </div>
       </div>
-
-      {/* ── Infinite Marquee (CommunitiesSection pattern) ── */}
-      <motion.div
-        initial={{ opacity: 0 }}
-        whileInView={{ opacity: 1 }}
-        viewport={{ once: true }}
-        transition={{ duration: 1.5, delay: 0.3 }}
-        className="relative z-10 w-full py-6"
-        onMouseEnter={() => setIsHovered(true)}
-        onMouseLeave={() => setIsHovered(false)}
-      >
-        <motion.div
-          animate={{ x: ["0%", "-50%"] }}
-          transition={{
-            x: {
-              repeat: Infinity,
-              repeatType: "loop",
-              // ── MARQUEE SPEED ──────────────────────────────────────────
-              // Increase the number to make it slower, decrease to speed it up.
-              // On hover the duration jumps to 200 (effectively paused).
-              // Normal scroll speed: 70 seconds for one full loop.
-              // ──────────────────────────────────────────────────────────
-              duration: isHovered ? 300 : 200,
-              ease: "linear",
-            },
-          }}
-          className="flex gap-5 w-max px-4"
-        >
-          {infiniteCards.map((award, index) => (
-            <div
-              key={`award-${award.id}-${index}`}
-              className="w-[400px] md:w-[400px] flex-shrink-0 cursor-pointer"
-              onClick={() => setSelectedAward(award)}
-            >
-              {/* Card — square 1:1 ratio, image only */}
-              <div className="group relative aspect-square overflow-hidden bg-[#1a1940]">
-                <img
-                  src={award.img}
-                  alt={award.title}
-                  className="w-full h-full object-cover transition-transform duration-[1400ms] ease-[cubic-bezier(0.16,1,0.3,1)] group-hover:scale-105"
-                />
-
-                {/* Gradient overlay */}
-                <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-black/10 to-transparent opacity-70 group-hover:opacity-90 transition-opacity duration-500" />
-
-                {/* Click hint bottom */}
-                <div className="absolute bottom-5 left-5 right-5">
-                  <div className="w-5 h-[1px] bg-[#A19585] group-hover:w-10 transition-all duration-400 mb-3" />
-                  <p className="text-white/0 group-hover:text-white/50 text-[10px] tracking-[0.3em] uppercase transition-all duration-400">
-                    View Details
-                  </p>
-                </div>
-
-                {/* Tap ripple indicator */}
-                <div className="absolute top-4 right-4 w-7 h-7 border border-white/20 flex items-center justify-center group-hover:border-[#A19585] transition-colors duration-400">
-                  <span className="text-white/40 group-hover:text-[#A19585] text-xs transition-colors duration-400">+</span>
-                </div>
-              </div>
-            </div>
-          ))}
-        </motion.div>
-
-        {/* Edge fades */}
-        <div className="absolute left-0 top-0 bottom-0 w-20 bg-gradient-to-r from-[#100F2B] to-transparent pointer-events-none z-20" />
-        <div className="absolute right-0 top-0 bottom-0 w-20 bg-gradient-to-l from-[#100F2B] to-transparent pointer-events-none z-20" />
-      </motion.div>
-
-      {/* ── Awards by Year (list) ── */}
-      <div className="relative z-10 max-w-[1400px] mx-auto px-6 md:px-16 lg:px-24 mt-20">
-        <div className="w-full h-[1px] bg-white/8 mb-14" />
-        <div className="awards-year-grid grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-x-10 gap-y-12">
-          {AWARDS_YEARS.map((yr, i) => (
-            <div key={i} className="awards-year-col">
-              <div className="text-[#A19585]/50 text-[4rem] leading-none mb-4 select-none" style={{ fontWeight: 300 }}>
-                {yr.year}
-              </div>
-              <div className="w-full h-[2px] bg-white/10 mb-4" />
-              <ul className="space-y-0">
-                {yr.awards.map((award, ai) => (
-                  <li
-                    key={ai}
-                    className="text-white/45 text-[14px] leading-relaxed py-2.5 border-b border-white/5 hover:text-white/75 hover:pl-2 transition-all duration-300 cursor-default"
-                  >
-                    {award}
-                  </li>
-                ))}
-              </ul>
-            </div>
-          ))}
-        </div>
-      </div>
-
-      {/* Award Popup */}
-      <AnimatePresence>
-        {selectedAward && (
-          <AwardPopup award={selectedAward} onClose={() => setSelectedAward(null)} />
-        )}
-      </AnimatePresence>
     </section>
   );
 }
 
 // ─────────────────────────────────────────────────────────────
-// CLOSING CTA — two-column: content left, CTAs right
+// CLOSING CTA
 // ─────────────────────────────────────────────────────────────
 function Closing() {
   const ref = useRef<HTMLElement>(null);
   const imageRef = useRef<HTMLImageElement>(null);
-  const contentRef = useRef<HTMLDivElement>(null);
 
   useGSAP(() => {
     gsap.to(imageRef.current, {
@@ -901,32 +528,26 @@ function Closing() {
 
   return (
     <section ref={ref} className="relative w-full bg-white overflow-hidden">
-      {/* Subtle background texture */}
       <img
         ref={imageRef}
         src="https://www.fakhruddinproperties.com/wp-content/uploads/2025/04/bg@2x1.jpg"
         alt=""
         className="absolute inset-0 w-full h-full object-cover will-change-transform"
       />
-      {/* Left-to-right gradient to keep layout clean */}
       <div className="absolute inset-0 bg-gradient-to-r from-white/70 via-white/35 to-white/30" />
 
-
-      {/* Accent top border */}
       <div className="absolute top-0 left-0 right-0 h-[3px] bg-gradient-to-r from-[#A19585] via-[#A19585]/50 to-transparent" />
 
       <div className="relative z-10 max-w-[1400px] mx-auto px-6 md:px-16 lg:px-24 py-24 md:py-32">
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-20 items-center">
-
-          {/* LEFT — headline + body */}
           <div className="closing-left">
             <span className="text-[#A19585] text-xs tracking-[0.4em] uppercase block mb-6">Begin Here</span>
             <h2
-              className="text-4xl md:text-5xl lg:text-6xl text-[#1b2946] leading-tight mb-6"
+              className="font-marcellus font-light text-4xl md:text-5xl lg:text-6xl text-[#1b2946] leading-tight mb-6"
               style={{ fontWeight: 300 }}
             >
               This is not<br />
-              <span className="text-[#A19585] italic">just our story.</span>
+              <span className="text-[#A19585]">just our story.</span>
             </h2>
             <div className="w-14 h-[2px] bg-[#A19585] mb-6" />
             <p className="text-[#1b2946]/50 text-base leading-relaxed max-w-md">
@@ -935,9 +556,7 @@ function Closing() {
             </p>
           </div>
 
-          {/* RIGHT — CTA stack */}
           <div className="closing-right flex flex-col gap-4 lg:items-end">
-            {/* Primary CTA */}
             <Link
               href="/projects"
               className="group relative w-full lg:w-auto inline-flex items-center justify-between gap-8 bg-[#100F2B] text-white text-xs tracking-[0.4em] uppercase px-10 py-6 overflow-hidden hover:bg-[#1a1940] transition-colors duration-400"
@@ -947,7 +566,6 @@ function Closing() {
               <div className="absolute bottom-0 left-0 w-full h-[2px] bg-[#A19585] scale-x-0 group-hover:scale-x-100 transition-transform duration-500 origin-left" />
             </Link>
 
-            {/* Secondary CTA */}
             <Link
               href="/treppan-living"
               className="group w-full lg:w-auto inline-flex items-center justify-between gap-8 border border-[#1b2946]/15 text-[#1b2946]/60 text-xs tracking-[0.4em] uppercase px-10 py-6 hover:border-[#A19585] hover:text-[#1b2946] transition-all duration-400"
@@ -956,7 +574,6 @@ function Closing() {
               <div className="w-6 h-[1px] bg-[#A19585]/50 group-hover:w-10 transition-all duration-400" />
             </Link>
 
-            {/* Tertiary — contact */}
             <Link
               href="/contact"
               className="group w-full lg:w-auto inline-flex items-center justify-between gap-8 text-[#1b2946]/50 text-xs tracking-[0.4em] uppercase px-10 py-4 hover:text-[#A19585] transition-colors duration-400"
@@ -965,7 +582,6 @@ function Closing() {
               <span className="text-[#A19585]/40 group-hover:text-[#A19585] transition-colors duration-400">→</span>
             </Link>
           </div>
-
         </div>
       </div>
     </section>
@@ -984,13 +600,29 @@ export default function AboutPage() {
   }, []);
 
   return (
-    <main className="bg-black overflow-x-hidden">
+    <main className="bg-black">
       <Navbar />
+
+      <motion.div
+        initial={{ y: 0 }}
+        animate={{ x: "-100%" }}
+        transition={{ duration: 1.4, ease: customEase, delay: 0.2 }}
+        className="fixed inset-0 z-50 bg-black pointer-events-none flex items-center justify-center"
+      >
+        <motion.div
+          animate={{ opacity: [0.5, 1, 0.5] }}
+          transition={{ duration: 1.5, repeat: Infinity }}
+          className="w-16 h-16 rounded-full flex items-center justify-center"
+        >
+          <span className="text-gray-400 text-xs tracking-widest">FP</span>
+        </motion.div>
+      </motion.div>
+
       <Hero />
       <OurStory />
-      <Philosophy />
+      <Journey />
       <ManagementTeam />
-      <Awards />
+      <AwardsSection />
       <Closing />
       <Footer />
     </main>
