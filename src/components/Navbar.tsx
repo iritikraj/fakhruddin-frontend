@@ -6,26 +6,49 @@ import Link from "next/link";
 
 // Navigation Data
 const navLinks = [
-  { name: "Home Page", href: "/" },
-  { name: "About Us", href: "/about" },
-  { name: "Treppan Living", href: "/treppan-living" },
+  {
+    name: "Home Page",
+    href: "/"
+  },
+  {
+    name: "About Us",
+    href: "/about-us"
+  },
+  {
+    name: "Treppan Living",
+    href: "/treppan-living"
+  },
+  {
+    name: "WellTech",
+    href: "/welltech"
+  },
   {
     name: "Projects",
     subLinks: [
-      { name: "Residential", href: "/projects/residential" },
-      { name: "Commercial", href: "/projects/commercial" },
-      { name: "Luxury Living", href: "/projects/luxury" }
+      {
+        name: "Main",
+        href: "/projects"
+      },
+      {
+        name: "Treppan Serenique",
+        href: "/projects/treppan-serenique"
+      },
     ]
   },
   {
     name: "Communities",
     subLinks: [
+      {
+        name: "Main",
+        href: "/communities"
+      },
       { name: "Dubai Islands", href: "/communities/dubai-islands" },
-      { name: "Jumeirah Village Triangle", href: "/communities/jvt" }
     ]
   },
-  { name: "Partner", href: "/partner" },
-  { name: "Media Center", href: "/media" },
+  {
+    name: "Contact",
+    href: "/contact"
+  },
 ];
 
 const socials = ["Youtube", "LinkedIn", "Instagram"];
@@ -66,8 +89,8 @@ export default function Navbar() {
         animate={{ y: 0 }}
         transition={{ duration: 1, ease: luxuryEase }}
         className={`fixed top-0 left-0 w-full z-[100] flex justify-between items-center px-8 md:px-16 transition-all duration-700 ${scrolled && !isOpen
-            ? "bg-black/20 backdrop-blur-xl py-4 md:py-4 border-b border-white/5"
-            : "bg-transparent py-6 md:py-10"
+          ? "bg-black/20 backdrop-blur-xl py-4 md:py-4 border-b border-white/5"
+          : "bg-transparent py-6 md:py-10"
           }`}
       >
         <Link href="/" onClick={() => setIsOpen(false)}>
@@ -129,26 +152,45 @@ export default function Navbar() {
                         onClick={() => setOpenSubMenu(isSubMenuOpen ? null : link.name)}
                         className="w-full flex items-center justify-between py-4 md:py-6 group text-left outline-none"
                       >
-                        <h2 className={`font-marcellus text-3xl md:text-5xl transition-all duration-500 ${isSubMenuOpen ? "text-[#b69c6b] translate-x-2" : "text-[#0d1833]/80 group-hover:text-[#0d1833]"
+                        <h2 className={`font-marcellus text-3xl md:text-4xl transition-all duration-500 ${isSubMenuOpen ? "text-[#b69c6b] translate-x-2" : "text-[#0d1833]/80 group-hover:text-[#0d1833]"
                           }`}>
                           {link.name}
                         </h2>
                         <motion.svg
-                          animate={{ rotate: isSubMenuOpen ? 180 : 0 }}
+                          animate={{ rotate: isSubMenuOpen ? 90 : 0 }}
                           transition={{ duration: 0.5, ease: luxuryEase }}
-                          className={`w-5 h-5 md:w-6 md:h-6 transition-colors duration-500 ${isSubMenuOpen ? "text-[#b69c6b]" : "text-[#0d1833]/30 group-hover:text-[#0d1833]"}`}
-                          fill="none" viewBox="0 0 24 24" stroke="currentColor"
+                          className={`w-4 h-4 md:w-5 md:h-5 transition-colors duration-500 ${isSubMenuOpen ? "text-[#b69c6b]" : "text-[#0d1833]/30 group-hover:text-[#0d1833]"
+                            }`}
+                          fill="none"
+                          viewBox="0 0 24 24"
+                          stroke="currentColor"
                         >
-                          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1} d="M19 9l-7 7-7-7" />
+                          {/* Horizontal Line */}
+                          <path
+                            strokeLinecap="round"
+                            strokeLinejoin="round"
+                            strokeWidth={1.2}
+                            d="M12 5v14"
+                            className="origin-center"
+                          />
+                          {/* Vertical Line - We animate this to hide or rotate */}
+                          <motion.path
+                            animate={{ opacity: isSubMenuOpen ? 0 : 1 }}
+                            transition={{ duration: 0.3 }}
+                            strokeLinecap="round"
+                            strokeLinejoin="round"
+                            strokeWidth={1.2}
+                            d="M5 12h14"
+                          />
                         </motion.svg>
                       </button>
                     ) : (
                       <Link
                         href={link.href!}
                         onClick={() => setIsOpen(false)}
-                        className="w-full flex items-center justify-between py-4 md:py-6 group text-left outline-none"
+                        className="w-full flex items-center justify-between py-2 md:py-4 group text-left outline-none"
                       >
-                        <h2 className="font-marcellus text-3xl md:text-5xl text-[#0d1833]/80 group-hover:text-[#0d1833] transition-all duration-500">
+                        <h2 className="font-marcellus text-3xl md:text-4xl text-[#0d1833]/80 group-hover:text-[#0d1833] transition-all duration-500">
                           {link.name}
                         </h2>
                       </Link>
@@ -186,20 +228,20 @@ export default function Navbar() {
             </div>
 
             {/* Right Contact/Info Area */}
-            <div className="flex flex-col justify-between w-full md:w-1/3 mt-16 md:mt-0 md:pl-20 lg:border-l border-[#0d1833]/10 h-full py-8 md:py-20">
+            <div className="flex flex-col justify-between w-full md:w-1/3 mt-16 md:mt-0 md:pl-20 lg:border-l border-[#0d1833]/10 h-full py-8 md:py-28">
               <motion.div
                 initial={{ opacity: 0, x: 20 }}
                 animate={{ opacity: 1, x: 0 }}
                 transition={{ delay: 0.4, duration: 1, ease: luxuryEase }}
-                className="space-y-12"
+                className="space-y-6"
               >
-                <div className="space-y-6">
+                <div className="space-y-3">
                   <p className="text-[10px] tracking-[0.4em] uppercase text-[#b69c6b] font-bold font-sans">
                     Get in touch
                   </p>
                   <p className="text-lg md:text-xl text-[#0d1833]/70 font-serif leading-relaxed">
                     If in doubt. <br />
-                    <span className="font-marcellus text-3xl md:text-4xl text-[#0d1833] block mt-2">Reach out.</span>
+                    <span className="font-marcellus text-2xl md:text-3xl text-[#0d1833] block mt-2">Reach out.</span>
                   </p>
                 </div>
 
