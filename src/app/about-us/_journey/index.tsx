@@ -15,39 +15,111 @@ const JOURNEY_DATA = [
   {
     year: "1963",
     title: "The Foundation",
-    description: "Fakhruddin Holdings is established, laying the cornerstone of a legacy built on entrepreneurship, integrity, and community values.",
-    image: "https://images.unsplash.com/photo-1507208773393-40d9fc670acf?q=80&w=2070&auto=format&fit=crop"
+    description: "Fakhruddin Ibrahimji foudned the first company Fakhruddin Ebrahim Al Hindi.",
+    image: "./images/journey/Journey-01.png"
   },
   {
-    year: "1975",
-    title: "Expanding Horizons",
-    description: "First international expansion, establishing presence beyond the UAE and beginning a journey of cross-border excellence.",
-    image: "https://images.unsplash.com/photo-1464822759023-fed622ff2c3b?q=80&w=2070&auto=format&fit=crop"
+    year: "1978",
+    title: "New Formation",
+    description: "After many years of consolidation and growth, Mohd. Hussain & Bros was formed.",
+    image: "./images/journey/Journey-02.png"
   },
   {
-    year: "1983",
-    title: "Architectural Innovation",
-    description: "Pioneering new architectural approaches that blend modern design with timeless elegance and functionality.",
-    image: "https://images.unsplash.com/photo-1546768292-fb12f6c92568?q=80&w=2070&auto=format&fit=crop"
+    year: "1996",
+    title: "New Establishment",
+    description: "Fakhruddin General Trading was established.",
+    image: "./images/journey/Journey-03.png"
   },
   {
-    year: "2001",
-    title: "A New Millennium",
-    description: "Embracing sustainability as a core principle, introducing green building practices before they became industry standard.",
-    image: "https://images.unsplash.com/photo-1516156008625-3a9d6067fab5?q=80&w=2070&auto=format&fit=crop"
+    year: "2000",
+    title: "2 New Registrations",
+    description: "Sterling Perfumed Industries and Premier Cosmetics were registered.",
+    image: "./images/journey/Journey-04.avif"
   },
   {
-    year: "2015",
-    title: "Wellness Revolution",
-    description: "Launch of wellness-focused developments, prioritizing human-centric design and holistic living experiences.",
-    image: "https://images.unsplash.com/photo-1519641471654-76ce0107ad1b?q=80&w=2070&auto=format&fit=crop"
+    year: "2002",
+    title: "A New Introduction",
+    description: "Premier Plastics was introduced, Fakhruddin Properties was formed.",
+    image: "./images/journey/Journey-05.png"
+  },
+  {
+    year: "2007",
+    title: "New Developments",
+    description: "Trafalgar Tower, Trafalgar Executive and Oasis High Park were developed by Fakhruddin Properties.",
+    image: "./images/journey/Journey-06.webp"
+  },
+  {
+    year: "2011",
+    title: "A New Launch",
+    description: "Trafalgar Central was developed.",
+    image: "./images/journey/Journey-07.webp"
+  },
+  {
+    year: "2012",
+    title: "New Tower",
+    description: "Lake Central Tower was developed.",
+    image: "./images/journey/Journey-08.webp"
+  },
+  {
+    year: "2013",
+    title: "Holdings Establishment",
+    description: "Fakhruddin Holdings was establised.",
+    image: "./images/journey/Journey-09.png"
+  },
+  {
+    year: "2014",
+    title: "A New Launch",
+    description: "Trappen Hotel & Suits was developed and launched.",
+    image: "./images/journey/Journey-10.webp"
+  },
+  {
+    year: "2016",
+    title: "FIS was formed",
+    description: "Fakhruddin Properties began developments in Uganda.",
+    image: "./images/journey/Journey-11.webp"
+  },
+  {
+    year: "2017",
+    title: "Began in UK",
+    description: "Fakhruddin Holdings UK developments began.",
+    image: "./images/journey/Journey-12.webp"
+  },
+  {
+    year: "2022",
+    title: "Maimoon Gardens Launch",
+    description: "Fakhruddin Properties Developments was registered and launched the Maimoon Gardens Residential project in JVC.",
+    image: "./images/journey/Journey-13.webp"
+  },
+  {
+    year: "2023",
+    title: "A New Launch",
+    description: "Treppan Living was launched.",
+    image: "./images/journey/Journey-14.webp"
+  },
+  {
+    year: "2024",
+    title: "A New Brand",
+    description: "Treppan Living Branded Apartments Hatimi.",
+    image: "./images/journey/Journey-15.webp"
+  },
+  {
+    year: "2025",
+    title: "A New Residences",
+    description: "Trappen Serenique Residences.",
+    image: "./images/journey/Journey-16.webp"
   },
   {
     year: "2026",
-    title: "The Future Unfolds",
-    description: "Leading the next generation of sustainable, AI-integrated communities that redefine urban living.",
-    image: "https://images.unsplash.com/photo-1480714378408-67cf0d13bc1b?q=80&w=2070&auto=format&fit=crop"
-  }
+    title: "A New Brand Ambassador",
+    description: "JOHN ABRAHAM as the Global Brand Ambassador for Treppan Living.",
+    image: "./images/journey/Journey-17.webp"
+  },
+  {
+    year: "2026",
+    title: "A New Launch",
+    description: "Treppan Living Prive in Dubai Islands.",
+    image: "./images/journey/Journey-18.webp"
+  },
 ];
 
 // ==========================================
@@ -219,16 +291,19 @@ export default function Journey() {
                     }`}>
                     {row.year}
                   </span>
-                  <h3 className="text-2xl md:text-4xl lg:text-5xl tracking-tight text-[#1A1A1A] leading-tight">
+                  {/* <h3 className="text-2xl md:text-4xl lg:text-5xl tracking-tight text-[#1A1A1A] leading-tight">
                     {row.title}
-                  </h3>
-                </div>
-
-                <div>
-                  <p className="text-[9px] md:text-[10px] tracking-[0.3em] uppercase text-[#1A1A1A]/50 font-medium md:pl-[4.5rem]">
+                  </h3> */}
+                  <p className="text-[12px] md:text-[16px] tracking-[1px] text-[#1A1A1A]/80 font-medium md:pl-[4.5rem]">
                     {row.description}
                   </p>
                 </div>
+
+                {/* <div>
+                  <p className="text-[9px] md:text-[10px] tracking-[0.3em] uppercase text-[#1A1A1A]/50 font-medium md:pl-[4.5rem]">
+                    {row.description}
+                  </p>
+                </div> */}
 
               </div>
             ))}
