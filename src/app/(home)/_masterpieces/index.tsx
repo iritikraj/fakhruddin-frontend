@@ -9,47 +9,40 @@ const PROJECTS = [
     title: "Treppan Living Privé",
     category: "Residential",
     image: "/port-1.webp",
+    logo: "https://www.fakhruddinproperties.com/wp-content/uploads/2026/02/maimoon-gardens-logo.png"
   },
   {
     id: 2,
     title: "Treppan Serenique Residences",
     category: "Luxury Living",
-    image: "/port-2.webp",
+    image: "/port-3.webp",
+    logo: "https://www.fakhruddinproperties.com/wp-content/uploads/2026/02/treppan-serenique-logo.png"
   },
   {
     id: 3,
     title: "Treppan Tower",
     category: "Commercial",
-    image: "/port-3.webp",
+    image: "https://www.fakhruddinproperties.com/wp-content/uploads/2025/12/Treppan-Tower-Copy-of-TwilightUpdate.webp",
+    logo: "https://www.fakhruddinproperties.com/wp-content/uploads/2026/02/treppan-tower-logo.png"
   },
   {
     id: 4,
     title: "Hatimi Residences",
     category: "Architecture",
-    image: "/port-4.webp",
+    image: "https://www.fakhruddinproperties.com/wp-content/uploads/2025/12/Podium-Day_7_11.webp",
+    logo: "https://www.fakhruddinproperties.com/wp-content/uploads/2026/02/hatimi-logo.png"
   }
 ];
 
-// Animation variants for the title container and individual words
-const titleContainer: any = {
-  hidden: { opacity: 0 },
-  show: {
-    opacity: 1,
-    transition: {
-      staggerChildren: 0.18,
-      delayChildren: 0.5,
-    },
-  },
-};
-
-const wordReveal: any = {
+// Single, grand cinematic reveal for the logo images
+const logoReveal: any = {
   hidden: {
     y: 80,
-    z: -200,
-    rotateX: 12,
+    z: -150,
+    rotateX: 15,
     opacity: 0,
-    scale: 0.9,
-    filter: "blur(4px)",
+    scale: 0.85,
+    filter: "blur(10px)",
   },
   show: {
     y: 0,
@@ -59,8 +52,8 @@ const wordReveal: any = {
     scale: 1,
     filter: "blur(0px)",
     transition: {
-      duration: 1.5,
-      ease: [0.16, 1, 0.3, 1],
+      duration: 1.6,
+      ease: [0.16, 1, 0.3, 1], // Luxury ease curve
     },
   },
 };
@@ -116,44 +109,36 @@ function ProjectCard({ project, index }: { project: any, index: number }) {
             alt={project.title}
             className="w-full h-full object-cover"
           />
-          {/* Subtle Vignette */}
-          <div className="absolute inset-0 bg-linear-to-b from-black/10 to-black/40 to-black/10" />
+          {/* Subtle Vignette for text/logo readability */}
+          <div className="absolute inset-0 bg-gradient-to-b from-black/20 via-black/10 to-black/60" />
         </div>
 
         {/* Content Overlay */}
-        <div className="relative z-10 h-full flex flex-col items-center justify-center text-center px-4">
-          <motion.span
-            initial={{ opacity: 0, y: 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.8, delay: 0.2 }}
-            className="text-[10px] md:text-xs uppercase tracking-[0.3em] text-white/70 pb-2 pl-3 pr-2 border-b border-white/30"
-          >
-            {project.category}
-          </motion.span>
+        <div className="relative z-10 h-full flex flex-col items-center justify-center text-center px-6 [perspective:1200px]">
 
-          <motion.h3
-            variants={titleContainer}
+          {/* The 3D Animated Logo */}
+          <motion.div
+            variants={logoReveal}
             initial="hidden"
             whileInView="show"
             viewport={{ once: false, amount: 0.5 }}
-            className="text-5xl md:text-6xl text-white font-marcellus leading-tight flex flex-wrap justify-center gap-x-4 md:gap-x-6 [perspective:1000px]"
+            className="relative w-full max-w-[280px] sm:max-w-[400px] md:max-w-[550px] h-[120px] md:h-[200px] flex items-center justify-center"
           >
-            {project.title.split(" ").map((word: string, i: number) => (
-              <span key={i} className="relative overflow-hidden inline-block pb-2">
-                <motion.span variants={wordReveal} className="inline-block">
-                  {word}
-                </motion.span>
-              </span>
-            ))}
-          </motion.h3>
+            <img
+              src={project.logo}
+              alt={project.title}
+              className={`w-96 h-full object-contain ${project.logo.endsWith(".svg") ? "invert" : ""} ${project.image.endsWith("/port-3.webp") ? "w-210" : ""}`}
+            />
+          </motion.div>
+
         </div>
 
-        {/* Bottom Left: Project Numbering */}
-        <div className="absolute top-20 right-12 hidden md:block">
-          <p className="text-white/40 font-marcellus text-2xl">
-            0{index + 1} <span className="text-xs tracking-widest ml-2 opacity-50">/ 04</span>
+        {/* Top Right: Project Numbering */}
+        {/* <div className="absolute top-10 md:top-20 right-6 md:right-12">
+          <p className="text-white/60 font-marcellus text-xl md:text-2xl drop-shadow-md">
+            0{index + 1} <span className="text-[10px] md:text-xs tracking-widest ml-1 md:ml-2 opacity-50">/ 04</span>
           </p>
-        </div>
+        </div> */}
       </motion.div>
     </div>
   );

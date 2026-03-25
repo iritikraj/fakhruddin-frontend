@@ -39,8 +39,8 @@ export default function GreenhousePremium() {
         <div className="mb-24 flex flex-col md:flex-row justify-between items-end gap-12">
           <div className="max-w-2xl">
             <Coffee className="text-[#b69c6b] w-12 h-12 mb-10" />
-            <h2 className="text-7xl md:text-[140px] font-serif tracking-tighter leading-[0.85] mb-8">
-              The Living <br /> <span className="italic text-[#b69c6b]">Sanctuary.</span>
+            <h2 className="text-7xl md:text-[140px] font-marcellus tracking-tighter leading-[0.85] mb-8">
+              The Living <br /> <span className="text-[#b69c6b]">Sanctuary.</span>
             </h2>
           </div>
           <p className="text-[#7a6a58] text-xl font-light leading-relaxed max-w-sm pb-4">
@@ -68,7 +68,7 @@ export default function GreenhousePremium() {
                       {feature.id}
                     </span>
                     <div>
-                      <h4 className={`text-3xl font-serif mb-4 transition-all duration-500 ${activeFeature === idx ? 'translate-x-4 italic' : ''}`}>
+                      <h4 className={`text-3xl font-marcellus mb-4 transition-all duration-500 ${activeFeature === idx ? 'translate-x-4' : ''}`}>
                         {feature.title}
                       </h4>
                       <p className={`text-sm text-[#7a6a58] font-light max-w-xs transition-opacity duration-700 ${activeFeature === idx ? 'opacity-100' : 'opacity-40'}`}>
@@ -105,7 +105,7 @@ export default function GreenhousePremium() {
             <div className="absolute bottom-12 left-12 right-12 flex justify-between items-end text-white">
               <div>
                 <span className="text-[#b69c6b] text-[10px] uppercase tracking-[0.4em] font-bold mb-4 block">Current Harvest</span>
-                <span className="text-3xl font-serif italic">Wild Arugula & Basil</span>
+                <span className="text-3xl font-marcellus">Wild Arugula & Basil</span>
               </div>
               <div className="w-16 h-16 rounded-full bg-white/10 backdrop-blur-md border border-white/20 flex items-center justify-center hover:bg-[#b69c6b] transition-all duration-500 cursor-pointer">
                 <ArrowUpRight className="w-6 h-6" />
