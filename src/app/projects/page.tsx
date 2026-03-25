@@ -203,6 +203,7 @@ function HeroSlider() {
 // ─────────────────────────────────────────────────────────────
 interface ProjectCardProps {
   id: string;
+  logo: string;
   title: string;
   location: string;
   description: string;
@@ -218,7 +219,7 @@ interface ProjectCardProps {
   align?: 'left' | 'right';
 }
 
-function ProjectCard({ id, title, location, description, image, specs, isNew, index, align = 'left' }: ProjectCardProps) {
+function ProjectCard({ id, logo, title, location, description, image, specs, isNew, index, align = 'left' }: ProjectCardProps) {
   const cardRef: any = useRef<HTMLDivElement>(null);
   const imageRef: any = useRef<HTMLDivElement>(null);
   const contentRef: any = useRef<HTMLDivElement>(null);
@@ -318,18 +319,34 @@ function ProjectCard({ id, title, location, description, image, specs, isNew, in
           <div className="w-full space-y-6">
             {/* Title Section */}
             <div className="space-y-2">
-              <span className="text-[#A19585] text-xs tracking-[0.3em]">
-                {String(index + 1).padStart(2, '0')} — {location}
-              </span>
-              <h2 className="font-marcellus font-light text-4xl lg:text-5xl text-black">
+              <img
+                src={logo}
+                alt={title}
+                className={`w-80 h-full m-auto object-contain brightness-0 mt-10 md:mt-0`}
+              />
+              {/* <h2 className="font-marcellus font-light text-4xl lg:text-5xl text-black">
                 {title}
-              </h2>
+              </h2> */}
             </div>
 
             {/* Description */}
             <p className="text-black/50 text-base leading-relaxed">
               {description}
             </p>
+
+            {/* Location */}
+            <div className="flex items-center gap-3">
+              <div className="flex-shrink-0">
+                <svg className="w-5 h-5 text-[#A19585]" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z" />
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z" />
+                </svg>
+              </div>
+              <div className="h-4 w-px bg-[#A19585]/30"></div>
+              <p className="text-[#A19585] text-xs tracking-[0.3em]">
+                {location}
+              </p>
+            </div>
 
             {/* Specs Grid */}
             <div className="grid grid-cols-2 sm:grid-cols-4 gap-4 py-6">
@@ -411,6 +428,7 @@ function ProjectShowcase() {
   const projects = [
     {
       id: "treppan-living-prive",
+      logo: "https://www.fakhruddinproperties.com/wp-content/uploads/2026/01/TREPPEN-PRIVE-LOGO.svg",
       title: "Tréppan Living Privé",
       location: "Dubai Islands",
       description: "Step into a world where thoughtful design meets future-ready living. Experience a tranquil, wellness-led sanctuary with calm at its core. From AI-enabled smart homes to 46+ curated amenities, Tréppan Living Privé transforms everyday life into a rhythm of balance and ease. Each residence is meticulously crafted with premium finishes, smart home automation, and private outdoor spaces that blur the line between indoor and outdoor living.",
@@ -426,6 +444,7 @@ function ProjectShowcase() {
     },
     {
       id: "treppan-serenique",
+      logo: "https://www.fakhruddinproperties.com/wp-content/uploads/2026/02/treppan-serenique-logo.png",
       title: "Tréppan Serenique",
       location: "Dubai Islands",
       description: "Designed for those who seek more than luxury, Serenique was envisioned as a place where life unfolds with intention and ease. Every element nurtures physical vitality, mental clarity, and emotional harmony. The architecture embraces biophilic principles, bringing natural light and greenery into every corner. With dedicated wellness amenities including a spa, meditation gardens, and fitness pavilions, Serenique offers a lifestyle that feels restorative yet effortlessly refined.",
@@ -441,6 +460,7 @@ function ProjectShowcase() {
     },
     {
       id: "treppan-tower",
+      logo: "https://www.fakhruddinproperties.com/wp-content/uploads/2026/02/treppan-tower-logo.png",
       title: "Tréppan Tower",
       location: "Jumeirah Village Triangle",
       description: "Tréppan Tower is a serene sanctuary, located in Jumeirah Village Triangle. It creates a home where families and communities can truly flourish. The tower features thoughtfully designed residences with panoramic city views, state-of-the-art fitness facilities, swimming pools, children's play areas, and landscaped gardens. Each apartment is finished to the highest standards with smart home technology and energy-efficient systems.",
@@ -455,6 +475,7 @@ function ProjectShowcase() {
     },
     {
       id: "hatimi-residences",
+      logo: "https://www.fakhruddinproperties.com/wp-content/uploads/2026/02/hatimi-logo.png",
       title: "Hatimi Residences",
       location: "Dubai Islands",
       description: "On Dubai Islands, Hatimi Residences grace the waterfront with timeless purpose. Uninterrupted seaviews unfold endlessly, embracing the blue horizon of the Gulf. These exclusive residences offer direct beach access, private marina berths, and waterfront dining. The architecture draws inspiration from the ocean's rhythms, with flowing curves and expansive glass walls that frame the water views from every room.",
@@ -469,6 +490,7 @@ function ProjectShowcase() {
     },
     {
       id: "maimoon-gardens",
+      logo: "https://www.fakhruddinproperties.com/wp-content/uploads/2026/02/maimoon-gardens-logo.png",
       title: "Maimoon Gardens",
       location: "Jumeirah Village Circle",
       description: "Maimoon Gardens stands as a purposefully crafted address for sustainable living. Its design balances nature, innovation, and comfort within an enduring community vision. The development features lush green spaces, community gardens, solar-powered amenities, and water-efficient landscaping. Residences are designed to maximize natural light and ventilation, reducing energy consumption while enhancing wellbeing.",

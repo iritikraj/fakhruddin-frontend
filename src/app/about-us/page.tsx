@@ -323,12 +323,14 @@ function ManagementTeam() {
       role: "Chief Executive Officer",
       img: "https://www.fakhruddinproperties.com/wp-content/uploads/2025/12/Yousuf-Fakhruddin-CEO.webp",
       bio: "Visionary leader driving innovation and sustainable growth across the Middle East's real estate landscape.",
+      linkedIn: "https://www.linkedin.com/in/yusuffakhruddin/"
     },
     {
       name: "Fatema Yousuf Fakhruddin",
       role: "Chief Operating Officer",
       img: "https://www.fakhruddinproperties.com/wp-content/uploads/2025/12/Fatema-Fakhruddin-COO.webp",
       bio: "Operational excellence leader ensuring seamless execution of visionary projects with precision.",
+      linkedIn: "#"
     },
   ];
 
@@ -357,7 +359,7 @@ function ManagementTeam() {
               <div className="relative overflow-hidden rounded-2xl bg-gradient-to-br from-[#F9F8F6] to-white shadow-xl">
                 {/* Image Container - Circular with elegant framing */}
                 <div className="relative pt-8 px-8">
-                  <div className="relative rounded-full overflow-hidden aspect-square max-w-[280px] mx-auto ring-4 ring-[#A19585]/20 group-hover:ring-[#A19585]/40 transition-all duration-500">
+                  <div className="relative rounded-2xl overflow-hidden aspect-square max-w-[360px] mx-auto ring-4 ring-[#A19585]/20 group-hover:ring-[#A19585]/40 transition-all duration-500">
                     <img
                       src={leader.img}
                       alt={leader.name}
@@ -384,23 +386,15 @@ function ManagementTeam() {
                   {/* Social/Contact Icons */}
                   <div className="flex justify-center gap-4 mt-6">
                     <motion.a
-                      href="#"
-                      className="w-8 h-8 rounded-full bg-[#1b2946]/5 flex items-center justify-center text-[#1b2946]/40 hover:bg-[#A19585] hover:text-white transition-all duration-300"
+                      href={leader.linkedIn}
+                      target="_blank"
+                      className="w-8 h-8 rounded-full bg-[#1b2946]/5 flex items-center justify-center text-[#1b2946]/40 hover:bg-[#0077B5] hover:text-white transition-all duration-300"
                       whileHover={{ scale: 1.1 }}
                     >
                       <svg className="w-4 h-4" fill="currentColor" viewBox="0 0 24 24">
-                        <path d="M22 12c0-5.523-4.477-10-10-10S2 6.477 2 12c0 4.991 3.657 9.128 8.438 9.879v-6.99h-2.54V12h2.54V9.797c0-2.506 1.492-3.89 3.777-3.89 1.094 0 2.238.195 2.238.195v2.46h-1.26c-1.243 0-1.63.771-1.63 1.562V12h2.773l-.443 2.89h-2.33v6.99C18.343 21.128 22 16.991 22 12z"/>
+                        <path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433c-1.144 0-2.063-.926-2.063-2.065 0-1.138.92-2.063 2.063-2.063 1.14 0 2.064.925 2.064 2.063 0 1.139-.925 2.065-2.064 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451c.979 0 1.771-.773 1.771-1.729V1.729C24 .774 23.204 0 22.225 0z"/>
                       </svg>
-                    </motion.a>
-                    <motion.a
-                      href="#"
-                      className="w-8 h-8 rounded-full bg-[#1b2946]/5 flex items-center justify-center text-[#1b2946]/40 hover:bg-[#A19585] hover:text-white transition-all duration-300"
-                      whileHover={{ scale: 1.1 }}
-                    >
-                      <svg className="w-4 h-4" fill="currentColor" viewBox="0 0 24 24">
-                        <path d="M23.953 4.57a10 10 0 01-2.825.775 4.958 4.958 0 002.163-2.723c-.951.555-2.005.959-3.127 1.184a4.92 4.92 0 00-8.384 4.482C7.69 8.095 4.067 6.13 1.64 3.162a4.822 4.822 0 00-.666 2.475c0 1.71.87 3.213 2.188 4.096a4.904 4.904 0 01-2.228-.616v.06a4.923 4.923 0 003.946 4.827 4.996 4.996 0 01-2.212.085 4.937 4.937 0 004.604 3.417 9.868 9.868 0 01-6.102 2.104c-.39 0-.779-.023-1.17-.067a13.995 13.995 0 0021.257-11.858c0-.21-.009-.42-.028-.63A9.935 9.935 0 0024 4.59z"/>
-                      </svg>
-                    </motion.a>
+                    </motion.a>                    
                   </div>
                 </div>
 
