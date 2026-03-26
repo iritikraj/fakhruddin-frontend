@@ -1,7 +1,7 @@
 "use client";
 
 import { useRef, useState, useEffect } from "react";
-import { motion, AnimatePresence } from "framer-motion";
+import { motion, AnimatePresence, useInView } from "framer-motion";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { useGSAP } from "@gsap/react";
@@ -79,6 +79,33 @@ const JOURNEY_DATA = [
     image: "https://images.unsplash.com/photo-1480714378408-67cf0d13bc1b?q=80&w=2070&auto=format&fit=crop"
   }
 ];
+
+// ─── ANIMATED COUNTER ───────────────────────────────────────
+function AnimatedCounter({ value }: { value: string }) {
+  const ref = useRef<HTMLSpanElement>(null);
+  const isInView = useInView(ref, { once: true, margin: '-50px' });
+  const [display, setDisplay] = useState('0');
+  const numericPart = parseFloat(value);
+
+  useEffect(() => {
+    if (!isInView || isNaN(numericPart)) return;
+    const duration = 2000;
+    const startTime = performance.now();
+    const step = (now: number) => {
+      const progress = Math.min((now - startTime) / duration, 1);
+      const eased = 1 - Math.pow(1 - progress, 4);
+      const current = Math.floor(eased * numericPart);
+      const formatted = value.startsWith('0') && current < 10 ? `0${current}` : String(current);
+      setDisplay(formatted);
+      if (progress < 1) requestAnimationFrame(step);
+      else setDisplay(value);
+    };
+    requestAnimationFrame(step);
+  }, [isInView, numericPart, value]);
+
+  if (isNaN(numericPart)) return <span ref={ref}>{value}</span>;
+  return <span ref={ref}>{display}</span>;
+}
 
 // ─────────────────────────────────────────────────────────────
 // HERO SECTION (unchanged)
@@ -264,10 +291,10 @@ function OurStory() {
           {/* Stats */}
           <div className="grid grid-cols-2 gap-6 border-t border-black/8 pt-8">
             {[
-              { v: "60+", l: "Years of Legacy" },
-              { v: "20+", l: "Industry Awards" },
-              { v: "60%", l: "Carbon Footprint Reduced" },
-              { v: "AED 120M", l: "Invested in Wellness Living" },
+              { prefix:"", v: "60", postfix:"+", l: "Years of Legacy" },
+              { prefix:"", v: "20", postfix:"+", l: "Industry Awards" },
+              { prefix:"", v: "60", postfix:"%", l: "Carbon Footprint Reduced" },
+              { prefix:"AED", v: "120", postfix:"M", l: "Invested in Wellness Living" },
             ].map((s, i) => (
               <div
                 key={i}
@@ -278,7 +305,7 @@ function OurStory() {
                   className="text-3xl md:text-4xl text-[#FFFFFF] md:text-[#A19585] group-hover:scale-105 transition-transform duration-300"
                   style={{ fontWeight: 300 }}
                 >
-                  {s.v}
+                  {s.prefix} <AnimatedCounter value={s.v} />{s.postfix}
                 </div>
                 <div className="text-[#FFFFFF] md:text-[#1b2946]/50 text-xs tracking-[0.25em] uppercase mt-1">{s.l}</div>
               </div>
@@ -412,78 +439,176 @@ function ManagementTeam() {
 // ─────────────────────────────────────────────────────────────
 function AwardsSection() {
   const ref = useRef<HTMLElement>(null);
-  
+  const trackRef = useRef<HTMLDivElement>(null);
+
   useGSAP(() => {
-    gsap.fromTo(".awards-header",
-      { y: 60, opacity: 0 },
+    // Header entrance
+    gsap.fromTo(
+      ".awards-header",
+      { y: 50, opacity: 0 },
       {
-        y: 0, opacity: 1, duration: 1.4, ease: "power3.out",
+        y: 0,
+        opacity: 1,
+        duration: 1.2,
+        ease: "power3.out",
         scrollTrigger: { trigger: ref.current, start: "top bottom-=150" },
       }
     );
-    gsap.fromTo(".award-card-item",
-      { y: 50, opacity: 0 },
-      {
-        y: 0, opacity: 1, stagger: 0.12, duration: 0.8, ease: "power3.out",
-        scrollTrigger: { trigger: ".awards-grid", start: "top bottom-=100" },
-      }
+
+    if (!trackRef.current || !ref.current) return;
+
+    // totalWidth must be read after layout — trackRef.scrollWidth is the full
+    // scrollable width; window.innerWidth is what's visible.
+    const getDistance = () =>
+      trackRef.current!.scrollWidth - window.innerWidth;
+
+    // Pin the section; on each scrub tick manually set x on the track.
+    // This avoids the containerAnimation / .bind crash entirely.
+    ScrollTrigger.create({
+      id: "awardsHScroll",
+      trigger: ref.current,
+      start: "top top",
+      end: () => `+=${getDistance()}`,
+      pin: true,
+      scrub: 1,
+      anticipatePin: 1,
+      invalidateOnRefresh: true,
+      onUpdate: (self) => {
+        gsap.set(trackRef.current, {
+          x: -getDistance() * self.progress,
+        });
+      },
+    });
+
+    // Pills: set hidden upfront, reveal when card is roughly centred.
+    // We check manually inside the main onUpdate via a simple IntersectionObserver
+    // on the cards — no containerAnimation needed.
+    const observer = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) {
+            const pills = entry.target.querySelectorAll(".award-pill");
+            gsap.to(pills, {
+              y: 0,
+              opacity: 1,
+              stagger: 0.07,
+              duration: 0.55,
+              ease: "power2.out",
+            });
+            observer.unobserve(entry.target);
+          }
+        });
+      },
+      { threshold: 0.3 }
     );
+
+    gsap.utils.toArray<HTMLElement>(".year-panel").forEach((panel) => {
+      gsap.set(panel.querySelectorAll(".award-pill"), { y: 20, opacity: 0 });
+      observer.observe(panel);
+    });
+
+    return () => observer.disconnect();
   }, { scope: ref });
 
   return (
-    <section id="awards" ref={ref} className="relative w-full bg-[#F5F2EE] overflow-hidden py-24 md:py-32">
-      <div className="max-w-[1400px] mx-auto px-6 md:px-16 lg:px-24">
-        <div className="awards-header text-center mb-16">
-          <div className="flex items-center justify-center gap-4 mb-4">
-            <div className="w-10 h-[2px] bg-[#A19585]" />
-            <span className="text-[#A19585] text-xs tracking-[0.4em] uppercase">Recognition</span>
-            <div className="w-10 h-[2px] bg-[#A19585]" />
-          </div>
+    <section
+      id="awards"
+      ref={ref}      
+      className="relative w-full bg-[#F5F2EE]"
+    >
+      {/* ── Fixed Header ─────────────────────────────────────── */}
+      <div className="awards-header pt-24 pb-10 max-w-[1400px] mx-auto px-6 md:px-16 lg:px-24">
+        <div className="flex items-center gap-4 mb-4">
+          <div className="w-10 h-[2px] bg-[#A19585]" />
+          <span className="text-[#A19585] text-xs tracking-[0.4em] uppercase">Recognition</span>
+        </div>
+        <div className="flex flex-col md:flex-row md:items-end gap-6 justify-between">
           <h2 className="font-marcellus font-light text-4xl md:text-5xl lg:text-6xl text-[#1b2946] leading-tight">
             Industry Recognition,<br />
             <span className="text-[#A19585]">Year by Year.</span>
           </h2>
-          <div className="w-16 h-[2px] bg-[#A19585] mx-auto mt-6" />
-        </div>
-
-        {/* Awards by Year - Elegant Timeline */}
-        <div className="relative">
-          <div className="absolute left-8 top-0 bottom-0 w-[1px] bg-[#A19585]/20 hidden md:block" />
-          <div className="space-y-12">
-            {AWARDS_YEARS.map((yr, i) => (
-              <motion.div
-                key={i}
-                initial={{ opacity: 0, x: -20 }}
-                whileInView={{ opacity: 1, x: 0 }}
-                transition={{ delay: i * 0.1, duration: 0.6 }}
-                viewport={{ once: true }}
-                className="relative pl-0 md:pl-16"
-              >
-                <div className="hidden md:block absolute left-0 top-0 w-16 h-[2px] bg-[#A19585]/30" />
-                <div className="flex flex-col md:flex-row md:items-start gap-6">
-                  <div className="md:w-32 flex-shrink-0">
-                    <span className="text-[#A19585] text-4xl md:text-5xl font-light">{yr.year}</span>
-                  </div>
-                  <div className="flex-1">
-                    <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
-                      {yr.awards.map((award, ai) => (
-                        <div
-                          key={ai}
-                          className="group flex items-center gap-3 p-3 rounded-lg hover:bg-white/50 transition-all duration-300 cursor-default"
-                        >
-                          <div className="w-1.5 h-1.5 rounded-full bg-[#A19585]/40 group-hover:bg-[#A19585] transition-colors duration-300" />
-                          <span className="text-[#1b2946]/70 text-sm group-hover:text-[#1b2946] transition-colors duration-300">
-                            {award}
-                          </span>
-                        </div>
-                      ))}
-                    </div>
-                  </div>
-                </div>
-              </motion.div>
-            ))}
+          {/* Scroll hint */}
+          <div className="flex items-center gap-3 text-[#A19585]/70 text-xs tracking-widest uppercase pb-1 select-none">
+            <svg width="32" height="10" viewBox="0 0 32 10" fill="none">
+              <path d="M0 5H30M26 1L30 5L26 9" stroke="currentColor" strokeWidth="1.2" strokeLinecap="round" strokeLinejoin="round"/>
+            </svg>
+            Scroll to explore
           </div>
         </div>
+        <div className="w-16 h-[2px] bg-[#A19585] mt-6" />
+      </div>
+
+      {/* ── Horizontal Track ─────────────────────────────────── */}
+      <div
+        ref={trackRef}
+        className="flex will-change-transform pb-24"
+        style={{ width: "max-content" }}
+      >
+          {/* Leading spacer */}
+          <div className="w-6 md:w-16 lg:w-24 flex-shrink-0" />
+
+          {AWARDS_YEARS.map((yr, i) => (
+            <div
+              key={i}
+              className="year-panel flex-shrink-0 w-[82vw] md:w-[55vw] lg:w-[42vw] max-w-[560px] mr-6 md:mr-10"
+            >
+              {/* Card shell */}
+              <div className="relative h-full rounded-2xl border border-[#A19585]/20 bg-white/60 backdrop-blur-sm overflow-hidden group hover:border-[#A19585]/50 transition-colors duration-500">
+
+                {/* Year badge — large watermark + label */}
+                <div className="px-8 pt-8 pb-6 border-b border-[#A19585]/10 flex items-end justify-between">
+                  <span
+                    className="font-marcellus text-[5rem] leading-none text-[#1b2946]/8 select-none pointer-events-none absolute -right-3 -top-3"
+                    aria-hidden
+                  >
+                    {yr.year}
+                  </span>
+                  <div>
+                    <p className="text-[#A19585] text-[10px] tracking-[0.35em] uppercase mb-1">
+                      {yr.awards.length} Award{yr.awards.length > 1 ? "s" : ""}
+                    </p>
+                    <span className="font-marcellus text-5xl text-[#1b2946]">{yr.year}</span>
+                  </div>
+                  <div className="w-8 h-8 rounded-full border border-[#A19585]/30 flex items-center justify-center group-hover:bg-[#A19585]/10 transition-colors duration-300">
+                    <svg width="12" height="12" viewBox="0 0 12 12" fill="none">
+                      <path d="M2 6H10M7 3L10 6L7 9" stroke="#A19585" strokeWidth="1.2" strokeLinecap="round" strokeLinejoin="round"/>
+                    </svg>
+                  </div>
+                </div>
+
+                {/* Awards list */}
+                <div className="px-8 py-6 flex flex-wrap gap-2">
+                  {yr.awards.map((award, ai) => (
+                    <div
+                      key={ai}
+                      className="award-pill group/pill flex items-center gap-2 px-4 py-2 rounded-full border border-[#A19585]/25 bg-[#F5F2EE]/80 hover:bg-[#1b2946] hover:border-[#1b2946] transition-all duration-300 cursor-default"
+                    >
+                      <span className="w-1 h-1 rounded-full bg-[#A19585] group-hover/pill:bg-white transition-colors duration-300 flex-shrink-0" />
+                      <span className="text-[#1b2946]/75 text-base leading-snug group-hover/pill:text-white transition-colors duration-300">
+                        {award}
+                      </span>
+                    </div>
+                  ))}
+                </div>
+
+                {/* Bottom accent line */}
+                <div className="absolute bottom-0 left-0 w-0 h-[2px] bg-[#A19585] group-hover:w-full transition-all duration-700 ease-out" />
+              </div>
+            </div>
+          ))}
+
+          {/* Trailing spacer */}
+          <div className="w-6 md:w-16 lg:w-24 flex-shrink-0" />
+        </div>
+
+      {/* ── Progress dots ────────────────────────────────────── */}
+      <div className="absolute bottom-8 left-1/2 -translate-x-1/2 flex gap-2 pointer-events-none">
+        {AWARDS_YEARS.map((_, i) => (
+          <div
+            key={i}
+            className="progress-dot w-1.5 h-1.5 rounded-full bg-[#A19585]/30"
+          />
+        ))}
       </div>
     </section>
   );

@@ -41,6 +41,7 @@ function Hero() {
   const imageRef = useRef<HTMLImageElement>(null);
   const contentRef = useRef<HTMLDivElement>(null);
   const titleRef = useRef<HTMLHeadingElement>(null);
+  const descRef = useRef<HTMLHeadingElement>(null);
   const subtitleRef = useRef<HTMLParagraphElement>(null);
   const lineRef = useRef<HTMLDivElement>(null);
 
@@ -75,6 +76,10 @@ function Hero() {
       { y: 100, opacity: 0 },
       { y: 0, opacity: 1, duration: 1.5, ease: "power3.out" }
     );
+    gsap.fromTo(descRef.current,
+      { y: 100, opacity: 0 },
+      { y: 0, opacity: 1, duration: 1.5, delay: 0.2, ease: "power3.out" }
+    );
     
     gsap.fromTo(subtitleRef.current,
       { y: 50, opacity: 0 },
@@ -108,7 +113,7 @@ function Hero() {
             WellTech
           </h1>
           <div ref={lineRef} className="w-24 h-[2px] bg-[#A19585] mx-auto my-6 sm:my-8 opacity-0" />
-          <p className="text-white/80 text-lg sm:text-xl max-w-2xl mx-auto px-4">
+          <p  ref={descRef} className="text-white/80 text-lg sm:text-xl max-w-2xl mx-auto px-4">
             Where sustainability meets intelligence, and wellness becomes instinctive.
           </p>
         </div>
@@ -277,10 +282,26 @@ function Wellness() {
   }, { scope: ref });
 
   const features = [
-    { name: "Cryotherapy Zones", icon: "❄️", desc: "Advanced recovery at -140°C" },
-    { name: "Hyperbaric Therapy", icon: "⭕", desc: "Cellular regeneration and healing" },
-    { name: "Infrared Integration", icon: "☀️", desc: "Deep tissue recovery" },
-    { name: "Floatation Spaces", icon: "🌊", desc: "Neural reset and meditation" }
+    { 
+      name: "Cryotherapy Zones", 
+      desc: "Advanced recovery at -140°C",
+      fullDesc: "State-of-the-art cryotherapy chambers that stimulate cellular repair, reduce inflammation, and accelerate muscle recovery after intense physical activity."
+    },
+    { 
+      name: "Hyperbaric Therapy", 
+      desc: "Cellular regeneration and healing",
+      fullDesc: "Pressurized oxygen chambers that enhance oxygen absorption, promote tissue repair, and accelerate healing at the cellular level."
+    },
+    { 
+      name: "Infrared Integration", 
+      desc: "Deep tissue recovery",
+      fullDesc: "Full-spectrum infrared technology that penetrates deep into muscles, promoting detoxification, improved circulation, and accelerated recovery."
+    },
+    { 
+      name: "Floatation Spaces", 
+      desc: "Neural reset and meditation",
+      fullDesc: "Sensory deprivation tanks designed to eliminate external stimuli, allowing deep meditation, stress reduction, and neural pathway reset."
+    }
   ];
 
   return (
@@ -316,13 +337,60 @@ function Wellness() {
                 <div 
                   key={i}
                   ref={el => { featureRefs.current[i] = el; }}
-                  className="group bg-white/5 backdrop-blur-sm rounded-2xl p-4 sm:p-6 border border-white/10 hover:border-[#A19585]/30 transition-all duration-500 hover:transform hover:-translate-y-2"
+                  className="group relative bg-white/5 backdrop-blur-sm rounded-2xl p-4 sm:p-6 border border-white/10 hover:border-[#A19585]/30 transition-all duration-500 overflow-hidden cursor-pointer"
+                  style={{ minHeight: '160px' }}
                 >
-                  <div className="text-3xl sm:text-4xl mb-3 group-hover:scale-110 transition-transform duration-300">
-                    {feature.icon}
+                  {/* Front Content */}
+                  <div className="relative z-10 transition-all duration-500 group-hover:opacity-0">
+                    {/* SVG Icon */}
+                    <div className="text-3xl sm:text-4xl mb-3 group-hover:scale-110 transition-transform duration-300">
+                      {i === 0 && (
+                        <svg width="32" height="32" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                          <path d="M12 2L12 7M12 2L9 5M12 2L15 5" stroke="#A19585" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/>
+                          <path d="M12 22V17M12 22L9 19M12 22L15 19" stroke="#A19585" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/>
+                          <path d="M2 12H7M2 12L5 9M2 12L5 15" stroke="#A19585" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/>
+                          <path d="M22 12H17M22 12L19 9M22 12L19 15" stroke="#A19585" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/>
+                          <circle cx="12" cy="12" r="3" stroke="#A19585" strokeWidth="1.5"/>
+                        </svg>
+                      )}
+                      {i === 1 && (
+                        <svg width="32" height="32" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                          <path d="M12 2C6.48 2 2 6.48 2 12C2 17.52 6.48 22 12 22C17.52 22 22 17.52 22 12" stroke="#A19585" strokeWidth="1.5" strokeLinecap="round"/>
+                          <circle cx="12" cy="12" r="3" stroke="#A19585" strokeWidth="1.5"/>
+                          <path d="M16.5 7.5L19 5" stroke="#A19585" strokeWidth="1.5" strokeLinecap="round"/>
+                          <path d="M7.5 16.5L5 19" stroke="#A19585" strokeWidth="1.5" strokeLinecap="round"/>
+                          <path d="M12 6L12 3" stroke="#A19585" strokeWidth="1.5" strokeLinecap="round"/>
+                        </svg>
+                      )}
+                      {i === 2 && (
+                        <svg width="32" height="32" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                          <circle cx="12" cy="12" r="8" stroke="#A19585" strokeWidth="1.5"/>
+                          <path d="M12 4V2M12 22V20M4 12H2M22 12H20" stroke="#A19585" strokeWidth="1.5" strokeLinecap="round"/>
+                          <path d="M12 8C9.79 8 8 9.79 8 12" stroke="#A19585" strokeWidth="1.5" strokeLinecap="round"/>
+                          <circle cx="12" cy="12" r="2" fill="#A19585"/>
+                        </svg>
+                      )}
+                      {i === 3 && (
+                        <svg width="32" height="32" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                          <path d="M3 12L12 3L21 12L12 21L3 12Z" stroke="#A19585" strokeWidth="1.5"/>
+                          <path d="M12 8V16M8 12H16" stroke="#A19585" strokeWidth="1.5" strokeLinecap="round"/>
+                          <circle cx="12" cy="12" r="2" fill="#A19585"/>
+                        </svg>
+                      )}
+                    </div>
+                    <h3 className="text-white text-base sm:text-lg mb-2">{feature.name}</h3>
+                    <p className="text-white/40 text-xs sm:text-sm">{feature.desc}</p>
                   </div>
-                  <h3 className="text-white text-base sm:text-lg mb-2">{feature.name}</h3>
-                  <p className="text-white/40 text-xs sm:text-sm">{feature.desc}</p>
+                  
+                  {/* Back Content - Shows on Hover */}
+                  <div className="absolute inset-0 z-20 p-4 sm:p-6 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-all duration-500 bg-gradient-to-br from-[#0D1120] to-[#1A1F2E] rounded-2xl">
+                    <p className="text-white/80 text-xs sm:text-sm text-center leading-relaxed">
+                      {feature.fullDesc}
+                    </p>
+                  </div>
+                  
+                  {/* Animated border on hover */}
+                  <div className="absolute inset-0 border-2 border-[#A19585]/0 rounded-2xl group-hover:border-[#A19585]/30 transition-all duration-500" />
                 </div>
               ))}
             </div>
