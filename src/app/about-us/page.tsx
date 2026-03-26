@@ -228,8 +228,6 @@ function OurStory() {
         <div className="hidden md:block absolute inset-0 bg-gradient-to-l from-transparent via-transparent to-white md:via-transparent md:to-white" />
         {/* Mobile Overlay */}
         <div className="block md:hidden absolute inset-0 bg-gradient-to-b from-[#F5F2EE]/30 via-[#F5F2EE]/20 to-[#F5F2EE]/60" />
-        
-        <div className="absolute inset-0 bg-gradient-to-t from-white via-transparent to-transparent md:hidden" />
       </div>
 
       {/* Oversized year watermark - now on the right side */}
