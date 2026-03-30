@@ -13,28 +13,39 @@ if (typeof window !== "undefined") {
 
 const awardsList = [
   {
+    year: "2024",
+    tag: "Initiative", 
+    img: "images/FPD-Award.jpg",
+    title: "Dubai Land Department \u2013 SHE Pioneers Initiative",    
+    desc: "Participation and sponsorship of the SHE Pioneers programme by Dubai Land Department, supporting women's growing impact in real estate and initiatives promoting inclusivity and industry advancement.",
+  },
+  {
+    year: "2024",
+    tag: "2024",
+    img: "images/Our-Story-04.webp",
+    title: "Gulf Business \u2013 Sustainable Project of the Year",    
+    desc: "Awarded by Gulf Business at the Game Changer: UAE Real Estate Outlook for Treppan Tower (Jumeirah Village Triangle), recognising excellence in sustainable development and forward-thinking residential design.",
+  },
+  {
+    year: "2024",
+    tag: "Jan\u2013Mar 2024",
+    img: "images/Our-Story-06.webp",
+    title: "REM Times Industry Feature",
+    desc: "Recognised by REM Times with an editorial cover for pioneering sustainability-focused developments, AI-enabled living infrastructure, and progressive real estate initiatives.",
+  },
+  {
+    year: "2024",
+    tag: "Leadership Insight",
+    img: "images/Our-Story-07.webp",
+    title: "Gulf Business Feature",
+    desc: "Our CEO, Yousuf Fakhruddin featured in Gulf Business discussing integrated urban ecosystems, sustainable city planning, and forward-looking real estate innovation shaping future communities.",
+  },
+  {
     year: "2025",
-    title: "Sustainable Developer of the Year",
-    organization: "Forbes Middle East",
-    img: "/Our-Story-04-1024x1024.webp",
-  },
-  {
-    year: "2024",
-    title: "Pioneering AI Infrastructure",
-    organization: "Global Smart City Expo",
-    img: "/Our-Story-07-1024x1024.webp",
-  },
-  {
-    year: "2024",
-    title: "Excellence in Wellness Design",
-    organization: "International Property Awards",
-    img: "/Our-Story-02-760x760.webp",
-  },
-  {
-    year: "2023",
-    title: "Best Longevity Living Project",
-    organization: "Arabian Business",
-    img: "/Our-Story-08-1024x1024.webp",
+    tag: "2025",
+    img: "images/Our-Story-08.webp",
+    title: "Forbes Middle East \u2013 Most Impactful Real Estate Leaders",
+    desc: "Our CEO, Yousuf Fakhruddin, recognised by Forbes Middle East among Most Impactful Real Estate Leaders for his leadership impact, innovation-driven developments, and contributions shaping modern real estate towards sustainability and wellness.",
   },
 ];
 
@@ -208,14 +219,14 @@ export default function Awards() {
                     }`}>
                     {award.year}
                   </span>
-                  <h3 className="text-2xl md:text-4xl lg:text-5xl tracking-tight text-[#1A1A1A] leading-tight">
+                  <h3 className="text-xl md:text-2xl lg:text-3xl tracking-tight text-[#1A1A1A] leading-tight">
                     {award.title}
                   </h3>
                 </div>
 
                 <div>
-                  <p className="text-[9px] md:text-[10px] tracking-[0.3em] uppercase text-[#1A1A1A]/50 font-medium md:pl-[4.5rem]">
-                    {award.organization}
+                  <p className="text-base md:text-[16px] tracking-[0.5px] text-[#1A1A1A]/50 font-medium md:pl-[4.5rem]">
+                    {award.desc}
                   </p>
                 </div>
 

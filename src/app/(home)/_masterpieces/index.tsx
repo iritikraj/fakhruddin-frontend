@@ -6,31 +6,31 @@ import { motion, useScroll, useTransform } from 'framer-motion';
 const PROJECTS = [
   {
     id: 1,
-    title: "Treppan Living Privé",
-    category: "Residential",
-    image: "/port-1.webp",
-    logo: "https://www.fakhruddinproperties.com/wp-content/uploads/2026/02/maimoon-gardens-logo.png"
-  },
-  {
-    id: 2,
-    title: "Treppan Serenique Residences",
+    title: "Tréppan Serenique Residences",
     category: "Luxury Living",
     image: "/port-3.webp",
     logo: "https://www.fakhruddinproperties.com/wp-content/uploads/2026/02/treppan-serenique-logo.png"
   },
   {
+    id: 2,
+    title: "Hatimi Residences",
+    category: "Architecture",
+    image: "https://www.fakhruddinproperties.com/wp-content/uploads/2025/12/Podium-Day_7_11.webp",
+    logo: "https://www.fakhruddinproperties.com/wp-content/uploads/2026/02/hatimi-logo.png"
+  },
+  {
     id: 3,
-    title: "Treppan Tower",
+    title: "Tréppan Tower",
     category: "Commercial",
     image: "https://www.fakhruddinproperties.com/wp-content/uploads/2025/12/Treppan-Tower-Copy-of-TwilightUpdate.webp",
     logo: "https://www.fakhruddinproperties.com/wp-content/uploads/2026/02/treppan-tower-logo.png"
   },
   {
     id: 4,
-    title: "Hatimi Residences",
-    category: "Architecture",
-    image: "https://www.fakhruddinproperties.com/wp-content/uploads/2025/12/Podium-Day_7_11.webp",
-    logo: "https://www.fakhruddinproperties.com/wp-content/uploads/2026/02/hatimi-logo.png"
+    title: "Maimoon Gardens",
+    category: "Residential",
+    image: "/port-1.webp",
+    logo: "https://www.fakhruddinproperties.com/wp-content/uploads/2026/02/maimoon-gardens-logo.png"
   }
 ];
 

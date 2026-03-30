@@ -46,6 +46,14 @@ const navLinks = [
     ]
   },
   {
+    name: "Channel Partner",
+    href: "/partner-as-agent"
+  },
+  {
+    name: "Blog",
+    href: "/blog"
+  },
+  {
     name: "Contact",
     href: "/contact"
   },

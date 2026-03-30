@@ -1,15 +1,34 @@
 
 import type { Metadata } from "next";
-import { Marcellus } from "next/font/google";
+//import { Marcellus } from "next/font/google";
+import { Faculty_Glyphic } from 'next/font/google';
+import localFont from 'next/font/local';
 import "./globals.css";
 import SmoothScroll from "@/components/SmoothScroll";
 import CustomCursor from "@/components/CustomCursor";
 import PageTransition from "@/components/PageTransition";
 
-const marcellus = Marcellus({
+/*const marcellus = Marcellus({
   subsets: ["latin"],
   weight: "400",
   variable: "--font-marcellus",
+});*/
+
+// Google Font - Faculty Glyphic
+const facultyGlyphic = Faculty_Glyphic({
+  subsets: ['latin'],
+  weight: ['400'],
+  variable: '--font-faculty',
+  display: 'swap',
+});
+
+// Local Font - Seitu Regular (from your .otf file)
+const seituRegular = localFont({
+  src: '../../public/fonts/Seitu-Regular.otf',
+  variable: '--font-seitu',
+  weight: '400',
+  style: 'normal',
+  display: 'swap',
 });
 
 export const metadata: Metadata = {
@@ -23,7 +42,8 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en" className={marcellus.variable}>
+    <html lang="en" className={`${facultyGlyphic.variable} ${seituRegular.variable}`}>
+      {/* className={marcellus.variable} */}
       <head>
         <link
           rel="preload"

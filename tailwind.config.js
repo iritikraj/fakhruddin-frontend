@@ -8,6 +8,9 @@ module.exports = {
   theme: {
     extend: {
       fontFamily: {
+        heading: ['var(--font-faculty)', 'Faculty Glyphic', 'Georgia', 'serif'],        
+        body: ['var(--font-seitu)', 'system-ui', '-apple-system', 'BlinkMacSystemFont', 'Segoe UI', 'Roboto', 'sans-serif'],
+
         optima: ['var(--font-marcellus)'],
       },
     },
