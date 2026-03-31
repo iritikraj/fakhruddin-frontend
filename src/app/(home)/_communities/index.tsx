@@ -69,7 +69,7 @@ function CommunityBlock({ data }: { data: typeof COMMUNITIES[0] }) {
           {data.tag}
         </span>
         <h2
-          className="text-5xl md:text-8xl font-marcellus text-white leading-[1.1] mb-12 drop-shadow-2xl"
+          className="text-5xl md:text-6xl font-marcellus text-white leading-[1.1] mb-12 drop-shadow-2xl"
           dangerouslySetInnerHTML={{ __html: data.title }}
         />
         <div className="w-64 h-5 bg-[linear-gradient(90deg,rgba(76,73,104,0.7)_0%,rgba(115,3,192,0.7)_33.33%,rgba(236,56,188,0.7)_66.67%,rgba(253,239,249,0.7)_100%)] rounded-full" />

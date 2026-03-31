@@ -20,7 +20,7 @@ export default function BrandReveal() {
       scrollTrigger: {
         trigger: containerRef.current,
         start: "top top",
-        end: "+=300%",
+        end: "+=100%",
         scrub: 1.4,
         pin: true,
         anticipatePin: 1,
@@ -203,7 +203,7 @@ export default function BrandReveal() {
       {/* 1. THE LIQUID GLASS LAYER (Z-10) */}
       <div className="absolute inset-0 z-10 w-full h-full overflow-hidden bg-[#0A0A0A]">
         <img
-          src="https://www.fakhruddinproperties.com/wp-content/uploads/2026/01/Treppan-Living-PRIVE-GeneralView.webp"
+          src="https://www.fakhruddinproperties.com/wp-content/uploads/2026/01/Treppan-Living-PRIVE-GeneralView05-Bluehour-1.webp"
           className="pdp-hero-image absolute inset-0 w-full h-full object-cover origin-center will-change-transform"
           alt="Luxury Architecture"
           style={{ filter: "url(#liquid-glass)" }}
@@ -239,7 +239,7 @@ export default function BrandReveal() {
           style={{ width: "clamp(220px, 48vw, 580px)" }}
         >
           <img
-            src="https://www.fakhruddinproperties.com/wp-content/uploads/2026/02/FP-Logo-Light.png"
+            src="https://www.fakhruddinproperties.com/wp-content/uploads/2026/02/treppan-living-logo.png"
             alt="Fakhruddin"
             className="w-full h-auto object-contain drop-shadow-2xl"
           />

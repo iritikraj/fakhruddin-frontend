@@ -84,6 +84,21 @@ export default function PriveReveal() {
         className="absolute inset-0 z-20 w-full h-full pointer-events-none"
       >
         <defs>
+          {/* Define the background image as a pattern */}
+          <pattern
+            id="sandPattern"
+            patternUnits="userSpaceOnUse"
+            width="1920"
+            height="1080"
+          >
+            <image
+              href="/images/sand-background.webp"
+              width="1920"
+              height="1080"
+              preserveAspectRatio="xMidYMid slice"
+            />
+          </pattern>
+          
           <mask id="omniyat-mask">
             {/* White reveals, Black hides. We move the white part. */}
             <rect width="100%" height="100%" fill="white" />
@@ -94,8 +109,8 @@ export default function PriveReveal() {
             />
           </mask>
         </defs>
-        {/* This rect covers the image until the mask carves a hole */}
-        <rect width="100%" height="100%" fill="#F9F8F6" mask="url(#omniyat-mask)" />
+        {/* This rect covers the image until the mask carves a hole - NOW USING THE SAND BACKGROUND IMAGE */}
+        <rect width="100%" height="100%" fill="url(#sandPattern)" mask="url(#omniyat-mask)" />
       </svg>
 
       {/* THE OVERLAY CONTENT */}
