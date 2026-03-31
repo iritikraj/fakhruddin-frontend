@@ -1721,7 +1721,7 @@ export default function ProjectDetailPage() {
   const closeModal = useCallback(() => setModal(null), []);
 
   return (
-    <main className="bg-dark">
+    <main className="bg-black">
       <Navbar />
       <Hero onDownload={openBrochure} onInterest={openInterest} />
       <Overview onDownload={openBrochure} onInterest={openInterest} />
