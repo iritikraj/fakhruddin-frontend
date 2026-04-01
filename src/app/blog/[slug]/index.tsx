@@ -302,7 +302,7 @@ function BlogHero({ title }: { title: string }) {
   }, []);
 
   return (
-    <section ref={ref} className="relative w-full h-[50vh] min-h-[400px] overflow-hidden">
+    <section ref={ref} className="relative w-full h-[10vh] min-h-[100px] overflow-hidden">
       {/* Animated gradient background */}
       <div className="absolute inset-0" style={{ background: `linear-gradient(135deg, ${MSU_GREEN} 0%, ${DEEP_AQUAMARINE} 100%)` }} />
       
@@ -348,7 +348,7 @@ function BlogHero({ title }: { title: string }) {
       </div>
       
       {/* Content */}
-      <div ref={contentRef} className="relative z-10 h-full flex items-center justify-center text-center px-6">
+      {/* <div ref={contentRef} className="relative z-10 h-full flex items-center justify-center text-center px-6">
         <div>
           <motion.div
             initial={{ scale: 0 }}
@@ -364,17 +364,17 @@ function BlogHero({ title }: { title: string }) {
           </h1>
           <div className="blog-line w-20 h-[2px] mx-auto mb-6 origin-center" style={{ background: PRIMARY, transform: "scaleX(0)" }} />
         </div>
-      </div>
+      </div> */}
       
       {/* Scroll indicator */}
-      <motion.div 
+      {/* <motion.div 
         className="absolute bottom-10 left-1/2 -translate-x-1/2 z-20 flex flex-col items-center gap-2"
         animate={{ y: [0, 10, 0] }}
         transition={{ duration: 2, repeat: Infinity }}
       >
         <span className="text-white/40 text-[10px] tracking-[0.3em] uppercase">Read</span>
         <div className="w-[1px] h-8" style={{ background: `linear-gradient(to bottom, ${PRIMARY}, transparent)` }} />
-      </motion.div>
+      </motion.div> */}
     </section>
   );
 }
@@ -493,9 +493,13 @@ function BlogContent({ post }: { post: typeof BLOG_POSTS[0] }) {
 
   return (
     <div ref={contentRef} className="mx-auto">
-      <div className="blog-image rounded-2xl overflow-hidden mb-12">
+      <div className="blog-image rounded-2xl overflow-hidden">
         <img src={post.image} alt={post.title} className="w-full h-auto" />
       </div>
+
+      <h1 className="text-center text-black text-base md:text-4xl py-8 max-w-4xl mx-auto">
+        {post.title}
+      </h1>
 
       <div 
         className="blog-content prose prose-lg max-w-none"
@@ -570,7 +574,7 @@ export default function BlogDetailPage() {
       </section>
 
       {relatedPosts.length > 0 && (
-        <section className="relative w-full py-16 md:py-24" style={{ background: `linear-gradient(to bottom, ${WHITE}, ${PALE_SILVER}10)` }}>
+        <section className="relative w-full py-16 md:py-24" style={{ background: PALE_SILVER }}>
           <div className="max-w-[1300px] mx-auto px-6 md:px-12 lg:px-16">
             <div className="text-center mb-12">
               <h2 className="font-faculty text-3xl md:text-4xl mb-3" style={{ color: MSU_GREEN }}>

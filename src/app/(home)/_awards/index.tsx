@@ -15,36 +15,41 @@ const awardsList = [
   {
     year: "2024",
     tag: "Initiative", 
-    img: "images/FPD-Award.jpg",
-    title: "Dubai Land Department \u2013 SHE Pioneers Initiative",    
+    img: "images/Our-Story-02.webp",
+    icon: "/images/awards/award-1.webp",
+    title: "Architectural Residential",    
     desc: "Participation and sponsorship of the SHE Pioneers programme by Dubai Land Department, supporting women's growing impact in real estate and initiatives promoting inclusivity and industry advancement.",
   },
   {
     year: "2024",
     tag: "2024",
     img: "images/Our-Story-04.webp",
-    title: "Gulf Business \u2013 Sustainable Project of the Year",    
+    icon: "/images/awards/award-2.webp",
+    title: "Sustainable Real",    
     desc: "Awarded by Gulf Business at the Game Changer: UAE Real Estate Outlook for Treppan Tower (Jumeirah Village Triangle), recognising excellence in sustainable development and forward-thinking residential design.",
   },
   {
     year: "2024",
     tag: "Jan\u2013Mar 2024",
     img: "images/Our-Story-06.webp",
-    title: "REM Times Industry Feature",
+    icon: "/images/awards/award-3.webp",
+    title: "Highly",
     desc: "Recognised by REM Times with an editorial cover for pioneering sustainability-focused developments, AI-enabled living infrastructure, and progressive real estate initiatives.",
   },
   {
     year: "2024",
     tag: "Leadership Insight",
     img: "images/Our-Story-07.webp",
-    title: "Gulf Business Feature",
+    icon: "/images/awards/award-4.webp",
+    title: "Sustainable",
     desc: "Our CEO, Yousuf Fakhruddin featured in Gulf Business discussing integrated urban ecosystems, sustainable city planning, and forward-looking real estate innovation shaping future communities.",
   },
   {
     year: "2025",
     tag: "2025",
     img: "images/Our-Story-08.webp",
-    title: "Forbes Middle East \u2013 Most Impactful Real Estate Leaders",
+    icon: "/images/awards/award-5.webp",
+    title: "Best Sustainable",
     desc: "Our CEO, Yousuf Fakhruddin, recognised by Forbes Middle East among Most Impactful Real Estate Leaders for his leadership impact, innovation-driven developments, and contributions shaping modern real estate towards sustainability and wellness.",
   },
 ];
@@ -214,7 +219,28 @@ export default function Awards() {
                 <div className={`absolute left-0 top-0 h-full w-[2px] md:w-1 bg-[#9D7E44] transition-transform duration-700 origin-top ${activeIndex === index ? "scale-y-100" : "scale-y-0"
                   }`} />
 
-                <div className="flex flex-col md:flex-row md:items-center gap-2 md:gap-8">
+                  <div className="flex flex-col items-center text-center gap-3 md:gap-4">
+                    <img 
+                      src={award.icon} 
+                      alt={award.title} 
+                      className="object-contain" 
+                    />
+
+                    <h4 className={`text-sm md:text-xl font-semibold transition-colors duration-300 ${
+                      activeIndex === index 
+                        ? "text-[#9D7E44]" 
+                        : "text-[#1A1A1A]/70 group-hover:text-[#9D7E44]"
+                    }`}>
+                      {award.tag}
+                    </h4>
+                    {award.title && (
+                      <p className="text-xs md:text-base text-[#1A1A1A]/50">
+                        {award.title}
+                      </p>
+                    )}
+                  </div>
+
+                {/* <div className="flex flex-col md:flex-row md:items-center gap-2 md:gap-8">
                   <span className={`italic text-xl md:text-3xl transition-colors duration-500 ${activeIndex === index ? "text-[#9D7E44]" : "text-[#1A1A1A]/40"
                     }`}>
                     {award.year}
@@ -222,13 +248,12 @@ export default function Awards() {
                   <h3 className="text-xl md:text-2xl lg:text-3xl tracking-tight text-[#1A1A1A] leading-tight">
                     {award.title}
                   </h3>
-                </div>
-
-                <div>
+                </div> */}
+                {/* <div>
                   <p className="text-base md:text-[16px] tracking-[0.5px] text-[#1A1A1A]/50 font-medium md:pl-[4.5rem]">
                     {award.desc}
                   </p>
-                </div>
+                </div> */}
 
               </div>
             ))}

@@ -38,7 +38,8 @@ const useWindowSize = () => {
 // ─────────────────────────────────────────────────────────────
 function Hero() {
   const ref = useRef<HTMLElement>(null);
-  const imageRef = useRef<HTMLImageElement>(null);
+  const currentImageRef = useRef<HTMLImageElement>(null);
+  const newImageRef = useRef<HTMLImageElement>(null);
   const contentRef = useRef<HTMLDivElement>(null);
   const titleRef = useRef<HTMLHeadingElement>(null);
   const descRef = useRef<HTMLHeadingElement>(null);
@@ -59,7 +60,7 @@ function Hero() {
     });
 
     // Animate the image to zoom and fade
-    tl.to(imageRef.current, {
+    tl.to(currentImageRef.current, {
       scale: 1.5,
       opacity: 0,
       ease: "power2.inOut"
@@ -90,17 +91,51 @@ function Hero() {
       { width: 0, opacity: 0 },
       { width: 96, opacity: 1, duration: 1.5, delay: 0.6, ease: "power3.out" }
     );
+
+    // Image transition after 2 seconds (independent of scroll)
+    gsap.delayedCall(1, () => {
+      gsap.to(currentImageRef.current, {
+        opacity: 0,
+        duration: 0.8,
+        ease: "sine.inOut",
+        onComplete: () => {
+          if (currentImageRef.current) {
+            currentImageRef.current.style.display = "none";
+          }
+        }
+      });
+      
+      gsap.fromTo(newImageRef.current,
+        { opacity: 0 },
+        { 
+          opacity: 1, 
+          duration: 0.8, 
+          ease: "sine.inOut",
+          scale: 1 // Ensure scale is consistent with scroll animation
+        }
+      );
+    });
+
   }, { scope: ref });
 
   return (
     <section ref={ref} className="relative w-full h-screen overflow-hidden">
-      {/* Image with overlay */}
+      {/* Current Image */}
       <img 
-        ref={imageRef}
-        src="images/Intelligent-Living-Tech.webp"
+        ref={currentImageRef}
+        src="https://www.fakhruddinproperties.com/wp-content/uploads/2026/02/Intelligent-Living.webp" 
         alt="Hero"
         className="absolute inset-0 w-full h-full object-cover"
       />
+      
+      {/* New Image (hidden initially) */}
+      <img 
+        ref={newImageRef}
+        src="https://www.fakhruddinproperties.com/wp-content/uploads/2026/03/Intelligent-Living-Tech.webp" 
+        alt="Hero"
+        className="absolute inset-0 w-full h-full object-cover opacity-0"
+      />
+      
       <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/40 to-black/20" />
       
       {/* Content */}
@@ -113,7 +148,7 @@ function Hero() {
             WellTech
           </h1>
           <div ref={lineRef} className="w-24 h-[2px] bg-[#A19585] mx-auto my-6 sm:my-8 opacity-0" />
-          <p  ref={descRef} className="text-white/80 text-lg sm:text-xl max-w-2xl mx-auto px-4">
+          <p ref={descRef} className="text-white/80 text-lg sm:text-xl max-w-2xl mx-auto px-4">
             Where sustainability meets intelligence, and wellness becomes instinctive.
           </p>
         </div>
@@ -121,6 +156,7 @@ function Hero() {
     </section>
   );
 }
+
 
 // ─────────────────────────────────────────────────────────────
 // SECTION 2 — SUSTAINABILITY
