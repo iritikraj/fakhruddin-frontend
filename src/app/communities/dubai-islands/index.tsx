@@ -12,7 +12,7 @@ import {
   useMotionValue,
   useSpring
 } from 'framer-motion';
-import { Plus, Minus, MapPin, Play, ArrowUpRight, Phone, Video, MessageSquare } from 'lucide-react';
+import { Plus, Minus, MapPin, Play, Pause, ArrowUpRight, Phone, Video, MessageSquare } from 'lucide-react';
 import Navbar from '@/components/Navbar';
 import Footer from '@/components/Footer';
 
@@ -157,18 +157,19 @@ function SophisticationSection() {
   return (
     <section
       ref={containerRef}
-      className="relative max-w-[1400px] mx-auto px-6 py-40 md:py-64 overflow-hidden"
+      className="bg-white relative px-6 py-40 md:py-64 overflow-hidden"
     >
       {/* ─── BACKGROUND SECTION TITLE ─── */}
       <motion.div
         style={{ y: textY }}
-        className="absolute top-20 left-6 z-0 opacity-[0.03] pointer-events-none select-none"
+        className="absolute inset-x-0 top-20 z-0 opacity-[0.05] pointer-events-none select-none flex justify-center"
       >
-        <h2 className="text-[11vw] font-marcellus leading-none uppercase text-center">Sophisticated</h2>
+        <h2 className="text-[10vw] text-[#000000] font-marcellus leading-none uppercase text-center">
+          Sophisticated
+        </h2>
       </motion.div>
 
-      <div className="relative grid grid-cols-12 gap-4 items-start">
-
+      <div className="max-w-[1400px] mx-auto relative grid grid-cols-12 gap-4 items-start">
         {/* LEFT COLUMN: THE ANCHOR CARD */}
         <div className="col-span-12 md:col-span-7 relative z-10">
           <div className="overflow-hidden mb-12 text-left">
@@ -243,10 +244,74 @@ function SophisticationSection() {
   );
 }
 
+// ─── INVISIBLE AUDIO PLAYER HOOK ─────────────────────────────
+function useBackgroundAudio(audioSrc: string) {
+  const [isPlaying, setIsPlaying] = useState(false);
+  const audioRef = useRef<HTMLAudioElement | null>(null);
+
+  useEffect(() => {
+    // Create audio element only on client side
+    if (typeof window !== 'undefined') {
+      const audio = new Audio(audioSrc);
+      audio.loop = true; // Loop the beach sound for continuous ambiance
+      audio.preload = 'auto';
+      
+      // Handle audio end to reset playing state if not looping (though loop is true)
+      audio.addEventListener('ended', () => setIsPlaying(false));
+      
+      audioRef.current = audio;
+      
+      return () => {
+        if (audioRef.current) {
+          audioRef.current.pause();
+          audioRef.current.src = '';
+          audioRef.current = null;
+        }
+      };
+    }
+  }, [audioSrc]);
+
+  const togglePlay = () => {
+    if (!audioRef.current) return;
+    
+    if (isPlaying) {
+      audioRef.current.pause();
+      setIsPlaying(false);
+    } else {
+      // Play with a promise to handle autoplay restrictions gracefully
+      const playPromise = audioRef.current.play();
+      if (playPromise !== undefined) {
+        playPromise
+          .then(() => {
+            setIsPlaying(true);
+          })
+          .catch((error) => {
+            console.warn('Audio playback failed:', error);
+            setIsPlaying(false);
+          });
+      }
+    }
+  };
+
+  // Optional: Pause audio when component unmounts or page navigates
+  useEffect(() => {
+    return () => {
+      if (audioRef.current) {
+        audioRef.current.pause();
+      }
+    };
+  }, []);
+
+  return { isPlaying, togglePlay };
+}
+
 // ─── MAIN PAGE COMPONENT ────────────────────────────────────
 export default function CommunityPage() {
   const [openFaq, setOpenFaq] = useState<number | null>(0);
   const [activeStickySection, setActiveStickySection] = useState(stickySections[0].id);
+  
+  // Audio playback hook - using the beach sound file
+  const { isPlaying, togglePlay } = useBackgroundAudio('/sound/beach-sound.mp3');
 
   // Parallax Refs
   const heroRef = useRef<HTMLDivElement>(null);
@@ -260,7 +325,7 @@ export default function CommunityPage() {
 
   return (
     <>
-      <Navbar />
+      <Navbar /> 
 
       {/* CURTAIN REVEAL */}
       <motion.div
@@ -279,7 +344,7 @@ export default function CommunityPage() {
         </motion.div>
       </motion.div>
 
-      <main className="bg-white text-[#222] min-h-screen font-sans selection:bg-[#CBA153] selection:text-white">
+      <main className="bg-black">
 
         {/* ══════════════════════════════════════════
             1. HERO VIDEO
@@ -293,12 +358,22 @@ export default function CommunityPage() {
             <div className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent" />
           </motion.div>
 
-          {/* Magnetic Watch Button */}
+          {/* Magnetic Audio Play/Pause Button */}
           <div className="absolute bottom-12 right-12 z-20 hidden md:block">
             <Magnetic>
-              <button className="w-24 h-24 rounded-full border border-white/20 backdrop-blur-sm flex flex-col items-center justify-center text-white hover:bg-white hover:text-black transition-colors duration-500 group">
-                <Play size={16} fill="currentColor" className="mb-1 ml-1" />
-                <span className="text-[9px] uppercase tracking-widest font-medium">Watch</span>
+              <button 
+                onClick={togglePlay}
+                className="w-24 h-24 rounded-full border border-white/20 backdrop-blur-sm flex flex-col items-center justify-center text-white hover:bg-white hover:text-black transition-colors duration-500 group"
+                aria-label={isPlaying ? "Pause ambient sound" : "Play ambient sound"}
+              >
+                {isPlaying ? (
+                  <Pause size={20} className="mb-1" />
+                ) : (
+                  <Play size={20} fill="currentColor" className="mb-1 ml-1" />
+                )}
+                <span className="text-[9px] uppercase tracking-widest font-medium">
+                  {isPlaying ? 'Pause' : 'Play'}
+                </span>
               </button>
             </Magnetic>
           </div>
@@ -317,10 +392,7 @@ export default function CommunityPage() {
               viewport={{ once: true }}
               transition={{ duration: 1, ease: customEase }}
               className="flex flex-col items-center xl:items-start xl:w-1/4 shrink-0"
-            >
-              <div className="w-14 h-14 rounded-full border border-[#CBA153] flex items-center justify-center mb-4 bg-[#CBA153]/5">
-                <span className="text-[#CBA153] text-[10px] tracking-widest font-serif">FP</span>
-              </div>
+            >              
               <h2 className="text-xl md:text-2xl font-marcellus tracking-wide text-center xl:text-left text-gray-900">DUBAI ISLANDS</h2>
             </motion.div>
 
@@ -368,8 +440,8 @@ export default function CommunityPage() {
         {/* ══════════════════════════════════════════
             3. INTRO (Text Left, Image Right)
         ══════════════════════════════════════════ */}
-        <section className="max-w-[1400px] mx-auto px-6 py-24 md:py-40">
-          <div className="flex flex-col md:flex-row items-center gap-16 md:gap-24">
+        <section className="bg-white px-6 py-24 md:py-40">
+          <div className="max-w-[1400px] mx-auto flex flex-col md:flex-row items-center gap-16 md:gap-24">
 
             <div className="w-full md:w-1/2">
               {/* Staggered Line Reveal */}
@@ -471,11 +543,11 @@ export default function CommunityPage() {
         <SophisticationSection />
 
 
-        <section className="max-w-[1400px] mx-auto px-6 py-40 relative flex flex-col md:flex-row items-start gap-12 lg:gap-32">
+        <section className="bg-white px-6 py-40 relative flex flex-col md:flex-row items-start gap-12 lg:gap-32">
 
           {/* Left Sidebar: Minimalist "Instrument Cluster" */}
           <div className="hidden md:block w-1/5 sticky top-1/4 shrink-0 h-fit">
-            <div className="relative pl-8 border-l border-gray-100 flex flex-col gap-10">
+            <div className="max-w-[1400px] mx-auto relative pl-8 border-l border-gray-100 flex flex-col gap-10">
 
               {/* Moving Indicator Dot */}
               <motion.div
@@ -639,62 +711,75 @@ export default function CommunityPage() {
 
         {/* ══════════════════════════════════════════
             8. FAQs (Animated Border & Collapse)
-        ══════════════════════════════════════════ */}
-        <section className="max-w-[1400px] mx-auto px-6 py-24 md:py-40">
-          <div className="flex flex-col md:flex-row gap-12 md:gap-24">
-            <div className="w-full md:w-1/3 overflow-hidden">
-              <motion.h2
-                initial={{ y: "100%" }}
-                whileInView={{ y: 0 }}
-                viewport={{ once: true }}
-                transition={{ duration: 1, ease: customEase }}
-                className="text-5xl md:text-7xl font-marcellus text-gray-900 tracking-tight"
-              >
-                FAQs
-              </motion.h2>
-            </div>
+        ══════════════════════════════════════════ */}        
+        <section className="relative py-24 md:py-40 overflow-hidden">
+          {/* Background Image */}
+          <div className="absolute inset-0 w-full h-full">
+            <Image 
+              src="/images/sand-background.webp" 
+              alt="Sand background" 
+              fill 
+              className="object-cover"
+            />
+            <div className="absolute inset-0 bg-white/80" /> {/* Overlay for readability */}
+          </div>
+          
+          <div className="max-w-[1400px] mx-auto px-6 relative z-10">
+            <div className="flex flex-col md:flex-row gap-12 md:gap-24">
+              <div className="w-full md:w-1/3 overflow-hidden">
+                <motion.h2
+                  initial={{ y: "100%" }}
+                  whileInView={{ y: 0 }}
+                  viewport={{ once: true }}
+                  transition={{ duration: 1, ease: customEase }}
+                  className="text-5xl md:text-7xl font-marcellus text-gray-900 tracking-tight"
+                >
+                  FAQs
+                </motion.h2>
+              </div>
 
-            <div className="w-full md:w-2/3">
-              {/* Draw top line */}
-              <motion.div
-                initial={{ scaleX: 0 }}
-                whileInView={{ scaleX: 1 }}
-                viewport={{ once: true }}
-                transition={{ duration: 1.5, ease: customEase }}
-                className="w-full h-[1px] bg-gray-200 origin-left"
-              />
+              <div className="w-full md:w-2/3">
+                {/* Draw top line */}
+                <motion.div
+                  initial={{ scaleX: 0 }}
+                  whileInView={{ scaleX: 1 }}
+                  viewport={{ once: true }}
+                  transition={{ duration: 1.5, ease: customEase }}
+                  className="w-full h-[1px] bg-gray-200 origin-left"
+                />
 
-              {faqs.map((faq, idx) => (
-                <div key={idx} className="border-b border-gray-200">
-                  <button
-                    onClick={() => setOpenFaq(openFaq === idx ? null : idx)}
-                    className="w-full flex justify-between items-center py-8 text-left group"
-                  >
-                    <span className="text-lg md:text-2xl font-light text-gray-800 pr-8 transition-colors group-hover:text-[#CBA153]">
-                      <span className="text-[#CBA153] mr-6 text-sm font-bold font-sans">Q{idx + 1}</span>
-                      {faq.question}
-                    </span>
-                    <div className="w-10 h-10 rounded-full border border-gray-200 flex items-center justify-center text-gray-400 group-hover:border-[#CBA153] group-hover:text-[#CBA153] transition-all duration-500 shrink-0">
-                      {openFaq === idx ? <Minus size={16} strokeWidth={1.5} /> : <Plus size={16} strokeWidth={1.5} />}
-                    </div>
-                  </button>
-                  <AnimatePresence>
-                    {openFaq === idx && (
-                      <motion.div
-                        initial={{ height: 0, opacity: 0 }}
-                        animate={{ height: 'auto', opacity: 1 }}
-                        exit={{ height: 0, opacity: 0 }}
-                        transition={{ duration: 0.4, ease: customEase }}
-                        className="overflow-hidden"
-                      >
-                        <p className="pb-8 text-gray-500 font-light leading-relaxed pl-12 text-lg max-w-2xl">
-                          {faq.answer}
-                        </p>
-                      </motion.div>
-                    )}
-                  </AnimatePresence>
-                </div>
-              ))}
+                {faqs.map((faq, idx) => (
+                  <div key={idx} className="border-b border-gray-200">
+                    <button
+                      onClick={() => setOpenFaq(openFaq === idx ? null : idx)}
+                      className="w-full flex justify-between items-center py-8 text-left group"
+                    >
+                      <span className="text-lg md:text-2xl font-light text-gray-800 pr-8 transition-colors group-hover:text-[#CBA153]">
+                        <span className="text-[#CBA153] mr-6 text-sm font-bold font-sans">Q{idx + 1}</span>
+                        {faq.question}
+                      </span>
+                      <div className="w-10 h-10 rounded-full border border-gray-200 flex items-center justify-center text-gray-400 group-hover:border-[#CBA153] group-hover:text-[#CBA153] transition-all duration-500 shrink-0">
+                        {openFaq === idx ? <Minus size={16} strokeWidth={1.5} /> : <Plus size={16} strokeWidth={1.5} />}
+                      </div>
+                    </button>
+                    <AnimatePresence>
+                      {openFaq === idx && (
+                        <motion.div
+                          initial={{ height: 0, opacity: 0 }}
+                          animate={{ height: 'auto', opacity: 1 }}
+                          exit={{ height: 0, opacity: 0 }}
+                          transition={{ duration: 0.4, ease: customEase }}
+                          className="overflow-hidden"
+                        >
+                          <p className="pb-8 text-gray-500 font-light leading-relaxed pl-12 text-lg max-w-2xl">
+                            {faq.answer}
+                          </p>
+                        </motion.div>
+                      )}
+                    </AnimatePresence>
+                  </div>
+                ))}
+              </div>
             </div>
           </div>
         </section>
@@ -802,8 +887,9 @@ export default function CommunityPage() {
             </div>
           </div>
         </section>
+
+        <Footer />
       </main>
-      <Footer />
     </>
   );
 }

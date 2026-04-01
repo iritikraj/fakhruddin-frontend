@@ -5,9 +5,9 @@ import { useRef } from "react";
 import Image from "next/image";
 
 const footerLinks = [
-  { category: "Portfolio", items: ["Treppan Living Prive", "Treppan Serenique", "Treppan Tower", "Mamoon Gardens"] },
-  { category: "Company", items: ["Our Vision", "Communities", "Insights", "Contact"] },
-  { category: "Legal", items: ["Privacy Policy", "Terms of Service", "Cookie Policy"] },
+  { category: "Portfolio", items: ["Tréppan Living Prive", "Tréppan Serenique", "Tréppan Tower", "Hatimi Residences", "Maimoon Gardens", "Fakhruddin International"] },
+  { category: "Company", items: ["About Us", "Tréppan Living", "Channel Partner", "Blogs and Insights", "Contact Us"] },
+  { category: "Communities", items: ["Dubai Islands", "Jumeirah Village Circle","Jumeirah Village Triangle"] },
 ];
 
 export default function Footer() {
@@ -24,10 +24,10 @@ export default function Footer() {
   return (
     <footer
       ref={container}
-      className="relative bg-[#050505]/10 text-[#e5e5e5] pt-40 pb-12 px-6 md:px-20 overflow-hidden"
+      className="relative bg-[#050505]/10 text-[#e5e5e5] pt-10 pb-12 px-6 md:px-20 overflow-hidden"
     >
       {/* 1. The Call to Experience (Editorial CTA) */}
-      <div className="max-w-[1400px] mx-auto grid grid-cols-1 lg:grid-cols-2 gap-24 items-end border-b border-white/5 pb-32">
+      {/* <div className="max-w-[1400px] mx-auto grid grid-cols-1 lg:grid-cols-2 gap-24 items-end border-b border-white/5 pb-32">
         <div className="space-y-12">
           <motion.div
             initial={{ opacity: 0, x: -20 }}
@@ -51,7 +51,6 @@ export default function Footer() {
           </div>
         </div>
 
-        {/* 2. Kinetic Contact Section */}
         <div className="flex flex-col items-start lg:items-end gap-16">
           <div className="text-left lg:text-right space-y-4">
             <p className="text-[9px] tracking-[0.6em] uppercase text-white/60">The Concierge</p>
@@ -63,7 +62,7 @@ export default function Footer() {
             </p>
           </div>
         </div>
-      </div>
+      </div> */}
 
       {/* 3. The Boutique Link Grid */}
       <div className="max-w-[1400px] mx-auto py-24 grid grid-cols-2 md:grid-cols-4 lg:grid-cols-5 gap-12">
@@ -76,18 +75,24 @@ export default function Footer() {
               className="object-contain"
             />
           </div>
-          <p className="text-[11px] leading-[2] text-white/30 max-w-[280px] font-light tracking-wide">
-            Crafting sanctuary since 2003. A philosophy of quiet luxury and architectural permanence.
+          <p className="text-base leading-[2] text-white/30 max-w-[280px] font-light tracking-wide">
+            Crafting sanctuary since 2003 - a quiet pursuit to reimagine what real estate could mean for the people who live within it.
           </p>
+
+          <div>
+            <a href="tel:8005253" className="text-2xl font-bold hover:text-yellow-600 transition-all duration-500">
+              Toll Free 800 5253
+            </a>
+          </div>          
         </div>
 
         {footerLinks.map((section) => (
           <div key={section.category} className="space-y-8">
-            <h5 className="text-[9px] tracking-[0.5em] uppercase text-white/20 font-bold">{section.category}</h5>
+            <h5 className="text-base tracking-[0.5em] uppercase text-white/20 font-bold">{section.category}</h5>
             <ul className="space-y-4">
               {section.items.map((item) => (
                 <li key={item}>
-                  <a href="#" className="text-[12px] text-white/50 hover:text-yellow-600 transition-all duration-500 block font-light tracking-tight hover:italic hover:translate-x-1">
+                  <a href="#" className="text-base text-white/50 hover:text-yellow-600 transition-all duration-500 block font-light tracking-tight hover:italic hover:translate-x-1">
                     {item}
                   </a>
                 </li>
@@ -95,12 +100,13 @@ export default function Footer() {
             </ul>
           </div>
         ))}
+
+        
       </div>
 
       {/* 4. The Monumental Branding (Parallax) */}
-      <div className="relative h-[25vh] md:h-[40vh] flex items-center justify-center overflow-hidden pointer-events-none">
-        <motion.div
-          // style={{ y, opacity }}
+      {/* <div className="relative h-[25vh] md:h-[40vh] flex items-center justify-center overflow-hidden pointer-events-none">
+        <motion.div          
           className="relative w-[70vw] max-w-[900px] h-[120px] md:h-[180px] lg:h-[220px]"
         >
           <Image
@@ -112,12 +118,11 @@ export default function Footer() {
           />
         </motion.div>
 
-        {/* Optional: Add a subtle glow behind the text to make it "pop" from the black */}
         <motion.div
           style={{ opacity: useTransform(scrollYProgress, [0.8, 1], [0, 0.15]) }}
           className="absolute inset-0 bg-gradient-to-t from-yellow-900/20 to-transparent blur-3xl"
         />
-      </div>
+      </div> */}
 
       {/* 5. Minimalist Sub-Footer */}
       <div className="max-w-[1400px] mx-auto pt-12 border-t border-white/5 flex flex-col md:flex-row justify-between items-center gap-8">

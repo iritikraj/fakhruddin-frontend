@@ -324,9 +324,6 @@ function ProjectCard({ id, logo, title, location, description, image, specs, isN
                 alt={title}
                 className={`w-80 h-full m-auto object-contain brightness-0 mt-10 md:mt-0`}
               />
-              {/* <h2 className="font-marcellus font-light text-4xl lg:text-5xl text-black">
-                {title}
-              </h2> */}
             </div>
 
             {/* Description */}
@@ -402,7 +399,86 @@ function ProjectCard({ id, logo, title, location, description, image, specs, isN
 }
 
 // ─────────────────────────────────────────────────────────────
-// PROJECT SHOWCASE - All Properties with Full Content
+// COMMUNITY SECTION - Minimalist Design
+// ─────────────────────────────────────────────────────────────
+// ─────────────────────────────────────────────────────────────
+// COMMUNITY SECTION - Elegant Header Design
+// ─────────────────────────────────────────────────────────────
+interface CommunitySectionProps {
+  title: string;
+  projects: any[];
+}
+
+function CommunitySection({ title, projects }: CommunitySectionProps) {
+  const sectionRef = useRef<HTMLElement>(null);
+  const headerRef = useRef<HTMLDivElement>(null);
+
+  useGSAP(() => {
+    gsap.fromTo(headerRef.current,
+      { y: 40, opacity: 0 },
+      {
+        y: 0,
+        opacity: 1,
+        duration: 0.8,
+        scrollTrigger: {
+          trigger: headerRef.current,
+          start: "top bottom-=80",
+          end: "top center",
+          scrub: 1,
+        }
+      }
+    );
+  }, { scope: sectionRef });
+
+  return (
+    <section ref={sectionRef} className="relative w-full">
+      {/* Community Header - Elegant Design */}
+      <div ref={headerRef} className="mb-16">
+        <div className="flex items-center justify-between border-b border-[#A19585]/20 pb-6">
+          {/* Left side - Community name with decorative element */}
+          <div className="flex items-center gap-4">
+            <div className="w-1 h-12 bg-[#A19585]"></div>
+            <div>
+              <h3 className="text-3xl md:text-4xl lg:text-5xl font-marcellus font-light text-black tracking-wide">
+                {title}
+              </h3>
+              <div className="flex items-center gap-2 mt-2">
+                <div className="w-8 h-[1px] bg-[#A19585]/40"></div>
+                <span className="text-[#A19585]/50 text-xs tracking-wider">PRIME LOCATION</span>
+              </div>
+            </div>
+          </div>
+          
+          {/* Right side - Project count with elegant styling */}
+          <div className="text-right">
+            <div className="relative">
+              <span className="text-5xl md:text-6xl font-light text-[#A19585]/20">0{projects.length}</span>
+              <span className="absolute -top-2 -right-6 text-[#A19585] text-sm font-light tracking-wider">
+                PROJECTS
+              </span>
+            </div>            
+          </div>
+        </div>       
+      </div>
+
+      {/* Projects within this community */}
+      <div className="space-y-16">
+        {projects.map((project, index) => (
+          <ProjectCard
+            key={index}
+            {...project}
+            index={index}
+          />
+        ))}
+      </div>
+    </section>
+  );
+}
+
+
+
+// ─────────────────────────────────────────────────────────────
+// PROJECT SHOWCASE - Categorized by Community with Minimalist Layout
 // ─────────────────────────────────────────────────────────────
 function ProjectShowcase() {
   const sectionRef = useRef<HTMLElement>(null);
@@ -425,12 +501,14 @@ function ProjectShowcase() {
     );
   }, { scope: sectionRef });
 
-  const projects = [
+  // Define all projects with their communities
+  const allProjects = [
     {
       id: "treppan-living-prive",
       logo: "https://www.fakhruddinproperties.com/wp-content/uploads/2026/01/TREPPEN-PRIVE-LOGO.svg",
       title: "Tréppan Living Privé",
       location: "Dubai Islands",
+      community: "Dubai Islands",
       description: "Step into a world where thoughtful design meets future-ready living. Experience a tranquil, wellness-led sanctuary with calm at its core. From AI-enabled smart homes to 46+ curated amenities, Tréppan Living Privé transforms everyday life into a rhythm of balance and ease. Each residence is meticulously crafted with premium finishes, smart home automation, and private outdoor spaces that blur the line between indoor and outdoor living.",
       image: "https://www.fakhruddinproperties.com/wp-content/uploads/2026/01/Treppan-Living-Prive-Cover.webp",
       specs: {
@@ -447,6 +525,7 @@ function ProjectShowcase() {
       logo: "https://www.fakhruddinproperties.com/wp-content/uploads/2026/02/treppan-serenique-logo.png",
       title: "Tréppan Serenique",
       location: "Dubai Islands",
+      community: "Dubai Islands",
       description: "Designed for those who seek more than luxury, Serenique was envisioned as a place where life unfolds with intention and ease. Every element nurtures physical vitality, mental clarity, and emotional harmony. The architecture embraces biophilic principles, bringing natural light and greenery into every corner. With dedicated wellness amenities including a spa, meditation gardens, and fitness pavilions, Serenique offers a lifestyle that feels restorative yet effortlessly refined.",
       image: "https://www.fakhruddinproperties.com/wp-content/uploads/2025/12/Treppan-Serenique-Balcony-Podium-Overview.webp",
       specs: {
@@ -459,10 +538,43 @@ function ProjectShowcase() {
       align: 'right' as const
     },
     {
+      id: "hatimi-residences",
+      logo: "https://www.fakhruddinproperties.com/wp-content/uploads/2026/02/hatimi-logo.png",
+      title: "Hatimi Residences",
+      location: "Dubai Islands",
+      community: "Dubai Islands",
+      description: "On Dubai Islands, Hatimi Residences grace the waterfront with timeless purpose. Uninterrupted seaviews unfold endlessly, embracing the blue horizon of the Gulf. These exclusive residences offer direct beach access, private marina berths, and waterfront dining. The architecture draws inspiration from the ocean's rhythms, with flowing curves and expansive glass walls that frame the water views from every room.",
+      image: "https://www.fakhruddinproperties.com/wp-content/uploads/2025/12/Exterior-Render-1_4_11.webp",
+      specs: {
+        bedrooms: "1-4",
+        price: "AED 7.02M",
+        amenities: "12+",
+        completion: "Q3 2027"
+      },
+      align: 'left' as const
+    },
+    {
+      id: "maimoon-gardens",
+      logo: "https://www.fakhruddinproperties.com/wp-content/uploads/2026/02/maimoon-gardens-logo.png",
+      title: "Maimoon Gardens",
+      location: "Jumeirah Village Circle",
+      community: "Jumeirah Village Circle",
+      description: "Maimoon Gardens stands as a purposefully crafted address for sustainable living. Its design balances nature, innovation, and comfort within an enduring community vision. The development features lush green spaces, community gardens, solar-powered amenities, and water-efficient landscaping. Residences are designed to maximize natural light and ventilation, reducing energy consumption while enhancing wellbeing.",
+      image: "https://www.fakhruddinproperties.com/wp-content/uploads/2026/01/Maimoon-Banner.webp",
+      specs: {
+        bedrooms: "Studio-3",
+        price: "AED 1.4M",
+        amenities: "17+",
+        completion: "Q4 2026"
+      },
+      align: 'right' as const
+    },
+    {
       id: "treppan-tower",
       logo: "https://www.fakhruddinproperties.com/wp-content/uploads/2026/02/treppan-tower-logo.png",
       title: "Tréppan Tower",
       location: "Jumeirah Village Triangle",
+      community: "Jumeirah Village Triangle",
       description: "Tréppan Tower is a serene sanctuary, located in Jumeirah Village Triangle. It creates a home where families and communities can truly flourish. The tower features thoughtfully designed residences with panoramic city views, state-of-the-art fitness facilities, swimming pools, children's play areas, and landscaped gardens. Each apartment is finished to the highest standards with smart home technology and energy-efficient systems.",
       image: "https://www.fakhruddinproperties.com/wp-content/uploads/2025/12/Treppan-Tower-Copy-of-Elevation01.webp",
       specs: {
@@ -472,44 +584,25 @@ function ProjectShowcase() {
         completion: "Q1 2027"
       },
       align: 'left' as const
-    },
-    {
-      id: "hatimi-residences",
-      logo: "https://www.fakhruddinproperties.com/wp-content/uploads/2026/02/hatimi-logo.png",
-      title: "Hatimi Residences",
-      location: "Dubai Islands",
-      description: "On Dubai Islands, Hatimi Residences grace the waterfront with timeless purpose. Uninterrupted seaviews unfold endlessly, embracing the blue horizon of the Gulf. These exclusive residences offer direct beach access, private marina berths, and waterfront dining. The architecture draws inspiration from the ocean's rhythms, with flowing curves and expansive glass walls that frame the water views from every room.",
-      image: "https://www.fakhruddinproperties.com/wp-content/uploads/2025/12/Exterior-Render-1_4_11.webp",
-      specs: {
-        bedrooms: "1-4",
-        price: "AED 7.02M",
-        amenities: "12+",
-        completion: "Q3 2027"
-      },
-      align: 'right' as const
-    },
-    {
-      id: "maimoon-gardens",
-      logo: "https://www.fakhruddinproperties.com/wp-content/uploads/2026/02/maimoon-gardens-logo.png",
-      title: "Maimoon Gardens",
-      location: "Jumeirah Village Circle",
-      description: "Maimoon Gardens stands as a purposefully crafted address for sustainable living. Its design balances nature, innovation, and comfort within an enduring community vision. The development features lush green spaces, community gardens, solar-powered amenities, and water-efficient landscaping. Residences are designed to maximize natural light and ventilation, reducing energy consumption while enhancing wellbeing.",
-      image: "https://www.fakhruddinproperties.com/wp-content/uploads/2026/01/Maimoon-Banner.webp",
-      specs: {
-        bedrooms: "Studio-3",
-        price: "AED 1.4M",
-        amenities: "17+",
-        completion: "Q4 2026"
-      },
-      align: 'left' as const
     }
   ];
+
+  // Group projects by community in the desired order
+  const communityOrder = ["Dubai Islands", "Jumeirah Village Triangle", "Jumeirah Village Circle"];
+  
+  const communityData = communityOrder.map(communityName => {
+    const projectsInCommunity = allProjects.filter(p => p.community === communityName);
+    return {
+      name: communityName,
+      projects: projectsInCommunity
+    };
+  }).filter(community => community.projects.length > 0);
 
   return (
     <section ref={sectionRef} className="relative w-full py-16 lg:py-24 bg-white">
       <div className="max-w-[1400px] mx-auto px-4 sm:px-6 lg:px-8">
         {/* Section Header */}
-        <div ref={titleRef} className="text-center mb-12 lg:mb-16">
+        <div ref={titleRef} className="text-center mb-16 lg:mb-20">
           <span className="text-[#A19585] text-xs sm:text-sm tracking-[0.3em]">OUR PORTFOLIO</span>
           <h2 className="text-3xl sm:text-4xl lg:text-5xl text-black mt-4">
             Defining Modern Living
@@ -519,15 +612,37 @@ function ProjectShowcase() {
           </p>
         </div>
 
-        {/* Projects List - Full Content Always Visible */}
-        <div className="space-y-16 lg:space-y-24">
-          {projects.map((project, index) => (
-            <ProjectCard
-              key={index}
-              {...project}
-              index={index}
+        {/* Community-based Project Listing - Minimalist */}
+        <div className="space-y-24 lg:space-y-32">
+          {communityData.map((community, idx) => (
+            <CommunitySection
+              key={idx}
+              title={community.name}
+              projects={community.projects}
             />
           ))}
+        </div>
+
+        {/* Community Location Map */}
+        <div className="mt-24 pt-16 border-t border-[#A19585]/10">
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-12">
+            {communityData.map((community, idx) => (
+              <div key={idx} className="group cursor-pointer">
+                <div className="relative mb-4">
+                  <div className="w-12 h-[2px] bg-[#A19585]/40 group-hover:w-20 transition-all duration-500"></div>
+                </div>
+                <h4 className="text-xl font-marcellus text-black mb-2 group-hover:text-[#A19585] transition-colors duration-300">
+                  {community.name}
+                </h4>
+                <p className="text-[#A19585]/60 text-sm">
+                  {community.projects.length} {community.projects.length === 1 ? 'project' : 'projects'}
+                </p>
+                <div className="mt-3 text-black/30 text-xs tracking-wide">
+                  {community.projects.map(p => p.title).join(' • ')}
+                </div>
+              </div>
+            ))}
+          </div>
         </div>
       </div>
     </section>

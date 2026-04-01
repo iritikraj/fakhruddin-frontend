@@ -36,19 +36,19 @@ const BLOG_POSTS = [
     excerpt: "Explore how technology, sustainability, and wellness are reshaping Dubai's luxury property market.",
     content: `
       <p>Dubai's luxury real estate market is undergoing a remarkable transformation, driven by evolving buyer preferences and technological advancements. The days of simply offering opulent finishes and prime locations are behind us. Today's discerning buyers seek properties that integrate seamlessly with their lifestyle, prioritize wellness, and embrace sustainable technologies.</p>
-      
+      <br>
       <h2>The Rise of Wellness-Centric Living</h2>
       <p>Wellness has become a cornerstone of luxury real estate. Developments like Tréppan Serenique are leading this charge with comprehensive wellness amenities including hyperbaric oxygen therapy, flotation therapy, and dedicated meditation zones. Buyers are no longer just purchasing a home; they're investing in a holistic lifestyle that supports their physical and mental wellbeing.</p>
-      
+      <br>
       <h2>Smart Technology Integration</h2>
       <p>AI-enabled infrastructure is no longer a novelty but a necessity. From smart robot delivery systems to intelligent climate control, technology is creating seamless living experiences. Properties that embrace these innovations are seeing stronger demand from tech-savvy buyers who value convenience and efficiency.</p>
-      
+      <br>
       <h2>Sustainability as Standard</h2>
       <p>Environmental consciousness has moved from a niche consideration to a mainstream requirement. Luxury developers are incorporating sustainable materials, energy-efficient systems, and green spaces into their projects. This shift reflects a broader understanding that true luxury must be responsible and forward-thinking.</p>
-      
+      <br>
       <h2>Location Reimagined</h2>
       <p>While prime locations like Dubai Marina and Downtown remain highly desirable, we're seeing increased interest in areas that offer a balance of connectivity and tranquility. Projects positioned near the coast with easy access to city amenities are particularly attractive to buyers seeking the best of both worlds.</p>
-      
+      <br>
       <p>The future of Dubai's luxury real estate lies in properties that can deliver on multiple fronts: wellness, technology, sustainability, and location. As developers continue to innovate, buyers can expect even more sophisticated offerings that cater to their evolving needs and aspirations.</p>
     `,
     image: "https://www.fakhruddinproperties.com/wp-content/uploads/2026/03/How-Innovation-and-Compliance-Shape-Our-Community-Future.webp",
@@ -61,19 +61,19 @@ const BLOG_POSTS = [
     excerpt: "Discover why wellness-focused developments are commanding premium prices and attracting discerning buyers.",
     content: `
       <p>The real estate landscape is witnessing a paradigm shift where wellness amenities are no longer considered nice-to-have additions but essential value drivers. Properties that prioritize health and wellbeing are consistently outperforming traditional developments in both value appreciation and buyer demand.</p>
-      
+      <br>
       <h2>The Wellness Premium</h2>
       <p>Research indicates that properties with comprehensive wellness amenities command premiums of 10-15% compared to similar properties without these features. This wellness premium reflects the growing recognition that health-focused living environments contribute significantly to quality of life.</p>
-      
+      <br>
       <h2>Beyond Traditional Amenities</h2>
       <p>Today's wellness offerings go far beyond a standard gym or swimming pool. Forward-thinking developments are incorporating cryotherapy chambers, red light therapy rooms, salt brick saunas, and dedicated meditation spaces. These specialized amenities create unique value propositions that differentiate properties in competitive markets.</p>
-      
+      <br>
       <h2>Long-Term Value Creation</h2>
       <p>Wellness amenities contribute to sustained property value through multiple channels. They reduce the need for external wellness services, create community engagement opportunities, and position properties as holistic living solutions rather than just physical spaces. This comprehensive approach resonates strongly with buyers who view their homes as sanctuaries.</p>
-      
+      <br>
       <h2>Investment Implications</h2>
       <p>For investors, properties with strong wellness offerings represent compelling opportunities. The combination of premium pricing, strong rental demand, and appreciation potential makes these properties attractive additions to any portfolio. As awareness of wellness benefits continues to grow, this trend is likely to strengthen further.</p>
-      
+      <br>
       <p>As the market continues to evolve, wellness amenities will increasingly become standard expectations rather than differentiators. Developers who embrace this shift early are positioning themselves for success in the new era of luxury real estate.</p>
     `,
     image: "https://www.fakhruddinproperties.com/wp-content/uploads/2026/01/Investor-Awareness-Stage-706x510.webp",
@@ -86,19 +86,19 @@ const BLOG_POSTS = [
     excerpt: "Key trends and opportunities shaping Dubai's property market in the coming year.",
     content: `
       <p>As we look toward 2025, Dubai's real estate market presents compelling opportunities for investors and homeowners alike. The emirate's continued evolution as a global hub for business, tourism, and innovation creates a strong foundation for sustained property market growth.</p>
-      
+      <br>
       <h2>Emerging Investment Hotspots</h2>
       <p>While traditional areas maintain their appeal, new developments along Dubai's coastline are capturing significant attention. Areas offering beachfront living combined with innovative amenities are seeing particularly strong interest from international buyers seeking unique lifestyle propositions.</p>
-      
+      <br>
       <h2>Market Drivers</h2>
       <p>Several factors are fueling Dubai's property market momentum. The city's successful handling of global challenges has enhanced its reputation for stability and safety. Continued economic diversification, progressive visa policies, and world-class infrastructure development create an environment conducive to long-term property investment.</p>
-      
+      <br>
       <h2>Sector-Specific Opportunities</h2>
       <p>Luxury residential continues to perform strongly, with demand outstripping supply in key segments. The wellness-focused living sector represents a particularly dynamic opportunity, as buyers increasingly prioritize properties that support their health and wellbeing goals.</p>
-      
+      <br>
       <h2>Looking Forward</h2>
       <p>Dubai's real estate market is well-positioned for continued growth. The combination of strong fundamentals, innovative development approaches, and increasing global interest creates an optimistic outlook for the coming years. Investors who identify emerging trends early will be best positioned to capitalize on market opportunities.</p>
-      
+      <br>
       <p>The key to success in Dubai's evolving market lies in understanding the shifting preferences of modern buyers and aligning investments with these trends. Wellness, technology integration, and sustainability will continue to shape the future of luxury living in the emirate.</p>
     `,
     image: "https://www.fakhruddinproperties.com/wp-content/uploads/2026/01/End-User-Interest-720x510.webp",
@@ -111,19 +111,19 @@ const BLOG_POSTS = [
     excerpt: "How eco-friendly practices are becoming central to Dubai's luxury real estate.",
     content: `
       <p>Sustainability has emerged as a defining feature of Dubai's next generation of luxury developments. The integration of eco-friendly practices and green technologies is no longer an afterthought but a fundamental design principle shaping how properties are conceived and constructed.</p>
-      
+      <br>
       <h2>Beyond Green Building Certifications</h2>
       <p>While certifications remain important, the focus has shifted to holistic sustainability approaches that consider environmental impact, resource efficiency, and long-term operational performance. Developers are incorporating everything from solar energy systems to water recycling technologies.</p>
-      
+      <br>
       <h2>Biophilic Design Elements</h2>
       <p>Connecting residents with nature has become a priority in luxury development. Features like green walkways, bamboo oxygen parks, and hydroponic gardens bring natural elements into daily life while supporting environmental goals. These features also contribute significantly to resident wellbeing.</p>
-      
+      <br>
       <h2>Energy Efficiency Innovations</h2>
       <p>Smart building systems that optimize energy use without compromising comfort are becoming standard in premium developments. AI-enabled infrastructure can reduce energy consumption by 20-30% while maintaining optimal living conditions, delivering both environmental and financial benefits.</p>
-      
+      <br>
       <h2>The Economic Case for Sustainability</h2>
       <p>Beyond environmental considerations, sustainable properties make strong economic sense. Lower utility costs, reduced maintenance requirements, and growing buyer preference for green homes all contribute to strong investment performance. As awareness grows, the sustainability premium is likely to increase.</p>
-      
+      <br>
       <p>Dubai's commitment to sustainability positions its real estate market for long-term success. Developers who embrace these principles are creating properties that will retain their appeal and value as environmental considerations become increasingly central to buyer decisions.</p>
     `,
     image: "https://www.fakhruddinproperties.com/wp-content/uploads/2026/01/End-User-Awareness.webp",
@@ -136,16 +136,16 @@ const BLOG_POSTS = [
     excerpt: "How artificial intelligence is revolutionizing the way we live and interact with our homes.",
     content: `
       <p>Artificial intelligence is transforming the residential experience, moving beyond simple automation to create genuinely intelligent living environments. Smart homes are evolving into responsive spaces that anticipate resident needs and optimize living conditions automatically.</p>
-      
+      <br>
       <h2>The Rise of Predictive Systems</h2>
       <p>Modern AI systems learn from resident behaviors to predict preferences and automate routine tasks. From lighting and temperature adjustments to security protocols and maintenance alerts, these systems create seamless living experiences that enhance comfort and convenience.</p>
-      
+      <br>
       <h2>Smart Robot Delivery Systems</h2>
       <p>Innovative properties are incorporating robotic delivery systems that handle everything from package reception to food delivery. These systems represent the convergence of convenience and technology, adding tangible value to residents' daily lives.</p>
-      
+      <br>
       <h2>Enhanced Security and Safety</h2>
       <p>AI-powered security systems offer unprecedented levels of protection. Advanced facial recognition, anomaly detection, and integrated emergency response systems provide residents with peace of mind while maintaining privacy and convenience.</p>
-      
+      <br>
       <h2>Future Possibilities</h2>
       <p>As AI technology continues to evolve, the possibilities for smart homes expand. Predictive maintenance that prevents issues before they occur, energy optimization that reduces costs while maintaining comfort, and personalized environmental controls are just the beginning of what's possible.</p>
       
@@ -161,19 +161,19 @@ const BLOG_POSTS = [
     excerpt: "Why Dubai's coastline continues to attract discerning buyers from around the world.",
     content: `
       <p>Dubai's coastline represents one of the world's most desirable residential locations, combining natural beauty with unparalleled urban amenities. Beachfront properties in the emirate continue to attract strong interest from international buyers seeking the ultimate in luxury living.</p>
-      
+      <br>
       <h2>The Enduring Appeal of Waterfront Living</h2>
       <p>Properties with direct sea views and beach access consistently command premium valuations. The combination of scenic beauty, recreational opportunities, and the tranquility of coastal environments creates compelling living experiences that resonate with discerning buyers.</p>
-      
+      <br>
       <h2>Integrated Community Concepts</h2>
       <p>Modern coastal developments like Tréppan Serenique offer more than just waterfront residences. These integrated communities combine residential spaces with comprehensive amenities, creating self-contained environments where residents can live, work, and play without leaving the community.</p>
-      
+      <br>
       <h2>Investment Performance</h2>
       <p>Beachfront properties in prime Dubai locations have demonstrated strong appreciation over time. The limited supply of coastal land combined with consistent international demand creates favorable conditions for long-term value growth.</p>
-      
+      <br>
       <h2>The Wellness Connection</h2>
       <p>Coastal living supports the wellness focus that characterizes modern luxury real estate. Access to beaches, coastal walks, and sea views contributes to resident wellbeing, adding another dimension to the value proposition of these properties.</p>
-      
+      <br>
       <p>As Dubai continues to develop its coastline, opportunities for beachfront living will remain among the most sought-after in the global luxury market. For buyers seeking the ultimate in residential experiences, these properties represent the pinnacle of what the city has to offer.</p>
     `,
     image: "https://www.fakhruddinproperties.com/wp-content/uploads/2026/01/imgedm-01.webp",

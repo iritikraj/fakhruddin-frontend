@@ -464,10 +464,34 @@ function Intelligence() {
   }, { scope: ref });
 
   const capabilities = [
-    { icon: "01", title: "AI Predictive", desc: "Anticipates needs before expression", color: "from-purple-500/20" },
-    { icon: "02", title: "Smart Maintenance", desc: "Prevents issues proactively", color: "from-blue-500/20" },
-    { icon: "03", title: "Wellness Insights", desc: "Real-time optimization", color: "from-green-500/20" },
-    { icon: "04", title: "Community Connect", desc: "Fosters genuine connection", color: "from-orange-500/20" }
+    { 
+      number: "01", 
+      title: "AI Predictive", 
+      shortDesc: "Anticipates needs before expression",
+      fullDesc: "Machine learning algorithms that analyze behavioral patterns to predict and respond to your needs before you even express them, creating a truly intuitive living environment.",
+      color: "from-purple-500/20" 
+    },
+    { 
+      number: "02", 
+      title: "Smart Maintenance", 
+      shortDesc: "Prevents issues proactively",
+      fullDesc: "Continuous monitoring of building systems that detects anomalies and schedules maintenance before failures occur, ensuring uninterrupted comfort and safety.",
+      color: "from-blue-500/20" 
+    },
+    { 
+      number: "03", 
+      title: "Wellness Insights", 
+      shortDesc: "Real-time optimization",
+      fullDesc: "Biometric sensors and environmental monitors that provide actionable insights for optimizing sleep, nutrition, and daily wellness routines based on real-time data.",
+      color: "from-green-500/20" 
+    },
+    { 
+      number: "04", 
+      title: "Social Sync", 
+      shortDesc: "Fosters genuine connection",
+      fullDesc: "Intelligent networking platforms that facilitate meaningful community interactions, shared experiences, and collaborative events while respecting privacy boundaries.",
+      color: "from-orange-500/20" 
+    }
   ];
 
   return (
@@ -479,8 +503,6 @@ function Intelligence() {
           alt="Intelligence"
           className="w-full h-full object-cover opacity-30"
         />
-        {/* <div className="absolute inset-0 bg-gradient-to-t from-black/40 via-black/20 to-black/10" /> */}
-        {/* <div className="absolute inset-0 bg-gradient-to-br from-[#F9F8F6] via-[#F9F8F6]/40 to-transparent" /> */}
       </div>
       
       {/* Content */}
@@ -499,7 +521,7 @@ function Intelligence() {
             </p>
           </div>
           
-          {/* 3D Cards Grid */}
+          {/* 3D Cards Grid - Fixed Height */}
           <div className={`grid ${isMobile ? 'grid-cols-2 gap-4' : 'grid-cols-4 gap-6 sm:gap-8'}`}>
             {capabilities.map((cap, i) => (
               <div 
@@ -508,15 +530,33 @@ function Intelligence() {
                 className="group relative perspective-1000"
                 style={{ transformStyle: 'preserve-3d' }}
               >
-                <div className="bg-white/80 backdrop-blur-sm rounded-2xl p-6 sm:p-8 border border-white/60 hover:border-[#A19585]/30 transition-all duration-500 hover:shadow-2xl hover:-translate-y-2 hover:rotate-2">
+                <div 
+                  className="bg-white/80 backdrop-blur-sm rounded-2xl p-6 sm:p-8 border border-white/60 hover:border-[#A19585]/30 transition-all duration-500 hover:shadow-2xl hover:-translate-y-2 hover:rotate-2 overflow-hidden cursor-pointer"
+                  style={{ minHeight: '220px' }}
+                >
                   <div className={`absolute inset-0 bg-gradient-to-br ${cap.color} to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500 rounded-2xl`} />
-                  <div className="relative z-10">
-                    <div className="text-4xl sm:text-5xl mb-4 group-hover:scale-110 transition-transform duration-300 text-[#A19585]/50">
-                      {cap.icon}
+                  
+                  {/* Front Content - Visible by default */}
+                  <div className="relative z-10 transition-all duration-500 group-hover:opacity-0">
+                    <div className="text-4xl sm:text-5xl mb-4 group-hover:scale-110 transition-transform duration-300 text-[#A19585]">
+                      {cap.number}
                     </div>
                     <h3 className="text-lg sm:text-xl md:text-2xl text-black mb-2">{cap.title}</h3>
-                    <p className="text-black/50 text-xs sm:text-sm">{cap.desc}</p>
+                    <p className="text-black/50 text-xs sm:text-sm">{cap.shortDesc}</p>
                   </div>
+                  
+                  {/* Back Content - Shows on Hover */}
+                  <div className="absolute inset-0 z-20 p-6 sm:p-8 flex flex-col justify-center items-center opacity-0 group-hover:opacity-100 transition-all duration-500 bg-white/95 backdrop-blur-sm rounded-2xl">
+                    <div className="text-[#A19585] text-base mb-1">{cap.number}</div>
+                    <h3 className="text-black text-base font-semibold mb-2 text-center">{cap.title}</h3>
+                    <p className="text-black/60 text-xs sm:text-sm text-center leading-relaxed">
+                      {cap.fullDesc}
+                    </p>
+                    <div className="absolute bottom-4 left-1/2 -translate-x-1/2 w-8 h-[1px] bg-[#A19585]/30" />
+                  </div>
+                  
+                  {/* Animated border */}
+                  <div className="absolute inset-0 border-2 border-[#A19585]/0 rounded-2xl group-hover:border-[#A19585]/20 transition-all duration-500 pointer-events-none" />
                 </div>
               </div>
             ))}
@@ -526,6 +566,7 @@ function Intelligence() {
     </section>
   );
 }
+
 
 // ─────────────────────────────────────────────────────────────
 // SECTION 5 — INDOOR ENVIRONMENTS

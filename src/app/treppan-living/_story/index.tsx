@@ -61,8 +61,30 @@ export default function TreppanStory() {
       const expandTl = gsap.timeline({
         scrollTrigger: { trigger: '.takeover-section', start: 'top top', end: '+=150%', scrub: 1.2, pin: true, anticipatePin: 1 }
       });
+
+      expandTl
+        .to('.takeover-card', { width: '100vw', height: '100vh', borderRadius: '0px', ease: 'none' })
+        .to('.takeover-content', { opacity: 1, y: 0, duration: 0.5 }, 0.2)
+        // Image zoom effect on both images
+        .to(['.current-image', '.new-image'], { scale: 1.2, ease: 'none', duration: 2 }, 0)
+        // Smooth crossfade with overlap
+        .to('.current-image', { 
+          opacity: 0, 
+          duration: 0.8, 
+          ease: 'sine.inOut' 
+        }, 0.7)
+        .to('.new-image', { 
+          opacity: 1, 
+          duration: 0.8, 
+          ease: 'sine.inOut' 
+        }, 0.5); // Start new image earlier for smoother blend
+
+      
+      /*const expandTl = gsap.timeline({
+        scrollTrigger: { trigger: '.takeover-section', start: 'top top', end: '+=150%', scrub: 1.2, pin: true, anticipatePin: 1 }
+      });
       expandTl.to('.takeover-card', { width: '100vw', height: '100vh', borderRadius: '0px', ease: 'none' })
-        .to('.takeover-content', { opacity: 1, y: 0, duration: 0.5 }, 0.2);
+        .to('.takeover-content', { opacity: 1, y: 0, duration: 0.5 }, 0.2);*/
 
       // 6. SMART LIVING STACKING CARDS (Features 01-05)
       const smartCards: any = gsap.utils.toArray('.smart-stack-card');
@@ -129,7 +151,7 @@ export default function TreppanStory() {
 
       // 1.5 CINEMATIC PARALLAX WIPE (Replaces the rounded card effect)
       // The video sinks into the background and darkens
-      gsap.to('.video-hero-inner', {
+      /*gsap.to('.video-hero-inner', {
         yPercent: 30,
         filter: 'brightness(0.3)',
         ease: 'none',
@@ -139,7 +161,7 @@ export default function TreppanStory() {
           end: 'top top',
           scrub: true
         }
-      });
+      });*/
 
       // The new background pulls upward, creating extreme depth
       gsap.fromTo('.philosophy-bg-zoom',
@@ -348,8 +370,27 @@ export default function TreppanStory() {
         <div className="takeover-card relative w-[85vw] h-[75vh] rounded-[60px] border border-black/5 overflow-hidden shadow-2xl flex items-center justify-center">
 
           <div className="absolute inset-0 z-0">
-            <Image src="https://www.fakhruddinproperties.com/wp-content/uploads/2026/03/Intelligent-Living-Tech.webp" alt="Tech" fill className="object-cover" />
-            {/* LIGHTENED OVERLAY: Changed from solid 80% black to a softer gradient so the image pops */}
+            {/* Current/Initial Image */}
+            <div className="current-image absolute inset-0">
+              <Image 
+                src="https://www.fakhruddinproperties.com/wp-content/uploads/2026/02/Intelligent-Living.webp" 
+                alt="Intelligent Living Tech" 
+                fill 
+                className="object-cover" 
+              />
+            </div>
+            
+            {/* New Image that will appear during scroll */}
+            <div className="new-image absolute inset-0 opacity-0">
+              <Image 
+                src="https://www.fakhruddinproperties.com/wp-content/uploads/2026/03/Intelligent-Living-Tech.webp" 
+                alt="Intelligent Living Tech" 
+                fill 
+                className="object-cover" 
+              />
+            </div>
+            
+            {/* Lightened Overlay */}
             <div className="absolute inset-0 bg-gradient-to-b from-[#191817]/60 via-[#191817]/30 to-[#191817]/80 z-10" />
           </div>
 
@@ -364,12 +405,10 @@ export default function TreppanStory() {
               </h3>
             </div>
 
-            {/* NEW CONTENT: Added a descriptive paragraph */}
             <p className="text-white/90 text-lg md:text-xl font-light tracking-wide max-w-2xl mx-auto leading-relaxed mb-12 drop-shadow-md">
               A unified ecosystem where intelligent technology, environmental responsibility, and resort-level wellness seamlessly integrate into your everyday life.
             </p>
 
-            {/* NEW CONTENT: Added a 3-pillar summary grid to give the section more substance */}
             <div className="grid grid-cols-1 md:grid-cols-3 gap-8 md:gap-16 border-t border-white/20 pt-10 w-full max-w-3xl">
               <div className="flex flex-col items-center">
                 <span className="text-white text-xl font-serif mb-1">Intelligent</span>
