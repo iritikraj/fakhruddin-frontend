@@ -11,7 +11,7 @@ export const metadata: Metadata = {
 
 export default function TreppanLiving() {
   return (
-    <main className="min-h-screen">
+    <main className="bg-black min-h-screen">
       <Navbar />
       <TreppanStory />
       <Footer />
