@@ -1307,15 +1307,10 @@ function Location() {
           title="Tréppan Serenique Location"
         />
 
-        {/* <div 
+        <div 
           className="absolute inset-0 pointer-events-none" 
           style={{ background: "linear-gradient(to right, rgba(5,8,20,0.4) 0%, rgba(5,8,20,0.2) 30%, transparent 70%)" }} 
-        /> */}
-
-        <div className="absolute inset-0 pointer-events-none"
-          style={{ background: `linear-gradient(to bottom, ${MSU_GREEN}66 0%, transparent 15%, transparent 85%, ${MSU_GREEN}66 100%)` }} />
-
-
+        />
         <div className="absolute right-0 top-0 h-full flex items-center z-10 pointer-events-none">
           <div className="loc-card w-full md:w-[420px] lg:w-[480px] px-6 md:px-12 pointer-events-auto">
             <div className="mt-1 mb-6">
@@ -1327,7 +1322,7 @@ function Location() {
             <div
               className="backdrop-blur-xl rounded-2xl overflow-hidden"
               style={{
-                background: "linear-gradient(135deg, rgba(27,41,70,0.92) 0%, rgba(10,15,30,0.96) 100%)",
+                background: "linear-gradient(135deg, #408174 0%, #06191A 100%)",
                 border: `1px solid ${PRIMARY}40`,
                 boxShadow: `0 30px 60px rgba(0,0,0,0.4), 0 0 0 1px ${PRIMARY}25 inset`,
               }}
@@ -1544,7 +1539,9 @@ function RequestCallBack() {
     <section ref={ref} className="relative w-full py-28 overflow-hidden">
       <div className="absolute inset-0">
         <img src={BG_IMAGE} alt="" className="w-full h-full object-cover" />
-        <div className="absolute inset-0" style={{ background: "linear-gradient(135deg, rgba(5,8,20,0.92) 0%, rgba(10,20,50,0.88) 100%)" }} />
+        <div className="absolute inset-0" 
+          style={{ background: `linear-gradient(135deg, ${CHINESE_BLACK}CC 0%, ${MSU_GREEN}CC 35%, ${PRIMARY}CC 70%, ${WHITE}B3 100%)` }} />
+
         <div className="absolute top-20 left-10 w-64 h-64 rounded-full blur-3xl opacity-20 animate-pulse" style={{ background: PRIMARY }} />
         <div className="absolute bottom-20 right-10 w-80 h-80 rounded-full blur-3xl opacity-10 animate-pulse" style={{ background: PRIMARY, animationDelay: "2s" }} />
       </div>
@@ -1591,7 +1588,7 @@ function RequestCallBack() {
               style={{
                 borderRadius: 28,
                 border: `1px solid ${PRIMARY}30`,
-                background: "linear-gradient(145deg, rgba(27,41,70,0.85) 0%, rgba(15,25,45,0.95) 100%)",
+                background: `linear-gradient(145deg, ${MSU_GREEN}E6 0%, ${DEEP_AQUAMARINE}CC 100%)`,
                 backdropFilter: "blur(20px)",
                 boxShadow: `0 40px 80px rgba(0,0,0,0.5), 0 0 0 1px ${PRIMARY}20 inset, 0 0 20px ${PRIMARY}15`,
               }}
@@ -1685,7 +1682,7 @@ function RequestCallBack() {
                       <button
                         type="submit"
                         className="w-full text-xs tracking-[0.35em] uppercase py-4 transition-all duration-300"
-                        style={{ background: PRIMARY, color: CHINESE_BLACK, borderRadius: 10, fontWeight: 600 }}
+                        style={{ background: CHINESE_BLACK, color: PALE_SILVER, borderRadius: 10, fontWeight: 600 }}
                         onMouseEnter={(e) => { (e.currentTarget as HTMLElement).style.opacity = "0.88"; (e.currentTarget as HTMLElement).style.transform = "translateY(-1px)"; }}
                         onMouseLeave={(e) => { (e.currentTarget as HTMLElement).style.opacity = "1"; (e.currentTarget as HTMLElement).style.transform = "translateY(0)"; }}
                       >

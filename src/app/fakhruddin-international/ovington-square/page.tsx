@@ -1,12 +1,12 @@
 import { Metadata } from 'next';
-import FakhruddinInternationalPage from './index';
+import ProjectDetailPage from './index';
 
 export const metadata: Metadata = {
-  title: 'Fakhruddin International | Fakhruddin Properties',
+  title: 'Ovington Square | Fakhruddin Properties',
   description: '',  
   robots: 'noindex, nofollow',
 };
 
 export default function Page() {
-  return <FakhruddinInternationalPage />;
+  return <ProjectDetailPage />;
 }

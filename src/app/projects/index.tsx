@@ -508,7 +508,7 @@ function ProjectShowcase() {
       logo: "https://www.fakhruddinproperties.com/wp-content/uploads/2026/01/TREPPEN-PRIVE-LOGO.svg",
       title: "Tréppan Living Privé",
       location: "Dubai Islands",
-      community: "Dubai Islands",
+      community: "Dubai Islands Collection",
       description: "Step into a world where thoughtful design meets future-ready living. Experience a tranquil, wellness-led sanctuary with calm at its core. From AI-enabled smart homes to 46+ curated amenities, Tréppan Living Privé transforms everyday life into a rhythm of balance and ease. Each residence is meticulously crafted with premium finishes, smart home automation, and private outdoor spaces that blur the line between indoor and outdoor living.",
       image: "https://www.fakhruddinproperties.com/wp-content/uploads/2026/01/Treppan-Living-Prive-Cover.webp",
       specs: {
@@ -525,7 +525,7 @@ function ProjectShowcase() {
       logo: "https://www.fakhruddinproperties.com/wp-content/uploads/2026/02/treppan-serenique-logo.png",
       title: "Tréppan Serenique",
       location: "Dubai Islands",
-      community: "Dubai Islands",
+      community: "Dubai Islands Collection",
       description: "Designed for those who seek more than luxury, Serenique was envisioned as a place where life unfolds with intention and ease. Every element nurtures physical vitality, mental clarity, and emotional harmony. The architecture embraces biophilic principles, bringing natural light and greenery into every corner. With dedicated wellness amenities including a spa, meditation gardens, and fitness pavilions, Serenique offers a lifestyle that feels restorative yet effortlessly refined.",
       image: "https://www.fakhruddinproperties.com/wp-content/uploads/2025/12/Treppan-Serenique-Balcony-Podium-Overview.webp",
       specs: {
@@ -542,7 +542,7 @@ function ProjectShowcase() {
       logo: "https://www.fakhruddinproperties.com/wp-content/uploads/2026/02/hatimi-logo.png",
       title: "Hatimi Residences",
       location: "Dubai Islands",
-      community: "Dubai Islands",
+      community: "Dubai Islands Collection",
       description: "On Dubai Islands, Hatimi Residences grace the waterfront with timeless purpose. Uninterrupted seaviews unfold endlessly, embracing the blue horizon of the Gulf. These exclusive residences offer direct beach access, private marina berths, and waterfront dining. The architecture draws inspiration from the ocean's rhythms, with flowing curves and expansive glass walls that frame the water views from every room.",
       image: "https://www.fakhruddinproperties.com/wp-content/uploads/2025/12/Exterior-Render-1_4_11.webp",
       specs: {
@@ -558,7 +558,7 @@ function ProjectShowcase() {
       logo: "https://www.fakhruddinproperties.com/wp-content/uploads/2026/02/maimoon-gardens-logo.png",
       title: "Maimoon Gardens",
       location: "Jumeirah Village Circle",
-      community: "Jumeirah Village Circle",
+      community: "Jumeirah Village Circle Collection",
       description: "Maimoon Gardens stands as a purposefully crafted address for sustainable living. Its design balances nature, innovation, and comfort within an enduring community vision. The development features lush green spaces, community gardens, solar-powered amenities, and water-efficient landscaping. Residences are designed to maximize natural light and ventilation, reducing energy consumption while enhancing wellbeing.",
       image: "https://www.fakhruddinproperties.com/wp-content/uploads/2026/01/Maimoon-Banner.webp",
       specs: {
@@ -574,7 +574,7 @@ function ProjectShowcase() {
       logo: "https://www.fakhruddinproperties.com/wp-content/uploads/2026/02/treppan-tower-logo.png",
       title: "Tréppan Tower",
       location: "Jumeirah Village Triangle",
-      community: "Jumeirah Village Triangle",
+      community: "Jumeirah Village Triangle Collection",
       description: "Tréppan Tower is a serene sanctuary, located in Jumeirah Village Triangle. It creates a home where families and communities can truly flourish. The tower features thoughtfully designed residences with panoramic city views, state-of-the-art fitness facilities, swimming pools, children's play areas, and landscaped gardens. Each apartment is finished to the highest standards with smart home technology and energy-efficient systems.",
       image: "https://www.fakhruddinproperties.com/wp-content/uploads/2025/12/Treppan-Tower-Copy-of-Elevation01.webp",
       specs: {
@@ -588,7 +588,7 @@ function ProjectShowcase() {
   ];
 
   // Group projects by community in the desired order
-  const communityOrder = ["Dubai Islands", "Jumeirah Village Triangle", "Jumeirah Village Circle"];
+  const communityOrder = ["Dubai Islands Collection", "Jumeirah Village Triangle Collection", "Jumeirah Village Circle Collection"];
   
   const communityData = communityOrder.map(communityName => {
     const projectsInCommunity = allProjects.filter(p => p.community === communityName);

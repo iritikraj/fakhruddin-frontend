@@ -29,7 +29,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const post = BLOG_POSTS.find(p => p.slug === slug);
   
   return {
-    title: `${post?.slug?.split('-').map(word => word.charAt(0).toUpperCase() + word.slice(1)).join(' ') || 'Blog'} | Fakhruddin Properties`,
+    title: `${post?.slug?.split('-').map(word => word.charAt(0).toUpperCase() + word.slice(1)).join(' ') || 'Blog Detail'} | Fakhruddin Properties`,
     description: '',
     robots: 'noindex, nofollow',
   };
