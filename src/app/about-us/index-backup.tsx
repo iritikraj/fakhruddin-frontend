@@ -10,14 +10,6 @@ import Journey from "./_journey";
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
 
-// ─── COLOR PALETTE FROM CHANNEL PARTNER ────────────────────
-const PRIMARY = "#A1997F";      // Grullo
-const PALE_SILVER = "#C4C7B5";
-const MSU_GREEN = "#154741";
-const CHINESE_BLACK = "#06191A";
-const DEEP_AQUAMARINE = "#408174";
-const WHITE = "#FFFFFF";
-
 // ─── LUXURY EASING ─────────────────────────────────────────
 const customEase: [number, number, number, number] = [0.16, 1, 0.3, 1];
 const slowEase: [number, number, number, number] = [0.25, 1, 0.5, 1];
@@ -116,7 +108,7 @@ function AnimatedCounter({ value }: { value: string }) {
 }
 
 // ─────────────────────────────────────────────────────────────
-// HERO SECTION
+// HERO SECTION (unchanged)
 // ─────────────────────────────────────────────────────────────
 function Hero() {
   const ref = useRef<HTMLElement>(null);
@@ -166,7 +158,7 @@ function Hero() {
       <div className="absolute inset-0 bg-gradient-to-r from-black/15 via-transparent to-transparent" />
 
       <div className="absolute top-0 left-0 z-20 w-full h-[2px] bg-white/10">
-        <div className="h-full bg-[#A19585]" style={{ width: "100%", backgroundColor: PRIMARY }} />
+        <div className="h-full bg-[#A19585]" style={{ width: "100%" }} />
       </div>
 
       <div
@@ -174,7 +166,7 @@ function Hero() {
         className="relative z-10 h-full flex items-end px-8 md:px-16 lg:px-24 pb-24"
       >
         <div className="max-w-3xl">
-          <p ref={subtitleRef} className="text-xs sm:text-sm tracking-[0.3em] mb-4 uppercase opacity-0" style={{ color: PRIMARY }}>
+          <p ref={subtitleRef} className="text-[#A19585] text-xs sm:text-sm tracking-[0.3em] mb-4 uppercase opacity-0">
             About Us
           </p>
           <h1
@@ -183,18 +175,16 @@ function Hero() {
             style={{ fontWeight: 300, letterSpacing: "-0.02em" }}
           >
             Beyond Today,<br />
-            <span style={{ color: PRIMARY }}>by Design.</span>
+            <span className="text-[#A19585]">by Design.</span>
           </h1>
-          <div ref={lineRef} className="w-24 h-[2px] mt-8 mb-6 opacity-0" style={{ backgroundColor: PRIMARY }} />          
+          <div ref={lineRef} className="w-24 h-[2px] bg-[#A19585] mt-8 mb-6 opacity-0" />          
 
           <div className="flex gap-8 mt-8 flex-wrap">
-            {["Our Story", "Team", "Awards"].map((item, i) => (
+            {["Our Story", "Our Journey", "Philosophy", "Team", "Awards"].map((item, i) => (
               <a
                 key={i}
                 href={`#${item.toLowerCase().replace(" ", "-")}`}
-                className="text-white/40 text-xs tracking-[0.35em] uppercase transition-colors duration-300"                
-                onMouseEnter={(e) => e.currentTarget.style.color = PRIMARY}
-                onMouseLeave={(e) => e.currentTarget.style.color = "rgba(255,255,255,0.4)"}
+                className="text-white/40 text-xs tracking-[0.35em] uppercase hover:text-[#A19585] transition-colors duration-300"
               >
                 {item}
               </a>
@@ -205,7 +195,7 @@ function Hero() {
 
       <div className="absolute bottom-10 right-12 z-20 flex flex-col items-center gap-2">
         <span className="text-white/30 text-[10px] tracking-[0.3em] uppercase">Scroll</span>
-        <div className="w-[1px] h-14 bg-gradient-to-b from-[#A19585] to-transparent animate-pulse" style={{ background: `linear-gradient(to bottom, ${PRIMARY}, transparent)` }} />
+        <div className="w-[1px] h-14 bg-gradient-to-b from-[#A19585] to-transparent animate-pulse" />
       </div>
     </section>
   );
@@ -253,7 +243,7 @@ function OurStory() {
   }, { scope: ref });
 
   return (
-    <section id="our-story" ref={ref} className="relative w-full min-h-screen overflow-hidden" style={{ backgroundColor: WHITE }}>
+    <section id="our-story" ref={ref} className="relative w-full min-h-screen bg-white overflow-hidden">
       {/* Full-bleed parallax image - right half (swapped from left to right) */}
       <div ref={imageRef} className="absolute right-0 top-0 w-full md:w-1/2 h-[130%]">
         <img
@@ -271,7 +261,7 @@ function OurStory() {
       <div className="hidden md:block absolute bottom-10 right-4 md:right-8 pointer-events-none select-none z-0">
         <span
           className="text-[18vw] leading-none text-black/[0.15]"
-          style={{ fontWeight: 300, letterSpacing: "-0.04em", color: `${CHINESE_BLACK}26` }}
+          style={{ fontWeight: 300, letterSpacing: "-0.04em" }}
         >
           1963
         </span>
@@ -280,26 +270,26 @@ function OurStory() {
       {/* Content — left side (swapped from right to left) */}
       <div ref={contentRef} className="relative z-10 min-h-screen flex items-center justify-start px-6 md:px-16 lg:px-24">
         <div className="w-full md:w-[55%] lg:w-[50%] py-24 md:py-32">
-          <span className="text-xs tracking-[0.35em] uppercase block mb-6" style={{ color: PRIMARY }}>Our Story</span>
+          <span className="text-[#A19585] text-xs tracking-[0.35em] uppercase block mb-6">Our Story</span>
 
-          <h2 className="text-4xl md:text-5xl lg:text-6xl leading-tight mb-8" style={{ fontWeight: 300, color: CHINESE_BLACK }}>
+          <h2 className="text-4xl md:text-5xl lg:text-6xl text-[#1b2946] leading-tight mb-8" style={{ fontWeight: 300 }}>
             A Vision<br />
-            <span style={{ color: PRIMARY }}>Built to Endure.</span>
+            <span className="text-[#A19585]">Built to Endure.</span>
           </h2>
 
-          <div className="w-16 h-[2px] mb-8" style={{ backgroundColor: PRIMARY }} />
+          <div className="w-16 h-[2px] bg-[#A19585] mb-8" />
 
-          <div className="space-y-5 text-base leading-relaxed mb-12" style={{ color: `${CHINESE_BLACK}B3` }}>
+          <div className="space-y-5 text-[#FFFFFF] md:text-[#1b2946]/70 text-base leading-relaxed mb-12">
             <p>
               It began as a vision in 2003 - a quiet pursuit to reimagine what real estate could mean for the people who live within it. Born from the enduring legacy of Fakhruddin Holdings, founded in 1963, Fakhruddin Properties carries forward a tradition rooted in entrepreneurship, integrity, and a deep sense of community, now, has grown into one of the Middle East's most forward thinking property developers.
             </p>            
-            <p className="italic" style={{ color: `${CHINESE_BLACK}80` }}>
+            <p className="italic text-[#FFFFFF] md:text-[#1b2946]/50">
               This is not just our story. It is the quiet unfolding of a vision — one built to endure.
             </p>
           </div>
 
           {/* Stats */}
-          <div className="grid grid-cols-2 gap-6 border-t border-black/8 pt-8" style={{ borderTopColor: `${CHINESE_BLACK}14` }}>
+          <div className="grid grid-cols-2 gap-6 border-t border-black/8 pt-8">
             {[
               { prefix:"", v: "60", postfix:"+", l: "Years of Legacy" },
               { prefix:"", v: "20", postfix:"+", l: "Industry Awards" },
@@ -312,12 +302,12 @@ function OurStory() {
                 className="group"
               >
                 <div
-                  className="text-3xl md:text-4xl group-hover:scale-105 transition-transform duration-300"
-                  style={{ fontWeight: 300, color: PRIMARY }}
+                  className="text-3xl md:text-4xl text-[#FFFFFF] md:text-[#A19585] group-hover:scale-105 transition-transform duration-300"
+                  style={{ fontWeight: 300 }}
                 >
                   {s.prefix} <AnimatedCounter value={s.v} />{s.postfix}
                 </div>
-                <div className="text-xs tracking-[0.25em] uppercase mt-1" style={{ color: `${CHINESE_BLACK}80` }}>{s.l}</div>
+                <div className="text-[#FFFFFF] md:text-[#1b2946]/50 text-xs tracking-[0.25em] uppercase mt-1">{s.l}</div>
               </div>
             ))}
           </div>
@@ -370,15 +360,15 @@ function ManagementTeam() {
   ];
 
   return (
-    <section id="team" ref={ref} className="relative w-full overflow-hidden py-20 md:py-28" style={{ backgroundColor: WHITE }}>
+    <section id="team" ref={ref} className="relative w-full bg-white overflow-hidden py-20 md:py-28">
       <div className="max-w-[1400px] mx-auto px-6 md:px-16 lg:px-24">
         <div className="team-heading text-center mb-16 md:mb-20">
-          <span className="text-xs tracking-[0.4em] uppercase block mb-4" style={{ color: PRIMARY }}>Leadership</span>
-          <h2 className="text-4xl md:text-5xl lg:text-6xl leading-tight" style={{ color: CHINESE_BLACK }}>
+          <span className="text-[#A19585] text-xs tracking-[0.4em] uppercase block mb-4">Leadership</span>
+          <h2 className="text-[#1b2946] text-4xl md:text-5xl lg:text-6xl leading-tight">
             The Minds Behind<br />
-            <span style={{ color: PRIMARY }}>the Vision.</span>
+            <span className="text-[#A19585]">the Vision.</span>
           </h2>
-          <div className="w-16 h-[2px] mx-auto mt-6" style={{ backgroundColor: PRIMARY }} />
+          <div className="w-16 h-[2px] bg-[#A19585] mx-auto mt-6" />
         </div>
 
         <div className="team-cards-wrap grid grid-cols-1 md:grid-cols-2 gap-12 lg:gap-16 max-w-5xl mx-auto">
@@ -394,27 +384,27 @@ function ManagementTeam() {
               <div className="relative overflow-hidden rounded-2xl bg-gradient-to-br from-[#F9F8F6] to-white shadow-xl">
                 {/* Image Container - Circular with elegant framing */}
                 <div className="relative pt-8 px-8">
-                  <div className="relative rounded-2xl overflow-hidden aspect-square max-w-[360px] mx-auto ring-4 ring-[#A1997F]/20 group-hover:ring-[#A1997F]/40 transition-all duration-500">
+                  <div className="relative rounded-2xl overflow-hidden aspect-square max-w-[360px] mx-auto ring-4 ring-[#A19585]/20 group-hover:ring-[#A19585]/40 transition-all duration-500">
                     <img
                       src={leader.img}
                       alt={leader.name}
                       className="w-full h-full object-cover object-top transform transition-transform duration-700 group-hover:scale-110"
                     />
                     {/* Decorative gold ring */}
-                    <div className="absolute inset-0 rounded-full border-2 border-[#A1997F]/0 group-hover:border-[#A1997F]/30 transition-all duration-500" />
+                    <div className="absolute inset-0 rounded-full border-2 border-[#A19585]/0 group-hover:border-[#A19585]/30 transition-all duration-500" />
                   </div>
                   
                   {/* Decorative corner elements */}
-                  <div className="absolute top-12 left-8 w-12 h-12 border-l-2 border-t-2" style={{ borderColor: `${PRIMARY}33` }} />
-                  <div className="absolute top-12 right-8 w-12 h-12 border-r-2 border-t-2" style={{ borderColor: `${PRIMARY}33` }} />
+                  <div className="absolute top-12 left-8 w-12 h-12 border-l-2 border-t-2 border-[#A19585]/20" />
+                  <div className="absolute top-12 right-8 w-12 h-12 border-r-2 border-t-2 border-[#A19585]/20" />
                 </div>
 
                 {/* Content */}
                 <div className="text-center p-8 pt-4">
-                  <h3 className="text-2xl md:text-3xl mb-2" style={{ color: CHINESE_BLACK }}>
+                  <h3 className="text-2xl md:text-3xl text-[#1b2946] mb-2">
                     {leader.name}
                   </h3>
-                  <p className="text-sm tracking-[0.2em] uppercase mb-4" style={{ color: PRIMARY }}>
+                  <p className="text-[#A19585] text-sm tracking-[0.2em] uppercase mb-4">
                     {leader.role}
                   </p>                 
                   
@@ -423,9 +413,8 @@ function ManagementTeam() {
                     <motion.a
                       href={leader.linkedIn}
                       target="_blank"
-                      className="w-8 h-8 rounded-full flex items-center justify-center transition-all duration-300"
-                      style={{ backgroundColor: `${CHINESE_BLACK}0D`, color: `${CHINESE_BLACK}66` }}
-                      whileHover={{ scale: 1.1, backgroundColor: "#0077B5", color: WHITE }}
+                      className="w-8 h-8 rounded-full bg-[#1b2946]/5 flex items-center justify-center text-[#1b2946]/40 hover:bg-[#0077B5] hover:text-white transition-all duration-300"
+                      whileHover={{ scale: 1.1 }}
                     >
                       <svg className="w-4 h-4" fill="currentColor" viewBox="0 0 24 24">
                         <path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433c-1.144 0-2.063-.926-2.063-2.065 0-1.138.92-2.063 2.063-2.063 1.14 0 2.064.925 2.064 2.063 0 1.139-.925 2.065-2.064 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451c.979 0 1.771-.773 1.771-1.729V1.729C24 .774 23.204 0 22.225 0z"/>
@@ -435,7 +424,7 @@ function ManagementTeam() {
                 </div>
 
                 {/* Bottom decorative line */}
-                <div className="absolute bottom-0 left-0 right-0 h-[2px] bg-gradient-to-r from-transparent via-[#A1997F] to-transparent transform scale-x-0 group-hover:scale-x-100 transition-transform duration-700" />
+                <div className="absolute bottom-0 left-0 right-0 h-[2px] bg-gradient-to-r from-transparent via-[#A19585] to-transparent transform scale-x-0 group-hover:scale-x-100 transition-transform duration-700" />
               </div>
             </motion.div>
           ))}
@@ -525,29 +514,28 @@ function AwardsSection() {
     <section
       id="awards"
       ref={ref}      
-      className="relative w-full"
-      style={{ backgroundColor: "#F5F2EE" }}
+      className="relative w-full bg-[#F5F2EE]"
     >
       {/* ── Fixed Header ─────────────────────────────────────── */}
       <div className="awards-header pt-24 pb-10 max-w-[1400px] mx-auto px-6 md:px-16 lg:px-24">
         <div className="flex items-center gap-4 mb-4">
-          <div className="w-10 h-[2px]" style={{ backgroundColor: PRIMARY }} />
-          <span className="text-xs tracking-[0.4em] uppercase" style={{ color: PRIMARY }}>Recognition</span>
+          <div className="w-10 h-[2px] bg-[#A19585]" />
+          <span className="text-[#A19585] text-xs tracking-[0.4em] uppercase">Recognition</span>
         </div>
         <div className="flex flex-col md:flex-row md:items-end gap-6 justify-between">
-          <h2 className="text-4xl md:text-5xl lg:text-6xl leading-tight" style={{ color: CHINESE_BLACK }}>
+          <h2 className="text-4xl md:text-5xl lg:text-6xl text-[#1b2946] leading-tight">
             Industry Recognition,<br />
-            <span style={{ color: PRIMARY }}>Year by Year.</span>
+            <span className="text-[#A19585]">Year by Year.</span>
           </h2>
           {/* Scroll hint */}
-          <div className="flex items-center gap-3 text-xs tracking-widest uppercase pb-1 select-none" style={{ color: `${PRIMARY}B3` }}>
+          <div className="flex items-center gap-3 text-[#A19585]/70 text-xs tracking-widest uppercase pb-1 select-none">
             <svg width="32" height="10" viewBox="0 0 32 10" fill="none">
               <path d="M0 5H30M26 1L30 5L26 9" stroke="currentColor" strokeWidth="1.2" strokeLinecap="round" strokeLinejoin="round"/>
             </svg>
             Scroll to explore
           </div>
         </div>
-        <div className="w-16 h-[2px] mt-6" style={{ backgroundColor: PRIMARY }} />
+        <div className="w-16 h-[2px] bg-[#A19585] mt-6" />
       </div>
 
       {/* ── Horizontal Track ─────────────────────────────────── */}
@@ -565,26 +553,25 @@ function AwardsSection() {
               className="year-panel flex-shrink-0 w-[82vw] md:w-[55vw] lg:w-[42vw] max-w-[560px] mr-6 md:mr-10"
             >
               {/* Card shell */}
-              <div className="relative h-full rounded-2xl border bg-white/60 backdrop-blur-sm overflow-hidden group transition-colors duration-500" style={{ borderColor: `${PRIMARY}33` }}>
+              <div className="relative h-full rounded-2xl border border-[#A19585]/20 bg-white/60 backdrop-blur-sm overflow-hidden group hover:border-[#A19585]/50 transition-colors duration-500">
 
                 {/* Year badge — large watermark + label */}
-                <div className="px-8 pt-8 pb-6 border-b flex items-end justify-between" style={{ borderColor: `${PRIMARY}1A` }}>
+                <div className="px-8 pt-8 pb-6 border-b border-[#A19585]/10 flex items-end justify-between">
                   <span
-                    className="font-marcellus text-[5rem] leading-none select-none pointer-events-none absolute -right-3 -top-3"
+                    className="font-marcellus text-[5rem] leading-none text-[#1b2946]/8 select-none pointer-events-none absolute -right-3 -top-3"
                     aria-hidden
-                    style={{ color: `${CHINESE_BLACK}14` }}
                   >
                     {yr.year}
                   </span>
                   <div>
-                    <p className="text-[10px] tracking-[0.35em] uppercase mb-1" style={{ color: PRIMARY }}>
+                    <p className="text-[#A19585] text-[10px] tracking-[0.35em] uppercase mb-1">
                       {yr.awards.length} Award{yr.awards.length > 1 ? "s" : ""}
                     </p>
-                    <span className="font-marcellus text-5xl" style={{ color: CHINESE_BLACK }}>{yr.year}</span>
+                    <span className="font-marcellus text-5xl text-[#1b2946]">{yr.year}</span>
                   </div>
-                  <div className="w-8 h-8 rounded-full border flex items-center justify-center group-hover:bg-[#A1997F]/10 transition-colors duration-300" style={{ borderColor: `${PRIMARY}4D` }}>
+                  <div className="w-8 h-8 rounded-full border border-[#A19585]/30 flex items-center justify-center group-hover:bg-[#A19585]/10 transition-colors duration-300">
                     <svg width="12" height="12" viewBox="0 0 12 12" fill="none">
-                      <path d="M2 6H10M7 3L10 6L7 9" stroke={PRIMARY} strokeWidth="1.2" strokeLinecap="round" strokeLinejoin="round"/>
+                      <path d="M2 6H10M7 3L10 6L7 9" stroke="#A19585" strokeWidth="1.2" strokeLinecap="round" strokeLinejoin="round"/>
                     </svg>
                   </div>
                 </div>
@@ -594,23 +581,10 @@ function AwardsSection() {
                   {yr.awards.map((award, ai) => (
                     <div
                       key={ai}
-                      className="award-pill group/pill flex items-center gap-2 px-4 py-2 rounded-full border bg-[#F5F2EE]/80 transition-all duration-300 cursor-default"
-                      style={{ borderColor: `${PRIMARY}40` }}
-                      onMouseEnter={(e) => {
-                        e.currentTarget.style.backgroundColor = CHINESE_BLACK;
-                        e.currentTarget.style.borderColor = CHINESE_BLACK;
-                        const span = e.currentTarget.querySelector('span:last-child') as HTMLSpanElement;
-                        if (span) span.style.color = WHITE;
-                      }}
-                      onMouseLeave={(e) => {
-                        e.currentTarget.style.backgroundColor = "#F5F2EE";
-                        e.currentTarget.style.borderColor = `${PRIMARY}40`;
-                        const span = e.currentTarget.querySelector('span:last-child') as HTMLSpanElement;
-                        if (span) span.style.color = `${CHINESE_BLACK}BF`;
-                      }}
+                      className="award-pill group/pill flex items-center gap-2 px-4 py-2 rounded-full border border-[#A19585]/25 bg-[#F5F2EE]/80 hover:bg-[#1b2946] hover:border-[#1b2946] transition-all duration-300 cursor-default"
                     >
-                      <span className="w-1 h-1 rounded-full flex-shrink-0 transition-colors duration-300" style={{ backgroundColor: PRIMARY }} />
-                      <span className="text-base leading-snug transition-colors duration-300" style={{ color: `${CHINESE_BLACK}BF` }}>
+                      <span className="w-1 h-1 rounded-full bg-[#A19585] group-hover/pill:bg-white transition-colors duration-300 flex-shrink-0" />
+                      <span className="text-[#1b2946]/75 text-base leading-snug group-hover/pill:text-white transition-colors duration-300">
                         {award}
                       </span>
                     </div>
@@ -618,7 +592,7 @@ function AwardsSection() {
                 </div>
 
                 {/* Bottom accent line */}
-                <div className="absolute bottom-0 left-0 w-0 h-[2px] group-hover:w-full transition-all duration-700 ease-out" style={{ backgroundColor: PRIMARY }} />
+                <div className="absolute bottom-0 left-0 w-0 h-[2px] bg-[#A19585] group-hover:w-full transition-all duration-700 ease-out" />
               </div>
             </div>
           ))}
@@ -632,8 +606,7 @@ function AwardsSection() {
         {AWARDS_YEARS.map((_, i) => (
           <div
             key={i}
-            className="progress-dot w-1.5 h-1.5 rounded-full"
-            style={{ backgroundColor: `${PRIMARY}4D` }}
+            className="progress-dot w-1.5 h-1.5 rounded-full bg-[#A19585]/30"
           />
         ))}
       </div>
@@ -671,7 +644,7 @@ function Closing() {
   }, { scope: ref });
 
   return (
-    <section ref={ref} className="relative w-full overflow-hidden" style={{ backgroundColor: WHITE }}>
+    <section ref={ref} className="relative w-full bg-white overflow-hidden">
       <img
         ref={imageRef}
         src="https://www.fakhruddinproperties.com/wp-content/uploads/2025/04/bg@2x1.jpg"
@@ -680,21 +653,21 @@ function Closing() {
       />
       <div className="absolute inset-0 bg-gradient-to-r from-white/70 via-white/35 to-white/30" />
 
-      <div className="absolute top-0 left-0 right-0 h-[3px] bg-gradient-to-r from-[#A1997F] via-[#A1997F]/50 to-transparent" style={{ background: `linear-gradient(to right, ${PRIMARY}, ${PRIMARY}80, transparent)` }} />
+      <div className="absolute top-0 left-0 right-0 h-[3px] bg-gradient-to-r from-[#A19585] via-[#A19585]/50 to-transparent" />
 
       <div className="relative z-10 max-w-[1400px] mx-auto px-6 md:px-16 lg:px-24 py-24 md:py-32">
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-20 items-center">
           <div className="closing-left">
-            <span className="text-xs tracking-[0.4em] uppercase block mb-6" style={{ color: PRIMARY }}>Begin Here</span>
+            <span className="text-[#A19585] text-xs tracking-[0.4em] uppercase block mb-6">Begin Here</span>
             <h2
-              className="text-4xl md:text-5xl lg:text-6xl leading-tight mb-6"
-              style={{ fontWeight: 300, color: CHINESE_BLACK }}
+              className="text-4xl md:text-5xl lg:text-6xl text-[#1b2946] leading-tight mb-6"
+              style={{ fontWeight: 300 }}
             >
               This is not<br />
-              <span style={{ color: PRIMARY }}>just our story.</span>
+              <span className="text-[#A19585]">just our story.</span>
             </h2>
-            <div className="w-14 h-[2px] mb-6" style={{ backgroundColor: PRIMARY }} />
-            <p className="text-base leading-relaxed max-w-md" style={{ color: `${CHINESE_BLACK}80` }}>
+            <div className="w-14 h-[2px] bg-[#A19585] mb-6" />
+            <p className="text-[#1b2946]/50 text-base leading-relaxed max-w-md">
               It is the quiet unfolding of a vision — one built to endure.
               Explore our projects, discover our philosophy, or connect with our team.
             </p>
@@ -703,42 +676,27 @@ function Closing() {
           <div className="closing-right flex flex-col gap-4 lg:items-end">
             <Link
               href="/projects"
-              className="group relative w-full lg:w-auto inline-flex items-center justify-between gap-8 text-white text-xs tracking-[0.4em] uppercase px-10 py-6 overflow-hidden transition-colors duration-400"
-              style={{ backgroundColor: CHINESE_BLACK }}
-              onMouseEnter={(e) => e.currentTarget.style.backgroundColor = DEEP_AQUAMARINE}
-              onMouseLeave={(e) => e.currentTarget.style.backgroundColor = CHINESE_BLACK}
+              className="group relative w-full lg:w-auto inline-flex items-center justify-between gap-8 bg-[#100F2B] text-white text-xs tracking-[0.4em] uppercase px-10 py-6 overflow-hidden hover:bg-[#1a1940] transition-colors duration-400"
             >
               <span className="relative z-10">Explore Projects</span>
-              <div className="w-8 h-[1px] group-hover:w-14 transition-all duration-400" style={{ backgroundColor: PRIMARY }} />
-              <div className="absolute bottom-0 left-0 w-full h-[2px] scale-x-0 group-hover:scale-x-100 transition-transform duration-500 origin-left" style={{ backgroundColor: PRIMARY }} />
+              <div className="w-8 h-[1px] bg-[#A19585] group-hover:w-14 transition-all duration-400" />
+              <div className="absolute bottom-0 left-0 w-full h-[2px] bg-[#A19585] scale-x-0 group-hover:scale-x-100 transition-transform duration-500 origin-left" />
             </Link>
 
             <Link
               href="/treppan-living"
-              className="group w-full lg:w-auto inline-flex items-center justify-between gap-8 border text-xs tracking-[0.4em] uppercase px-10 py-6 transition-all duration-400"
-              style={{ borderColor: `${CHINESE_BLACK}26`, color: `${CHINESE_BLACK}99` }}
-              onMouseEnter={(e) => {
-                e.currentTarget.style.borderColor = PRIMARY;
-                e.currentTarget.style.color = CHINESE_BLACK;
-              }}
-              onMouseLeave={(e) => {
-                e.currentTarget.style.borderColor = `${CHINESE_BLACK}26`;
-                e.currentTarget.style.color = `${CHINESE_BLACK}99`;
-              }}
+              className="group w-full lg:w-auto inline-flex items-center justify-between gap-8 border border-[#1b2946]/15 text-[#1b2946]/60 text-xs tracking-[0.4em] uppercase px-10 py-6 hover:border-[#A19585] hover:text-[#1b2946] transition-all duration-400"
             >
               <span>Discover Tréppan Living</span>
-              <div className="w-6 h-[1px] group-hover:w-10 transition-all duration-400" style={{ backgroundColor: `${PRIMARY}80` }} />
+              <div className="w-6 h-[1px] bg-[#A19585]/50 group-hover:w-10 transition-all duration-400" />
             </Link>
 
             <Link
               href="/contact"
-              className="group w-full lg:w-auto inline-flex items-center justify-between gap-8 text-xs tracking-[0.4em] uppercase px-10 py-4 transition-colors duration-400"
-              style={{ color: `${CHINESE_BLACK}80` }}
-              onMouseEnter={(e) => e.currentTarget.style.color = PRIMARY}
-              onMouseLeave={(e) => e.currentTarget.style.color = `${CHINESE_BLACK}80`}
+              className="group w-full lg:w-auto inline-flex items-center justify-between gap-8 text-[#1b2946]/50 text-xs tracking-[0.4em] uppercase px-10 py-4 hover:text-[#A19585] transition-colors duration-400"
             >
               <span>Get in Touch</span>
-              <span className="transition-colors duration-400" style={{ color: `${PRIMARY}66` }}>→</span>
+              <span className="text-[#A19585]/40 group-hover:text-[#A19585] transition-colors duration-400">→</span>
             </Link>
           </div>
         </div>
@@ -759,7 +717,7 @@ export default function AboutPage() {
   }, []);
 
   return (
-    <main style={{ backgroundColor: CHINESE_BLACK }}>
+    <main className="bg-black">
       <Navbar />
 
       <motion.div

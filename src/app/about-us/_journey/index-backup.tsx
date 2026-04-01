@@ -7,14 +7,6 @@ import * as THREE from "three";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 
-// ─── COLOR PALETTE FROM CHANNEL PARTNER ────────────────────
-const PRIMARY = "#A1997F";      // Grullo
-const PALE_SILVER = "#C4C7B5";
-const MSU_GREEN = "#154741";
-const CHINESE_BLACK = "#06191A";
-const DEEP_AQUAMARINE = "#408174";
-const WHITE = "#FFFFFF";
-
 if (typeof window !== "undefined") {
   gsap.registerPlugin(ScrollTrigger);
 }
@@ -245,7 +237,7 @@ export default function Journey() {
   }, []);
 
   return (
-    <section ref={containerRef} className="relative w-full" style={{ backgroundColor: "#F9F8F6" }}>
+    <section ref={containerRef} className="bg-[#F9F8F6] text-[#1A1A1A] relative w-full">
 
       {/* 1. FIXED FULL-WIDTH BACKGROUND (Prevents cutting in half) */}
       <div className="absolute inset-0 z-0 pointer-events-none">
@@ -274,34 +266,44 @@ export default function Journey() {
         <div className="w-full lg:w-6/12 xl:w-5/12 pt-[55vh] lg:pt-40 pb-[20vh] lg:pb-[40vh]">
 
           <header className="space-y-4 md:space-y-6 mb-20 md:mb-32">
-            <span className="text-xs tracking-[0.4em] uppercase block mb-4" style={{ color: PRIMARY }}>Through the Decades</span>
-            <h2 className="font-marcellus font-light text-4xl md:text-5xl lg:text-6xl leading-tight mb-8" style={{ fontWeight: 300, color: CHINESE_BLACK }}>
-              Our Journey of<br />
-              <span style={{ color: PRIMARY }}>Enduring Excellence</span>
+            <span className="text-[#A19585] text-xs tracking-[0.4em] uppercase block mb-4">Through the Decades</span>
+            <h2 className="font-marcellus font-light text-4xl md:text-5xl lg:text-6xl text-[#1b2946] leading-tight mb-8" style={{ fontWeight: 300 }}>
+            Our Journey of<br />
+            <span className="text-[#A19585]">Enduring Excellence</span>
             </h2>
           </header>
 
-          <div className="border-t" style={{ borderColor: `${CHINESE_BLACK}1A` }}>
+          <div className="border-t border-[#1A1A1A]/10">
             {JOURNEY_DATA.map((row, index) => (
               <div
                 key={index}
                 ref={(el) => { rowRefs.current[index] = el; }}
                 onMouseEnter={() => setActiveIndex(index)}
-                className={`group relative border-b py-12 md:py-20 flex flex-col justify-between gap-4 md:gap-8 cursor-pointer transition-all duration-700 ${activeIndex === index ? "opacity-100 pl-6 md:pl-8" : "opacity-40 hover:opacity-100"
+                className={`group relative border-b border-[#1A1A1A]/10 py-12 md:py-20 flex flex-col justify-between gap-4 md:gap-8 cursor-pointer transition-all duration-700 ${activeIndex === index ? "opacity-100 pl-6 md:pl-8" : "opacity-40 hover:opacity-100"
                   }`}
-                style={{ borderColor: `${CHINESE_BLACK}1A` }}
               >
                 {/* Active Row Indicator */}
-                <div className={`absolute left-0 top-0 h-full w-[2px] md:w-1 transition-transform duration-700 origin-top ${activeIndex === index ? "scale-y-100" : "scale-y-0"}`} style={{ backgroundColor: PRIMARY }} />
+                <div className={`absolute left-0 top-0 h-full w-[2px] md:w-1 bg-[#9D7E44] transition-transform duration-700 origin-top ${activeIndex === index ? "scale-y-100" : "scale-y-0"
+                  }`} />
 
                 <div className="flex flex-col md:flex-row md:items-center gap-2 md:gap-8">
-                  <span className={`italic text-xl md:text-3xl transition-colors duration-500 ${activeIndex === index ? "" : ""}`} style={{ color: activeIndex === index ? PRIMARY : `${CHINESE_BLACK}66` }}>
+                  <span className={`italic text-xl md:text-3xl transition-colors duration-500 ${activeIndex === index ? "text-[#9D7E44]" : "text-[#1A1A1A]/40"
+                    }`}>
                     {row.year}
                   </span>
-                  <p className="text-[12px] md:text-[16px] tracking-[1px] font-medium md:pl-[4.5rem]" style={{ color: `${CHINESE_BLACK}CC` }}>
+                  {/* <h3 className="text-2xl md:text-4xl lg:text-5xl tracking-tight text-[#1A1A1A] leading-tight">
+                    {row.title}
+                  </h3> */}
+                  <p className="text-[12px] md:text-[16px] tracking-[1px] text-[#1A1A1A]/80 font-medium md:pl-[4.5rem]">
                     {row.description}
                   </p>
                 </div>
+
+                {/* <div>
+                  <p className="text-[9px] md:text-[10px] tracking-[0.3em] uppercase text-[#1A1A1A]/50 font-medium md:pl-[4.5rem]">
+                    {row.description}
+                  </p>
+                </div> */}
 
               </div>
             ))}
