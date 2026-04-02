@@ -447,81 +447,83 @@ function ProjectCard({ project }: { project: typeof UK_PROJECTS[0] }) {
       transition={{ duration: 0.7, ease: "easeOut" }}
     >
       {/* Card inner */}
-      <motion.div
-        className="relative w-full h-full"
-        animate={{ rotateY: hovered ? 8 : 0, rotateX: hovered ? -4 : 0, scale: hovered ? 1.02 : 1 }}
-        transition={{ duration: 0.5, ease: "easeOut" }}
-        style={{ transformStyle: "preserve-3d", borderRadius: "16px", overflow: "hidden" }}
-      >
-        {/* Image */}
-        <img
-          src={project.image}
-          alt={project.title}
-          className="absolute inset-0 w-full h-full object-cover"
-          style={{ transition: "transform 0.7s ease", transform: hovered ? "scale(1.08)" : "scale(1)" }}
-        />
-
-        {/* Gradient overlay */}
-        <div
-          className="absolute inset-0 transition-opacity duration-500"
-          style={{
-            background: `linear-gradient(to top, ${CHINESE_BLACK}F0 0%, ${CHINESE_BLACK}50 50%, ${CHINESE_BLACK}10 100%)`,
-            opacity: hovered ? 1 : 0.75,
-          }}
-        />
-
-        {/* Status Badge */}
-        <div className="absolute top-4 right-4">
-          <div
-            className="px-3 py-1 rounded-full text-[10px] tracking-[0.2em] uppercase font-seitu"
-            style={{ background: `${statusColor}25`, border: `1px solid ${statusColor}60`, color: statusColor, backdropFilter: "blur(8px)" }}
-          >
-            {project.status}
-          </div>
-        </div>
-
-        {/* Type badge top-left */}
-        <div className="absolute top-4 left-4">
-          <div
-            className="px-3 py-1 rounded-full text-[10px] tracking-[0.2em] uppercase font-seitu"
-            style={{ background: `${WHITE}12`, border: `1px solid ${WHITE}25`, color: WHITE, backdropFilter: "blur(8px)" }}
-          >
-            {project.type}
-          </div>
-        </div>
-
-        {/* Content */}
-        <div className="absolute bottom-0 left-0 right-0 p-6">
-          <h3 className="font-faculty text-2xl text-white mb-1">{project.title}</h3>
-          <div className="flex items-center gap-1.5 mb-4">
-            <LocationPinIcon color={PALE_SILVER} />
-            <span className="text-[12px] font-seitu" style={{ color: PALE_SILVER }}>{project.location}</span>
-          </div>
-
-          {/* Hover-revealed CTA */}
-          <motion.div
-            initial={{ opacity: 0, y: 10 }}
-            animate={{ opacity: hovered ? 1 : 0, y: hovered ? 0 : 10 }}
-            transition={{ duration: 0.3 }}
-            className="flex items-center gap-2 text-[11px] tracking-[0.25em] uppercase font-seitu"
-            style={{ color: PRIMARY }}
-          >
-            <span>View Project</span>
-            <ArrowRightIcon color={PRIMARY} />
-          </motion.div>
-        </div>
-
-        {/* 3D shine effect */}
+      <a href="/fakhruddin-international/ovington-square">
         <motion.div
-          className="absolute inset-0 pointer-events-none"
-          animate={{ opacity: hovered ? 1 : 0 }}
-          transition={{ duration: 0.4 }}
-          style={{
-            background: `linear-gradient(135deg, ${WHITE}12 0%, transparent 60%)`,
-            borderRadius: "16px",
-          }}
-        />
-      </motion.div>
+          className="relative w-full h-full"
+          animate={{ rotateY: hovered ? 8 : 0, rotateX: hovered ? -4 : 0, scale: hovered ? 1.02 : 1 }}
+          transition={{ duration: 0.5, ease: "easeOut" }}
+          style={{ transformStyle: "preserve-3d", borderRadius: "16px", overflow: "hidden" }}
+        >
+          {/* Image */}
+          <img
+            src={project.image}
+            alt={project.title}
+            className="absolute inset-0 w-full h-full object-cover"
+            style={{ transition: "transform 0.7s ease", transform: hovered ? "scale(1.08)" : "scale(1)" }}
+          />
+
+          {/* Gradient overlay */}
+          <div
+            className="absolute inset-0 transition-opacity duration-500"
+            style={{
+              background: `linear-gradient(to top, ${CHINESE_BLACK}F0 0%, ${CHINESE_BLACK}50 50%, ${CHINESE_BLACK}10 100%)`,
+              opacity: hovered ? 1 : 0.75,
+            }}
+          />
+
+          {/* Status Badge */}
+          <div className="absolute top-4 right-4">
+            <div
+              className="px-3 py-1 rounded-full text-[10px] tracking-[0.2em] uppercase font-seitu"
+              style={{ background: `${statusColor}25`, border: `1px solid ${statusColor}60`, color: statusColor, backdropFilter: "blur(8px)" }}
+            >
+              {project.status}
+            </div>
+          </div>
+
+          {/* Type badge top-left */}
+          <div className="absolute top-4 left-4">
+            <div
+              className="px-3 py-1 rounded-full text-[10px] tracking-[0.2em] uppercase font-seitu"
+              style={{ background: `${WHITE}12`, border: `1px solid ${WHITE}25`, color: WHITE, backdropFilter: "blur(8px)" }}
+            >
+              {project.type}
+            </div>
+          </div>
+
+          {/* Content */}
+          <div className="absolute bottom-0 left-0 right-0 p-6">
+            <h3 className="font-faculty text-2xl text-white mb-1">{project.title}</h3>
+            <div className="flex items-center gap-1.5 mb-4">
+              <LocationPinIcon color={PALE_SILVER} />
+              <span className="text-[12px] font-seitu" style={{ color: PALE_SILVER }}>{project.location}</span>
+            </div>
+
+            {/* Hover-revealed CTA */}
+            <motion.div
+              initial={{ opacity: 0, y: 10 }}
+              animate={{ opacity: hovered ? 1 : 0, y: hovered ? 0 : 10 }}
+              transition={{ duration: 0.3 }}
+              className="flex items-center gap-2 text-[11px] tracking-[0.25em] uppercase font-seitu"
+              style={{ color: PRIMARY }}
+            >
+              <span>View Project</span>
+              <ArrowRightIcon color={PRIMARY} />
+            </motion.div>
+          </div>
+
+          {/* 3D shine effect */}
+          <motion.div
+            className="absolute inset-0 pointer-events-none"
+            animate={{ opacity: hovered ? 1 : 0 }}
+            transition={{ duration: 0.4 }}
+            style={{
+              background: `linear-gradient(135deg, ${WHITE}12 0%, transparent 60%)`,
+              borderRadius: "16px",
+            }}
+          />
+        </motion.div>
+      </a>
     </motion.div>
   );
 }

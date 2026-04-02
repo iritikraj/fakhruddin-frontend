@@ -687,29 +687,34 @@ function Overview({ onDownload, onInterest }: { onDownload: () => void; onIntere
     });
   }, { scope: ref });
 
-  return (            
-    <section ref={ref} className="relative w-full overflow-hidden" style={{ background: "#f7f6f4" }}>
-      <div className="ov-image-wrap absolute left-0 top-0 w-full md:w-[52%] h-full" style={{ minHeight: 700 }}>
+  return (        
+    <section ref={ref} className="relative w-full min-h-screen overflow-hidden" style={{ backgroundColor: WHITE }}>
+      {/* Full-bleed parallax image - LEFT half */}
+      <div className="ov-image-wrap absolute left-0 top-0 w-full md:w-1/2 h-full">
         <img
           src="https://www.fakhruddinproperties.com/wp-content/uploads/2025/12/Wideup-lady.webp"
           alt="Tréppan Serenique"
           className="w-full h-full object-cover"
         />
-        {/* Desktop Overlay - removed the right border/line gradient */}
-        <div className="hidden md:block absolute inset-0" style={{ background: "linear-gradient(to right, transparent 55%, #f7f6f4 100%)" }} />
+        {/* Gradient overlay for text readability - on the right side */}
+        <div className="hidden md:block absolute inset-0 bg-gradient-to-r from-transparent via-transparent to-white md:via-transparent md:to-white" />
         {/* Mobile Overlay */}
-        <div className="block md:hidden absolute inset-0 bg-gradient-to-b from-[#F5F2EE]/30 via-[#F5F2EE]/20 to-[#F5F2EE]/60" />        
+        <div className="block md:hidden absolute inset-0 bg-gradient-to-b from-[#F5F2EE]/30 via-[#F5F2EE]/20 to-[#F5F2EE]/60" />
       </div>
 
-      <div className="relative z-10 flex items-center justify-end px-6 md:px-16 lg:px-24" style={{ minHeight: 700 }}>
-        <div className="ov-text w-full md:w-[54%] lg:w-[48%] py-24">
-          <span className="text-[10px] tracking-[0.45em] uppercase block mb-5" style={{ color: PRIMARY }}>Overview</span>
-          <h2 className="font-marcellus font-light text-4xl md:text-5xl lg:text-[3.2rem] leading-[1.08] mb-6" style={{ fontWeight: 300, color: CHINESE_BLACK }}>
+      {/* Content — RIGHT side (since image is on left) */}
+      <div className="relative z-10 min-h-screen flex items-center justify-end px-6 md:px-16 lg:px-24">
+        <div className="w-full md:w-[55%] lg:w-[50%] py-24 md:py-32">
+          <span className="text-xs tracking-[0.35em] uppercase block mb-6" style={{ color: PRIMARY }}>Overview</span>
+
+          <h2 className="text-4xl md:text-5xl lg:text-6xl leading-tight mb-8" style={{ fontWeight: 300, color: CHINESE_BLACK }}>
             A Sanctuary of<br />
             <span style={{ color: PRIMARY }}>Serenity by the Sea</span>
           </h2>
-          <div className="w-14 h-[2px] mb-7" style={{ background: PRIMARY }} />
-          <div className="space-y-4 leading-relaxed mb-10 text-base" style={{ color: `${CHINESE_BLACK}B3` }}>
+
+          <div className="w-16 h-[2px] mb-8" style={{ backgroundColor: PRIMARY }} />
+
+          <div className="space-y-5 text-base leading-relaxed mb-12" style={{ color: `${CHINESE_BLACK}B3` }}>
             <p>
               Discover coastal living at Tréppan Serenique — where the ocean breeze meets architectural brilliance.
               An exclusive collection crafted for those who seek the finest in resort-style living.

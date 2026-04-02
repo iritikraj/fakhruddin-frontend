@@ -14,48 +14,48 @@ if (typeof window !== "undefined") {
 const awardsList = [
   {
     year: "2024",
-    tag: "Initiative", 
-    img: "images/Our-Story-02.webp",
-    icon: "/images/awards/award-1.webp",
-    title: "Architectural Residential",    
-    desc: "Participation and sponsorship of the SHE Pioneers programme by Dubai Land Department, supporting women's growing impact in real estate and initiatives promoting inclusivity and industry advancement.",
-  },
-  {
-    year: "2024",
-    tag: "2024",
-    img: "images/Our-Story-04.webp",
-    icon: "/images/awards/award-2.webp",
-    title: "Sustainable Real",    
-    desc: "Awarded by Gulf Business at the Game Changer: UAE Real Estate Outlook for Treppan Tower (Jumeirah Village Triangle), recognising excellence in sustainable development and forward-thinking residential design.",
-  },
-  {
-    year: "2024",
-    tag: "Jan\u2013Mar 2024",
-    img: "images/Our-Story-06.webp",
-    icon: "/images/awards/award-3.webp",
-    title: "Highly",
-    desc: "Recognised by REM Times with an editorial cover for pioneering sustainability-focused developments, AI-enabled living infrastructure, and progressive real estate initiatives.",
-  },
-  {
-    year: "2024",
-    tag: "Leadership Insight",
-    img: "images/Our-Story-07.webp",
-    icon: "/images/awards/award-4.webp",
-    title: "Sustainable",
-    desc: "Our CEO, Yousuf Fakhruddin featured in Gulf Business discussing integrated urban ecosystems, sustainable city planning, and forward-looking real estate innovation shaping future communities.",
+    tag: "Forbes Middle East", 
+    img: "/images/awards/award-1.webp",
+    icon: "/images/awards/icon-1.webp",
+    title: "One of the Most Impactful Real Estate Leaders",
+    desc: "",
   },
   {
     year: "2025",
-    tag: "2025",
-    img: "images/Our-Story-08.webp",
-    icon: "/images/awards/award-5.webp",
-    title: "Best Sustainable",
-    desc: "Our CEO, Yousuf Fakhruddin, recognised by Forbes Middle East among Most Impactful Real Estate Leaders for his leadership impact, innovation-driven developments, and contributions shaping modern real estate towards sustainability and wellness.",
+    tag: "Forbes Middle East", 
+    img: "/images/awards/award-2.webp",
+    icon: "/images/awards/icon-2.webp",
+    title: "One of the Most Impactful Real Estate Leaders",
+    desc: "",
+  },
+  {
+    year: "2025",
+    tag: "Pillar of Read Estate",
+    img: "/images/awards/award-3.webp",
+    icon: "/images/awards/icon-3.webp",
+    title: "Sustainabile Real Estate Developer of the Year",
+    desc: "",
+  },
+  {
+    year: "2025",
+    tag: "Pillar of Read Estate",
+    img: "/images/awards/award-4.webp",
+    icon: "/images/awards/icon-4.webp",
+    title: "Branded Residences of the Year Treppan Living",
+    desc: "",
+  },
+  {
+    year: "2025",
+    tag: "Architecture Leaders Awards",
+    img: "/images/awards/award-5.webp",
+    icon: "/images/awards/icon-5.webp",
+    title: "Residential Project of the Year Treppan Serenique",
+    desc: "",
   },
 ];
 
 // ==========================================
-// 1. THE 3D STACK SCENE (FIXED RESPONSIVENESS)
+// 1. THE 3D STACK SCENE (WITH PROPER IMAGE DISPLAY)
 // ==========================================
 function AwardStackScene({ activeIndex }: { activeIndex: number }) {
   const groupRef = useRef<THREE.Group>(null);
@@ -64,16 +64,36 @@ function AwardStackScene({ activeIndex }: { activeIndex: number }) {
 
   const isMobile = viewport.width < 5;
 
-  // Sizing
+  // Sizing - using 4:5 ratio for your images
   const cardWidth = isMobile ? viewport.width * 0.7 : Math.min(viewport.width * 0.35, 3.5);
-  const cardHeight = cardWidth * 1.4;
+  const cardHeight = cardWidth * 1.25; // 4:5 ratio
 
-  // Base positions to keep things aligned without cutting off
-  const baseOffsetX = isMobile ? 0 : -viewport.width * 0.22; // Shifts cards to the left on desktop
-  const baseOffsetY = isMobile ? 0.4 : 0; // Modest shift up on mobile to avoid navbar, perfectly centered on desktop
+  // Base positions
+  const baseOffsetX = isMobile ? 0 : -viewport.width * 0.22;
+  const baseOffsetY = isMobile ? 0.4 : 0;
+
+  // Load textures for each card with proper color space
+  useEffect(() => {
+    awardsList.forEach((award, i) => {
+      const textureLoader = new THREE.TextureLoader();
+      textureLoader.load(award.img, (texture) => {
+        if (cardRefs.current[i]) {
+          const material = cardRefs.current[i]?.material as THREE.MeshBasicMaterial;
+          if (material) {
+            // Fix: Set proper color space to prevent washed out images
+            texture.colorSpace = THREE.SRGBColorSpace;
+            texture.needsUpdate = true;
+            
+            material.map = texture;
+            material.color.setHex(0xffffff);
+            material.needsUpdate = true;
+          }
+        }
+      });
+    });
+  }, []);
 
   useFrame((state, delta) => {
-    // Subtle mouse float
     if (groupRef.current) {
       groupRef.current.rotation.y = THREE.MathUtils.lerp(groupRef.current.rotation.y, (state.mouse.x * Math.PI) / 30, 0.05);
       groupRef.current.rotation.x = THREE.MathUtils.lerp(groupRef.current.rotation.x, (state.mouse.y * Math.PI) / 30, 0.05);
@@ -85,7 +105,7 @@ function AwardStackScene({ activeIndex }: { activeIndex: number }) {
       const isActive = i === activeIndex;
       const isPast = i < activeIndex;
 
-      let targetZ, targetX, targetY, targetRotZ, targetOpacity, targetGrayscale;
+      let targetZ, targetX, targetY, targetRotZ, targetOpacity;
 
       if (isActive) {
         targetZ = 2;
@@ -93,24 +113,19 @@ function AwardStackScene({ activeIndex }: { activeIndex: number }) {
         targetY = baseOffsetY;
         targetRotZ = 0;
         targetOpacity = 1;
-        targetGrayscale = 0;
       } else if (isPast) {
-        // Flies behind camera
         targetZ = 8;
         targetX = baseOffsetX - 2;
         targetY = baseOffsetY + 2;
         targetRotZ = -0.5;
         targetOpacity = 0;
-        targetGrayscale = 0;
       } else {
-        // Stacked background
         const offset = i - activeIndex;
         targetZ = -offset * 1.5;
         targetX = baseOffsetX + offset * (isMobile ? 0.15 : 0.5);
         targetY = baseOffsetY - (offset * 0.15);
         targetRotZ = -0.05 * offset;
         targetOpacity = Math.max(0.1, 1 - (offset * 0.25));
-        targetGrayscale = 0.8;
       }
 
       const lerpSpeed = 4;
@@ -119,10 +134,9 @@ function AwardStackScene({ activeIndex }: { activeIndex: number }) {
       card.position.z = THREE.MathUtils.lerp(card.position.z, targetZ, lerpSpeed * delta);
       card.rotation.z = THREE.MathUtils.lerp(card.rotation.z, targetRotZ, lerpSpeed * delta);
 
-      const material = card.material as any;
-      if (material) {
+      const material = card.material as THREE.MeshBasicMaterial;
+      if (material && material.map) {
         material.opacity = THREE.MathUtils.lerp(material.opacity, targetOpacity, lerpSpeed * delta);
-        material.grayscale = THREE.MathUtils.lerp(material.grayscale, targetGrayscale, lerpSpeed * delta);
       }
     });
   });
@@ -130,18 +144,19 @@ function AwardStackScene({ activeIndex }: { activeIndex: number }) {
   return (
     <group ref={groupRef}>
       {awardsList.map((award, i) => (
-        <Image
+        <mesh
           key={i}
-          ref={(el) => { cardRefs.current[i] = el as THREE.Mesh; }}
-          url={award.img}
-          transparent
-          scale={[cardWidth, cardHeight]}
+          ref={(el) => { cardRefs.current[i] = el; }}
           position={[baseOffsetX + i * 0.5, baseOffsetY, -i * 2]}
-        />
+        >
+          <planeGeometry args={[cardWidth, cardHeight]} />
+          <meshBasicMaterial color={0xffffff} transparent side={THREE.DoubleSide} />
+        </mesh>
       ))}
     </group>
   );
 }
+
 
 // ==========================================
 // 2. THE MAIN COMPONENT
@@ -175,8 +190,11 @@ export default function Awards() {
       <div className="absolute inset-0 z-0 pointer-events-none">
         <div className="sticky top-0 w-full h-screen">
 
-          <Canvas camera={{ position: [0, 0, 7], fov: 40 }} gl={{ alpha: true, antialias: true }}>
-            <ambientLight intensity={1} />
+          <Canvas 
+            camera={{ position: [1.0, 0, 8], fov: 45 }} 
+            gl={{ alpha: true, antialias: true, toneMapping: THREE.NoToneMapping }}
+          >
+            {/* <ambientLight intensity={1} /> */}
             <AwardStackScene activeIndex={activeIndex} />
           </Canvas>
 
@@ -219,14 +237,25 @@ export default function Awards() {
                 <div className={`absolute left-0 top-0 h-full w-[2px] md:w-1 bg-[#9D7E44] transition-transform duration-700 origin-top ${activeIndex === index ? "scale-y-100" : "scale-y-0"
                   }`} />
 
-                  <div className="flex flex-col items-center text-center gap-3 md:gap-4">
+                  <div className="flex flex-col md:flex-row md:items-center gap-2 md:gap-8">
+                    <span className={`italic text-xl md:text-3xl transition-colors duration-500 ${activeIndex === index ? "text-[#9D7E44]" : "text-[#1A1A1A]/40"
+                      }`}>
+                      {award.year}
+                    </span>
+                    <h3 className="text-xl md:text-2xl lg:text-3xl tracking-tight text-[#1A1A1A] leading-tight">
+                      {award.title}
+                    </h3>
+                  </div>
+                
+
+                  <div className="flex flex-col gap-3 md:gap-4">
                     <img 
                       src={award.icon} 
                       alt={award.title} 
-                      className="object-contain" 
+                      className="object-contain w-40" 
                     />
 
-                    <h4 className={`text-sm md:text-xl font-semibold transition-colors duration-300 ${
+                    {/* <h4 className={`text-sm md:text-xl font-semibold transition-colors duration-300 ${
                       activeIndex === index 
                         ? "text-[#9D7E44]" 
                         : "text-[#1A1A1A]/70 group-hover:text-[#9D7E44]"
@@ -237,7 +266,7 @@ export default function Awards() {
                       <p className="text-xs md:text-base text-[#1A1A1A]/50">
                         {award.title}
                       </p>
-                    )}
+                    )} */}
                   </div>
 
                 {/* <div className="flex flex-col md:flex-row md:items-center gap-2 md:gap-8">
