@@ -66,3 +66,12 @@ displacement-filter {
     cursor: none;
   }
 }
+
+.editorial-content :first-child::first-letter {
+  font-size: 4em;
+  font-weight: 600;
+  float: left;
+  line-height: 0.8;
+  margin-right: 0.15em;
+  color: #A1997F;  
+}

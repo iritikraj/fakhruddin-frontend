@@ -80,7 +80,7 @@ export default function Footer() {
           </p>
 
           <div>
-            <a href="tel:8005253" className="text-2xl font-bold hover:text-yellow-600 transition-all duration-500">
+            <a href="tel:+9718005253" className="text-2xl font-bold hover:text-yellow-600 transition-all duration-500">
               Toll Free 800 5253
             </a>
           </div>          

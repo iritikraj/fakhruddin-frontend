@@ -502,7 +502,7 @@ function BlogContent({ post }: { post: typeof BLOG_POSTS[0] }) {
       </h1>
 
       <div 
-        className="blog-content prose prose-lg max-w-none"
+        className="blog-content prose prose-lg max-w-none editorial-content"
         style={{
           color: CHINESE_BLACK,
           lineHeight: 1.8,
