@@ -178,7 +178,7 @@ export default function Footer() {
           </div>
           <p
             className="text-base leading-[2] max-w-[280px] font-light tracking-wide"
-            style={{ color: `${COLORS.WHITE}4d` }}
+            style={{ color: `${COLORS.WHITE}80` }}
           >
             Crafting sanctuary since 2003 - a quiet pursuit to reimagine what
             real estate could mean for the people who live within it.
