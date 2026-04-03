@@ -17,6 +17,13 @@ const COMMUNITIES = [
     tag: "COMMUNITY . RESIDENTIAL",
     leftImg: "/port-3.webp",
     rightImg: "/port-4.webp",
+  },
+  {
+    id: 3,
+    title: "Jumeirah <br/> Village <br/> Circle",
+    tag: "COMMUNITY . RESIDENTIAL",
+    leftImg: "/port-5.webp",
+    rightImg: "/port-6.webp",
   }
 ];
 

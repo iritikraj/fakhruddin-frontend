@@ -4,7 +4,6 @@ import { useRef, useState, useEffect, useCallback } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
-import { MapMarker } from "./_map-marker";
 import { useGSAP } from "@gsap/react";
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
@@ -29,64 +28,6 @@ const SVG_ICONS = [
   "https://www.fakhruddinproperties.com/wp-content/uploads/2026/02/Dubai-Islands-Mall-icon-09.svg",
 ];
 
-// ─────────────────────────────────────────────────────────────
-// COMPLETE AMENITIES LIST (53 items)
-// ─────────────────────────────────────────────────────────────
-const ALL_AMENITIES = [
-  "Hyperbaric Oxygen Therapy",
-  "Red Light Therapy",
-  "Flotation Therapy",
-  "Cryotherapy",
-  "Himalayan Salt Brick Sauna",
-  "Cold Plunge",
-  "Hot Plunge",
-  "Massage Beds",
-  "Male Spa",
-  "Steam Room",
-  "Female Spa",
-  "Nail Spa",
-  "Meditation Zone",
-  "Beauty Salon",
-  "Splash Pool",
-  "Bamboo Oxygen Park",
-  "Meditation Pods",
-  "Koi Pond",
-  "Green Walkway",
-  "Jogging Track",
-  "Indoor Gym",
-  "Outdoor Gym",
-  "Mini Golf Course",
-  "Wall Climbing",
-  "Boardwalk Bridge",
-  "Water Fountain",
-  "Cabana Seating",
-  "Infinity Swimming Pool",
-  "Aqua Gym",
-  "Pool Side Deck",
-  "Sunken Seaters",
-  "Private Courtyard",
-  "Grill Station",
-  "Outdoor Meeting Pods",
-  "Open Kitchen",
-  "Working Pods",
-  "Green House Cafe",
-  "Hydroponics",
-  "Kids Adventure Wall",
-  "Kids Play Area",
-  "Kids Water Slide",
-  "Kids Pool",
-  "Sandpit Playground",
-  "Skating Loop",
-  "Multi-Purpose Hall",
-  "BBQ Pits",
-  "Outdoor Cinema",
-  "Outdoor Party Deck",
-  "Rooftop Sea View Infinity Pool",
-  "Open Shower",
-  "Juice Bar",
-  "Sun Deck Cabana",
-  "Smart Robot Delivery System",
-];
 
 // ─────────────────────────────────────────────────────────────
 // GROUPED AMENITIES DATA (with all 53 items)
@@ -414,7 +355,7 @@ function CustomFormModal({
           <div className="relative px-8 pt-10 pb-10">
             <div className="flex items-start justify-between mb-2">
               <div>
-                <p className="text-[10px] tracking-[0.4em] uppercase mb-2" style={{ color: PRIMARY }}>Tréppan Serenique</p>
+                <p className="text-[10px] tracking-[0.4em] uppercase mb-2" style={{ color: PRIMARY }}>Tréppan Tower</p>
                 <h3 className="font-marcellus font-light text-white text-2xl md:text-3xl" style={{ fontWeight: 300 }}>{title}</h3>
               </div>
               <button
@@ -611,7 +552,7 @@ function Hero({ onDownload, onInterest }: { onDownload: () => void; onInterest: 
     <section ref={ref} className="relative w-full h-screen overflow-hidden">
       <video
         ref={videoRef}
-        src="https://www.fakhruddinproperties.com/wp-content/uploads/2025/12/Treppan-Serenique-Project.mp4"
+        src="https://www.fakhruddinproperties.com/wp-content/uploads/2025/12/Treppan-Tower-2.mp4"
         autoPlay muted loop playsInline
         className="absolute inset-0 w-full h-full object-cover"
       />
@@ -623,12 +564,12 @@ function Hero({ onDownload, onInterest }: { onDownload: () => void; onInterest: 
       <div ref={contentRef} className="relative z-10 h-full flex items-end px-8 md:px-16 lg:px-24 pb-24">
         <div className="max-w-2xl">
           <img
-            src="https://www.fakhruddinproperties.com/wp-content/uploads/2026/02/treppan-serenique-logo.png"
-            alt="Tréppan Serenique"
+            src="https://www.fakhruddinproperties.com/wp-content/uploads/2026/02/treppan-tower-logo.png"
+            alt="Tréppan Tower"
             className="hero-logo w-60 md:w-72 mb-5 opacity-0"
           />
           <p className="hero-tag text-xs tracking-[0.35em] uppercase opacity-0 mb-4" style={{ color: PRIMARY }}>
-            Experience The UAE's First Longevity Living Community
+            Step Inside A Tranquil Retreat in the Heart of JVT
           </p>
           <div
             className="hero-line w-20 h-[2px] mb-7 origin-left"
@@ -693,8 +634,8 @@ function Overview({ onDownload, onInterest }: { onDownload: () => void; onIntere
       {/* Full-bleed parallax image - LEFT half */}
       <div className="ov-image-wrap absolute left-0 top-0 w-full md:w-1/2 h-full">
         <img
-          src="https://www.fakhruddinproperties.com/wp-content/uploads/2025/12/Wideup-lady.webp"
-          alt="Tréppan Serenique"
+          src="https://www.fakhruddinproperties.com/wp-content/uploads/2025/12/Treppan-Tower.webp"
+          alt="Tréppan Tower"
           className="w-full h-full object-cover"
         />
         {/* Gradient overlay for text readability - on the right side */}
@@ -717,7 +658,7 @@ function Overview({ onDownload, onInterest }: { onDownload: () => void; onIntere
 
           <div className="space-y-5 text-base leading-relaxed mb-12" style={{ color: `${CHINESE_BLACK}B3` }}>
             <p>
-              Discover coastal living at Tréppan Serenique — where the ocean breeze meets architectural brilliance.
+              Discover coastal living at Tréppan Tower — where the ocean breeze meets architectural brilliance.
               An exclusive collection crafted for those who seek the finest in resort-style living.
             </p>
             <p>
@@ -1297,25 +1238,25 @@ function Location() {
           <br /><span style={{ color: PRIMARY }}>&amp; City Pulse</span>
         </h2>
         <p className="text-sm mt-4 max-w-2xl mx-auto" style={{ color: `${CHINESE_BLACK}73`, lineHeight: 1.7 }}>
-          Positioned where Dubai's coast meets the city — Tréppan Serenique offers unmatched connectivity without sacrificing your tranquil retreat.
+          Positioned where Dubai's coast meets the city — Tréppan Tower offers unmatched connectivity without sacrificing your tranquil retreat.
         </p>
       </div>
 
       <div className="relative w-full" style={{ height: "65vh", minHeight: 550 }}>
         <iframe
-          src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3964.037160871428!2d55.297956975759554!3d25.301316277644098!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3e5f450012f91b7f%3A0xa7ef0e9ee623c48e!2sTreppan%20Serenique%20Residences!5e1!3m2!1sen!2sin!4v1766041159348!5m2!1sen!2sin"
+          src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3920.984652142226!2d55.171316711158696!3d25.03320983823036!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3e5f6d005f01e39d%3A0x3bec9fb8339333a5!2sTreppan%20Tower!5e1!3m2!1sen!2sin!4v1764673157392!5m2!1sen!2sin"
           width="100%"
           height="100%"
           style={{ border: 0, position: "absolute", top: 0, left: 0 }}
           allowFullScreen
           loading="lazy"
           referrerPolicy="no-referrer-when-downgrade"
-          title="Tréppan Serenique Location"
+          title="Tréppan Tower Location"
         />
 
         <div 
           className="absolute inset-0 pointer-events-none" 
-          style={{ background: "linear-gradient(to right, rgba(5,8,20,0.4) 0%, rgba(5,8,20,0.2) 30%, transparent 70%)" }} 
+          style={{ background: "linear-gradient(to left, rgba(5,8,20,0.4) 20%, rgba(5,8,20,0.5) 30%, transparent 70%)" }} 
         />
         <div className="absolute right-0 top-0 h-full flex items-center z-10 pointer-events-none">
           <div className="loc-card w-full md:w-[420px] lg:w-[480px] px-6 md:px-12 pointer-events-auto">
@@ -1606,7 +1547,7 @@ function RequestCallBack() {
               <div className="absolute bottom-4 right-4 w-8 h-8 border-b-2 border-r-2 border-white/15 rounded-br-2xl pointer-events-none" />
 
               <div className="relative px-8 pt-8 pb-5 border-b border-white/10">
-                <p className="text-[10px] tracking-[0.4em] uppercase mb-1" style={{ color: PRIMARY }}>Tréppan Serenique</p>
+                <p className="text-[10px] tracking-[0.4em] uppercase mb-1" style={{ color: PRIMARY }}>Tréppan Tower</p>
                 <h3 className="font-marcellus font-light text-white text-xl" style={{ fontWeight: 300 }}>Schedule a Consultation</h3>
               </div>
 
@@ -1760,8 +1701,7 @@ export default function ProjectDetailPage() {
       
       <FeaturesAmenities />
       <FloorPlans onDownload={openBrochure} />
-      <MapMarker />
-      {/* <Location /> */}
+      <Location />
       <RequestCallBack />
       <Footer />
 

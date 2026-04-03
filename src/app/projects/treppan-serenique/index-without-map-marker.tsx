@@ -4,7 +4,6 @@ import { useRef, useState, useEffect, useCallback } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
-import { MapMarker } from "./_map-marker";
 import { useGSAP } from "@gsap/react";
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
@@ -1760,8 +1759,7 @@ export default function ProjectDetailPage() {
       
       <FeaturesAmenities />
       <FloorPlans onDownload={openBrochure} />
-      <MapMarker />
-      {/* <Location /> */}
+      <Location />
       <RequestCallBack />
       <Footer />
 

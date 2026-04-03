@@ -13,23 +13,29 @@ const blogs = [
   {
     tag: "Insight",
     date: "Mar 02, 2026",
-    title: "Longevity Real Estate: The Next Big Asset Class Arrives in the UAE",
+    slug: "future-of-luxury-real-estate-dubai",
+    title: "The Future of Luxury Real Estate in Dubai",
     img: "https://images.unsplash.com/photo-1600607687939-ce8a6c25118c?q=80&w=2053&auto=format&fit=crop",
     featured: true,
+    href: "#"
   },
   {
     tag: "Blog",
     date: "Feb 24, 2026",
-    title: "Inside a Home That Elevates How You Live, Breathe, Sleep, and Recover",
+    slug: "wellness-amenities-transforming-property-value",
+    title: "How Wellness Amenities Are Transforming Property Value",
     img: "https://images.unsplash.com/photo-1600607687939-ce8a6c25118c?q=80&w=2053&auto=format&fit=crop",
     featured: false,
+    href: "#"
   },
   {
     tag: "Blog",
     date: "Feb 12, 2026",
-    title: "Where Homes Heal: UAE's First Longevity Living Community",
+    slug: "dubai-real-estate-investment-2025",
+    title: "Dubai Real Estate Investment Outlook 2025",
     img: "https://images.unsplash.com/photo-1512917774080-9991f1c4c750?q=80&w=2070&auto=format&fit=crop",
     featured: false,
+    href: "#"
   },
 ];
 
@@ -119,54 +125,56 @@ function BlogCard({ blog }: { blog: typeof blogs[0] }) {
   return (
     <div className="blog-card group cursor-pointer flex flex-col h-full">
       <Card3D className="flex flex-col h-full">
-        <div
-          className="relative flex flex-col h-full rounded-xl overflow-hidden bg-white"
-          style={{
-            boxShadow:
-              "0 25px 50px -10px rgba(0,0,0,0.18), 0 12px 28px -8px rgba(0,0,0,0.14), 0 0 0 1px rgba(255,255,255,0.9) inset",
-            transformStyle: "preserve-3d",
-          }}
-        >
-          {/* ── Image ── */}
-          <div className="relative w-full aspect-[16/10] overflow-hidden bg-[#EFECE8] flex-shrink-0">
-            <img
-              src={blog.img}
-              alt={blog.title}
-              className="absolute inset-0 w-full h-full object-cover grayscale-[0.15] group-hover:grayscale-0 group-hover:scale-105 transition-all duration-1000 ease-[cubic-bezier(0.76,0,0.24,1)]"
-            />
-            {/* vignette */}
-            <div className="absolute inset-0 shadow-[inset_0_0_60px_rgba(0,0,0,0.12)] pointer-events-none" />
-            {/* tag pill */}
-            <div className="absolute top-4 left-4">
-              <span className="text-[9px] tracking-[0.35em] uppercase font-semibold bg-white/90 backdrop-blur-sm text-[#9D7E44] px-3 py-1.5 rounded-full shadow-sm">
-                {blog.tag}
-              </span>
-            </div>
-          </div>
-
-          {/* ── Body ── */}
-          <div className="flex flex-col flex-1 gap-4 p-6 pb-7 bg-white">
-            <p className="text-[9px] tracking-[0.35em] uppercase text-[#1A1A1A]/40 font-semibold">
-              {blog.date}
-            </p>
-            <h3 className="text-xl md:text-[1.35rem] leading-[1.25] font-marcellus text-[#1A1A1A] group-hover:text-[#9D7E44] transition-colors duration-500 flex-1">
-              {blog.title}
-            </h3>
-            <div className="pt-3 border-t border-[#1A1A1A]/8">
-              <span className="text-[9px] tracking-[0.35em] uppercase font-semibold text-[#1A1A1A]/35 group-hover:text-[#9D7E44] transition-colors duration-500 pb-0.5 border-b border-transparent group-hover:border-[#9D7E44]">
-                Read Article
-              </span>
-            </div>
-          </div>
-
-          {/* bottom edge shadow for depth illusion */}
+        <a href={`/blog/${blog.slug}`} className="flex flex-col h-full">
           <div
-            className="absolute bottom-0 inset-x-0 h-1 rounded-b-xl pointer-events-none"
+            className="relative flex flex-col h-full rounded-xl overflow-hidden bg-white"
             style={{
-              background: "linear-gradient(to bottom, transparent, rgba(0,0,0,0.06))",
+              boxShadow:
+                "0 25px 50px -10px rgba(0,0,0,0.18), 0 12px 28px -8px rgba(0,0,0,0.14), 0 0 0 1px rgba(255,255,255,0.9) inset",
+              transformStyle: "preserve-3d",
             }}
-          />
-        </div>
+          >
+            {/* ── Image ── */}
+            <div className="relative w-full aspect-[16/10] overflow-hidden bg-[#EFECE8] flex-shrink-0">
+              <img
+                src={blog.img}
+                alt={blog.title}
+                className="absolute inset-0 w-full h-full object-cover grayscale-[0.15] group-hover:grayscale-0 group-hover:scale-105 transition-all duration-1000 ease-[cubic-bezier(0.76,0,0.24,1)]"
+              />
+              {/* vignette */}
+              <div className="absolute inset-0 shadow-[inset_0_0_60px_rgba(0,0,0,0.12)] pointer-events-none" />
+              {/* tag pill */}
+              <div className="absolute top-4 left-4">
+                <span className="text-[9px] tracking-[0.35em] uppercase font-semibold bg-white/90 backdrop-blur-sm text-[#9D7E44] px-3 py-1.5 rounded-full shadow-sm">
+                  {blog.tag}
+                </span>
+              </div>
+            </div>
+
+            {/* ── Body ── */}
+            <div className="flex flex-col flex-1 gap-4 p-6 pb-7 bg-white">
+              <p className="text-[9px] tracking-[0.35em] uppercase text-[#1A1A1A]/40 font-semibold">
+                {blog.date}
+              </p>
+              <h3 className="text-xl md:text-[1.35rem] leading-[1.25] font-marcellus text-[#1A1A1A] group-hover:text-[#9D7E44] transition-colors duration-500 flex-1">
+                {blog.title}
+              </h3>
+              <div className="pt-3 border-t border-[#1A1A1A]/8">
+                <span className="text-[9px] tracking-[0.35em] uppercase font-semibold text-[#1A1A1A]/35 group-hover:text-[#9D7E44] transition-colors duration-500 pb-0.5 border-b border-transparent group-hover:border-[#9D7E44]">
+                  Read Article
+                </span>
+              </div>
+            </div>
+
+            {/* bottom edge shadow for depth illusion */}
+            <div
+              className="absolute bottom-0 inset-x-0 h-1 rounded-b-xl pointer-events-none"
+              style={{
+                background: "linear-gradient(to bottom, transparent, rgba(0,0,0,0.06))",
+              }}
+            />
+          </div>
+        </a>
       </Card3D>
     </div>
   );

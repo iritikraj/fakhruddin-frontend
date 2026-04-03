@@ -75,3 +75,344 @@ displacement-filter {
   margin-right: 0.15em;
   color: #A1997F;  
 }
+
+
+/* ============================================
+   MAP MARKER STYLES - Full working version
+   ============================================ */
+
+/* Main container */
+.infra {
+  position: relative;
+  width: 100vw;
+  height: 100vh;
+  overflow: hidden;
+}
+
+/* Map image */
+.map-img {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center 68%;
+  display: block;
+  user-select: none;
+  pointer-events: none;
+  z-index: 1;
+  filter: grayscale(0.85) brightness(0.55) contrast(2.0);
+  opacity: 0.9;
+}
+
+/* SVG Routes */
+.routes-svg {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+  z-index: 2;
+  overflow: visible;
+}
+
+/* Route lines */
+.route-line {
+  fill: none;
+  stroke: #e8c88a;
+  stroke-width: 0.25;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+  opacity: 0;
+}
+
+.route-line.visible {
+  opacity: 1;
+}
+
+/* Main property logo */
+.main-logo {
+  position: absolute;
+  z-index: 12;
+  transform: translate(-50%, -50%);
+  pointer-events: none;
+}
+
+.main-pin-marker {
+  position: relative;
+  width: 52px;
+  height: 52px;
+}
+
+.main-pin-marker svg {
+  width: 52px;
+  height: 52px;
+  filter: drop-shadow(0 2px 12px rgba(0, 0, 0, 0.6));
+}
+
+.main-pulse {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 70px;
+  height: 70px;
+  transform: translate(-50%, -50%);
+  border-radius: 50%;
+  background: rgba(232, 200, 138, 0.3);
+  animation: mainGlow 2s ease-out infinite;
+  pointer-events: none;
+  z-index: -1;
+}
+
+@keyframes mainGlow {
+  0% {
+    transform: translate(-50%, -50%) scale(0.8);
+    opacity: 0.7;
+  }
+  100% {
+    transform: translate(-50%, -50%) scale(1.8);
+    opacity: 0;
+  }
+}
+
+.main-label {
+  position: absolute;
+  bottom: -32px;
+  left: 50%;
+  transform: translateX(-50%);
+  white-space: nowrap;
+  font-size: 10px;
+  font-weight: 500;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  background: rgba(0, 0, 0, 0.75);
+  backdrop-filter: blur(4px);
+  padding: 4px 12px;
+  border-radius: 30px;
+  color: #e8d5b0;
+  border-left: 2px solid #e8c88a;
+  border-right: 2px solid #e8c88a;
+  pointer-events: none;
+}
+
+/* Pins */
+.pin {
+  position: absolute;
+  z-index: 15;
+  transform: translate(-50%, -50%);
+  cursor: pointer;
+  pointer-events: auto;
+}
+
+.pin-ring {
+  width: 34px;
+  height: 34px;
+  border-radius: 50%;
+  border: 1.5px solid rgba(200, 185, 145, 0.7);
+  background: rgba(28, 32, 34, 0.7);
+  backdrop-filter: blur(3px);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.2s cubic-bezier(0.2, 0.9, 0.4, 1.1);
+  position: relative;
+}
+
+.pin.hovered .pin-ring,
+.pin:hover .pin-ring {
+  border-color: #e8c88a;
+  background: rgba(48, 68, 64, 0.95);
+  transform: scale(1.25);
+  box-shadow: 0 0 0 6px rgba(232, 200, 138, 0.3);
+}
+
+.pin.hovered .pin-ring::after {
+  content: '';
+  position: absolute;
+  inset: -7px;
+  border-radius: 50%;
+  border: 1px solid rgba(232, 200, 138, 0.6);
+  animation: softPulse 1.5s ease-out infinite;
+  pointer-events: none;
+}
+
+@keyframes softPulse {
+  0% {
+    transform: scale(0.95);
+    opacity: 0.6;
+  }
+  100% {
+    transform: scale(1.5);
+    opacity: 0;
+  }
+}
+
+.pin-icon {
+  width: 14px;
+  height: 14px;
+}
+
+.pin-icon path {
+  fill: #cfc3a5;
+  transition: fill 0.2s;
+}
+
+.pin.hovered .pin-icon path,
+.pin:hover .pin-icon path {
+  fill: #f7e9cf;
+}
+
+.pin-label {
+  position: absolute;
+  top: calc(100% + 6px);
+  left: 50%;
+  transform: translateX(-50%);
+  white-space: nowrap;
+  font-size: 9px;
+  font-weight: 400;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: rgba(220, 205, 165, 0.9);
+  background: rgba(18, 22, 24, 0.75);
+  backdrop-filter: blur(2px);
+  padding: 2px 8px;
+  border-radius: 30px;
+  pointer-events: none;
+  transition: all 0.2s;
+}
+
+.pin.hovered .pin-label {
+  color: #f2e2c2;
+  background: rgba(42, 62, 58, 0.95);
+  font-weight: 500;
+}
+
+/* Carousel */
+.carousel-overlay {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  z-index: 30;
+  background: linear-gradient(
+    to bottom,
+    transparent 0%,
+    rgba(22, 27, 29, 0.25) 22%,
+    rgba(20, 25, 27, 0.6) 52%,
+    rgba(18, 22, 24, 0.85) 100%
+  );
+  padding-top: 30px;
+}
+
+.carousel-track-wrap {
+  overflow: hidden;
+  padding: 0 40px 28px;
+  cursor: grab;
+}
+
+.carousel-track-wrap:active {
+  cursor: grabbing;
+}
+
+.carousel-track {
+  display: flex;
+  gap: 10px;
+  transition: transform 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+  will-change: transform;
+}
+
+.slide {
+  flex: 0 0 200px;
+  /* background: rgba(28, 34, 36, 0.72); */
+  border: 1px solid rgba(255, 255, 255, 0.07);
+  cursor: pointer;
+  transition: border-color 0.3s, background 0.3s, box-shadow 0.3s, transform 0.3s;
+  position: relative;
+  overflow: hidden;
+  backdrop-filter: blur(10px);
+}
+
+.slide:hover,
+.slide.hovered {
+  border-color: #408174;
+  background: #154741;
+  /* box-shadow: 0 0 0 1px rgba(212, 184, 122, 0.4), 0 6px 24px rgba(0, 0, 0, 0.45); */
+  box-shadow: 0 0 0 1px #C4C7B5, 0 6px 24px #C4C7B5;
+  transform: translateY(-3px);
+}
+
+.slide::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 2px;
+  background: linear-gradient(90deg, #d4b87a, #e8c88a);
+  transform: scaleX(0);
+  transform-origin: left;
+  transition: transform 0.35s ease;
+}
+
+.slide:hover::after,
+.slide.hovered::after {
+  transform: scaleX(1);
+}
+
+.slide-photo {
+  width: 100%;
+  height: 110px;
+  overflow: hidden;
+  position: relative;
+}
+
+.slide-photo img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform 0.55s ease;
+  display: block;
+}
+
+.slide:hover .slide-photo img,
+.slide.hovered .slide-photo img {
+  transform: scale(1.06);
+}
+
+.slide-cover {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(to top, rgba(18, 22, 24, 0.5) 0%, transparent 55%);
+}
+
+.slide-body {
+  padding: 9px 13px 13px;
+}
+
+.slide-drive {
+  display: flex;
+  align-items: baseline;
+  gap: 4px;
+  margin-bottom: 3px;
+}
+
+.slide-drive-num {
+  font-size: 26px;
+  font-weight: 300;
+  color: #fff;
+  line-height: 1;
+}
+
+.slide-drive-unit {
+  font-size: 10px;
+  letter-spacing: 0.07em;
+  text-transform: uppercase;
+  color: rgba(255, 255, 255, 0.38);
+}
+
+.slide-name {
+  font-size: 16px;
+  font-weight: 400;
+  color: rgba(255, 255, 255, 0.82);
+  line-height: 1.3;
+}
